@@ -5,6 +5,13 @@ For this project, you will need to run two seperate servers. One is for our webs
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 Check out our [Wiki](https://github.com/ntjoar/Munchy/wiki) for more
 
+# About
+Munchy is a team of CS130 Students here at UCLA. We understand the struggle of students trying to execute recipes but not knowing where to go for ingredients. We are hoping to create a solution in which students can set how far they are willing to travel for cheap ingredients near them. As such, we are hoping to give those students trying to take more interest in culinary arts, the choice to do so.
+
+Our hope with this website is to help promote more interest in the culinary arts using recipes. We want you to be able to cook and execute a recipe without the hassle of having to find where to find the cheapest available choice for each ingredient. This is a website made by students for students.
+
+This website is our final project for CS130 and not officially published
+
 ## Available Scripts
 
 In the project directory, you can run:
