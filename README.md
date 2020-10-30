@@ -76,7 +76,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 This should be updated as we update our code design.
 
 ```
-/
+.
 |
 |-- Back_End
 |   |-- config (Which markets can we scrape)
