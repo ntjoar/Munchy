@@ -3,6 +3,7 @@ For this project, you will need to run two seperate servers. One is for our webs
 
 # General
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Check out our [Wiki](https://github.com/ntjoar/Munchy/wiki) for more
 
 ## Available Scripts
 
