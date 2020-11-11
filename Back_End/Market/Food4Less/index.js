@@ -4,7 +4,7 @@ const Item = require('../../model/Item');
 const Market = require('../../model/Market');
 
 function getSearchItemUrl(query) {
-    return `https://www.ralphs.com/search?query=${query}&searchType=default_search&fulfillment=all`;
+    return `https://www.food4less.com/search?query=${query}&searchType=default_search`;
 }
 
 async function fetch(link) {
@@ -26,14 +26,14 @@ async function getResults(query) {
         let elementCheerio = cheerio.load(element);
 
         let name = elementCheerio('.kds-Text--l').text().trim();
-        let link = "https://www.ralphs.com" + elementCheerio('.flex-grow > a').attr('href').trim();
+        let link = "https://www.food4less.com" + elementCheerio('.flex-grow > a').attr('href').trim();
         let price = elementCheerio('.kds-Price').text().trim().substr(1).split(" ")[0];
 
         console.log(i);
         console.log(new Item(name, price, link));
 
         items.push(new Item(name, price, link));
-
+        
         if(i > 27) {
             console.log("test"); // Necessary for whatever reason
             return false;
@@ -49,9 +49,9 @@ module.exports = {
     search: async function(query){
         try {
             let items = await getResults(query)
-            return new Market('Ralphs', 'www.ralphs.com', items)
+            return new Market('Food4Less', 'www.food4less.com', items)
         } catch (e) {
-            return new Market('Ralphs', 'www.ralphs.com', [])
+            return new Market('Food4Less', 'www.food4less.com', [])
         }
     }
 }
