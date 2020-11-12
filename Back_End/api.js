@@ -14,9 +14,10 @@ const port = 8000;
 
 app.use(cors())
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.get('/:query', async (req, res) => {
     let query = req.params.query;
-
     marketDataArr = []
 
     for (const [key, module] of marketApi.entries()) {
