@@ -18,7 +18,6 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/:query', async (req, res) => {
     let query = req.params.query;
-<<<<<<< HEAD
     let splitQuery = query.split('&')
     //default radius is 0
     let radius = "0"
@@ -43,8 +42,6 @@ app.get('/:query', async (req, res) => {
         console.log("no input for location")
         radius = "0"
     }
-=======
->>>>>>> 7f4dbb6f85988a92726b54290e70e16019be5a2e
     marketDataArr = []
 
     for (const [key, module] of marketApi.entries()) {
