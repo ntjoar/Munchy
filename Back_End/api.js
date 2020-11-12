@@ -7,6 +7,7 @@ markets.forEach((market) => {
     marketApi.set(market, require(`${marketModulesPath}/${market}/index.js`))
 })
 
+const fetch = require("node-fetch");
 const express = require('express');
 const app = express();
 var cors = require('cors')
@@ -19,7 +20,7 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 app.get('/:query', async (req, res) => {
     let query = req.params.query;
     let splitQuery = query.split('&')
-    //default radius is 0
+    //default radius is 0, but radius is in meters!!!!!, SO 2000 RADIUS IS NOT AS BIG AS YOU THINK
     let radius = "0"
     let longitude = "default"
     let latitude = "default"
@@ -49,6 +50,16 @@ app.get('/:query', async (req, res) => {
         console.log("no input for location")
         radius = "0"
     }
+    let location = latitude + "," + longitude
+    let API_KEY = 'AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE'
+    let radInt = parseInt(radius)
+    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${location}&radius=${radInt}&keyword=Grocery%20store`
+    fetch(url)
+    .then(res => res.json())
+    .then((out) => {
+        console.log('Checkout this JSON! ', out);
+    })
+    .catch(err => { throw err });
     //set the query to the first item in list for now as well, this will change later
     query = itemsList[0]
     marketDataArr = []
