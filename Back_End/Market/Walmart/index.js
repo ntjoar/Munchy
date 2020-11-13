@@ -1,7 +1,10 @@
 const Market = require('../../model/Market');
 const Item = require('../../model/Item');
-const axios = require('axios');
+const axios = require('axios').default;
+const cheerio = require('cheerio');
+const { http, https } = require('follow-redirects');
 
+<<<<<<< HEAD
 async function getReq (query) {
     // var itemArr = []
 
@@ -53,13 +56,49 @@ async function getReq (query) {
     //     itemArr.push(new Item(name, link, finalPrice))
     // }
     return []
+=======
+function getSearchItemUrl(query) {
+    return `https://www.walmart.com/browse/food/chocolate/976759_1096070_1224976?&search_redirect=true&redirectQuery=${query}`;
+}
+
+async function fetch(link) {
+    return await axios.get(link);
+}
+
+async function getHtml(link) {
+    return (await fetch(link)).data;
+}
+
+async function getResults (query) {
+    let items = [];
+    // console.log(getSearchItemUrl(query));
+
+    // let html = await axios.get(getSearchItemUrl(query));
+    // console.log(getSearchItemUrl(query));
+    // const $ = cheerio.load(html);
+
+
+    // console.log(searchResults.text());
+    // searchResults.each((i, element) => {
+    //     let elementCheerio = cheerio.load(element);
+    //     console.log(elementCheerio.text());
+
+    //     let name = elementCheerio('div.search-result-product-title > .visuallyhidden').text().trim();
+    //     console.log(name);
+    // })
+    return items;
+>>>>>>> 7f4dbb6f85988a92726b54290e70e16019be5a2e
 }
 
 module.exports = {
     search: async function(query) {
-        //TODO(ntjoar): Implement for Walmart
-        let items = await getReq(query)
-        return new Market('Walmart', 'www.walmart.com', items);
+        try{
+            let items = await getResults(query)
+            return new Market('Walmart', 'www.walmart.com', items);
+        }
+        catch (e) {
+            return new Market('Walmart', 'www.walmart.com', []);
+        }
     }
 }
 
