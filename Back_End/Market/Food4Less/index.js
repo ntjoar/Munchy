@@ -21,7 +21,7 @@ async function getResults(query) {
 
     const items = [];
 
-    let searchResults = $('div.ProductGridContainer > div.PaginateItems > div.AutoGrid > div.AutoGrid-cell');
+    let searchResults = $('div.ProductGridContainer > div.PaginateItems > div.AutoGrid > div.AutoGrid-cell > div.ProductCard');
     searchResults.each((i, element) => {
         let elementCheerio = cheerio.load(element);
 
@@ -29,18 +29,8 @@ async function getResults(query) {
         let link = "https://www.food4less.com" + elementCheerio('.flex-grow > a').attr('href').trim();
         let price = elementCheerio('.kds-Price').text().trim().substr(1).split(" ")[0];
 
-        console.log(i);
-        console.log(new Item(name, price, link));
-
         items.push(new Item(name, price, link));
-        
-        if(i > 27) {
-            console.log("test"); // Necessary for whatever reason
-            return false;
-        }
     });
-
-    console.log("test");
 
     return items;
 }

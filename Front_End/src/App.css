@@ -1,0 +1,30 @@
+.Header{
+   background-color: #274157;
+}
+
+.logo{
+    display: block;
+   height: 50px;
+
+}
+
+.bottomBorder {
+    /*           width style color  */
+    border-bottom: 2px solid rgb(228, 221, 221);
+  }
+.register_div{
+   margin-left:45px;
+}
+.Login-wrap{
+
+   padding-top: 10px;
+   padding-bottom: 25px;
+}
+.account_nav{
+   color:black !important;;
+}
+.Avfield{
+   width: 335px !important;
+}
+.link { color: #dcdfe4; } /* CSS link color (red) */
+.link:hover { color: #7f818f; } /* CSS link hover (green) */
