@@ -1,0 +1,7 @@
+.itemcontainer {
+    display: flex;
+    flex-direction: row;
+    width: 1000px;
+    height: 50px;
+    border: 2px solid purple;
+}

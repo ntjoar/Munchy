@@ -1,0 +1,65 @@
+.container {
+    width: 1200px;
+    height: 750px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    height: 450px;
+    border: 2px solid green;
+    margin: 20px 100px 0px 100px;
+}
+
+.topbuttonrow {
+    display: inline-block;
+    border: 2px solid pink;
+    width: 1000px;
+    height: auto;
+    text-align: left;
+    margin: 20px 0px 0px 0px;
+}
+
+.prefbutton {
+    margin: 0px 15px 0px 15px;
+    width: 100px;
+    height: 35px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.storeprefbutton {
+    margin: 0px 15px 0px 500px;
+    width: 220px;
+    height: 35px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.clearbutton {
+    margin: 0px 350px 0px 0px;
+    width: 100px;
+    height: 45px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.searchbutton {
+    margin: 0px 0px 0px 350px;
+    width: 100px;
+    height: 45px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.bottombuttonrow {
+    display: inline-block;
+    border: 2px solid pink;
+    width: 1000px;
+    height: auto;
+    margin: 20px 0px 0px 0px;
+    text-align: center;
+}
