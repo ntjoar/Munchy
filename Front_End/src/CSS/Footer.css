@@ -1,9 +1,10 @@
 .site-footer {
-  background-color: #26272b;
+  background-color: #274157;
   padding: 45px 0 20px;
   font-size: 15px;
   line-height: 24px;
   color: #737373;
+  position: fixed;
 }
 .site-footer hr {
   border-top-color: #bbb;
@@ -33,9 +34,15 @@
   list-style: none;
 }
 
+.footer-container {
+  color: 274157;
+  margin-left: 3rem;
+}
+
 .footer-links li {
   display: block;
 }
+
 .footer-links a {
   color: rgba(255, 255, 255, 0.785);
 }
@@ -62,6 +69,7 @@
   margin: 0;
   color: white;
   opacity: 0.8;
+  font-weight: bold;
 }
 @media (max-width: 991px) {
   .site-footer [class^="col-"] {

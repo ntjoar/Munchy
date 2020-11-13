@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../css/NavbarHeader.css";
+import "../CSS/NavbarHeader.css";
 import { Navbar, NavBarBrand, Container } from "reactstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
