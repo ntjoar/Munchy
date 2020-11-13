@@ -5,8 +5,8 @@ export default class Item extends Component {
     render() {
         return (
             <div className='itemcontainer'>
-                <button>X</button>
-                <div>ITEM</div>
+                <div className='removebutton'>X</div>
+                <div className='itemname'>ITEM</div>
             </div>
         );
     }

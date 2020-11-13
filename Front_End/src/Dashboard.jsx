@@ -8,9 +8,9 @@ export default class Dashboard extends Component {
         return (
             <div className='container'>
                 <div className='topbuttonrow'>
-                    <button className='prefbutton'>+ Recipe</button>
-                    <button className='prefbutton'>+ Item</button>
-                    <button className='storeprefbutton'>Store Preference Selection</button>
+                    <div className='prefbutton'>+ Recipe</div>
+                    <div className='prefbutton'>+ Item</div>
+                    <div className='storeprefbutton'>Store Preference Selection</div>
                 </div>
                 
                 <div className='dashboard'>
@@ -19,8 +19,8 @@ export default class Dashboard extends Component {
                 </div>
 
                 <div className='bottombuttonrow'>
-                    <button className='clearbutton'>Clear</button>
-                    <button className='searchbutton'>Search</button>
+                    <div className='clearbutton'>Clear</div>
+                    <div className='searchbutton'>Search</div>
                 </div>
             </div>
         );
