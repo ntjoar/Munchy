@@ -1,0 +1,32 @@
+{
+  "name": "Munchy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "npm install --prefix Front_End",
+    "server-install": "npm install --prefix Back_End",
+    "server-start": "npm start --prefix Back_End",
+    "server-dev": "npm run dev --prefix Back_End",
+    "client-start": "npm start --prefix Front_End",
+    "build-client": "npm build --prefix Front_End",
+    "dev": "concurrently \"npm run server-dev\" \"npm run client-start\"",
+    "start": "concurrently \"npm run server-start\" \"npm run client-start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "concurrently": "^5.3.0",
+    "jsonwebtoken": "^8.5.1"
+  }
+}

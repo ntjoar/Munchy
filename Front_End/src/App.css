@@ -1,0 +1,24 @@
+.Header{
+   background-color: #274157;
+}
+
+.logo{
+    display: block;
+   height: 50px;
+
+}
+
+.bottomBorder {
+    /*           width style color  */
+    border-bottom: 2px solid rgb(228, 221, 221);
+  }
+.register_div{
+   margin-left:45px;
+}
+.Login-wrap{
+   background-color: white;
+   margin-top: 10px;
+}
+.account_nav{
+   color:black !important;;
+}
