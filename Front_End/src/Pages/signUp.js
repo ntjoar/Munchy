@@ -4,7 +4,17 @@ import React, {Component, Fragment} from 'react';
 import HeaderApp from '../Components/Header'
 import {register} from '../actions/authAction'
 import {clearErrors} from '../actions/errorActions'
-
+import { faUserCircle, faLock} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AvForm, 
+          AvField, 
+          AvGroup, 
+          AvInput, 
+          AvFeedback, 
+          AvRadioGroup, 
+          AvRadio, 
+          AvCheckboxGroup, 
+          AvCheckbox } from 'availity-reactstrap-validation';
 import {
     Button,
     Form,
@@ -14,6 +24,13 @@ import {
     Row,
     Col,
     Alert,
+    Container,
+    Card,
+    CardTitle,
+    InputGroup,
+    CardText,
+    CardBody
+
 
 } from 'reactstrap'
 
@@ -83,42 +100,47 @@ class SignUp extends Component {
             <HeaderApp />
             <div className="Container">
             <Row>
-            <Col>
-            <div className="register_div"><h1>Create an account</h1></div>
-            
+            <Col>            
             {this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}
 
-            <Form className="ml-4" onSubmit={this.onSubmit}>
-            <Row className="ml-3 mr-3" form>
-                <Col md={6}>
-                <FormGroup>
-                <Label for="firstName">Your first name</Label>
-                <Input type="text" name="firstName" id="firstName" onChange={this.changeValue}/>
-              </FormGroup>
-                </Col>
-                <Col md={6}>
-                <FormGroup>
-                <Label for="lastName">Your last name</Label>
-                <Input type="text" name="lastName" id="lastName" onChange={this.changeValue}/>
-              </FormGroup>
-                </Col>
-              </Row>
-              <Row className="ml-3 mr-3" form>
-                <Col md={6}>
-                  <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input type="email" name="email" id="email" placeholder="Enter your email" onChange={this.changeValue}/>
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input type="password" name="password" id="password" placeholder="Enter your password" onChange={this.changeValue} />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Button className="ml-3 mr-3">Sign in</Button>
-            </Form>
+            <AvForm onSubmit={this.onSubmit}>
+            <Container fluid className="full-height bg-light">
+            <Row className="h-100 justify-content-center full-height align-items-center Login-wrap">
+            <Col xs="10" lg="3" className="p-0">
+              <Card>
+                <CardBody>
+                  <CardTitle><FontAwesomeIcon icon={faUserCircle}  size="2x" />  SIGN UP</CardTitle>
+                  <hr></hr>
+                  <CardText>Create an account.</CardText>
+
+                  <InputGroup className="mb-3">
+                  <Input type="text" name="firstName" id="firstName"   placeholder="Enter Your Firstname" onChange={this.changeValue} required/>                  </InputGroup>
+
+                  <InputGroup className="mb-3">
+                  <Input  type="text" name="lastName" id="lastName"  placeholder="Enter Your Lastname" onChange={this.changeValue} required/>                  </InputGroup>
+
+                  <InputGroup className="mb-3">
+                  <Input  type="text" name='email' id='email'  placeholder="Email" onChange={this.changeValue} required/>
+                  </InputGroup>
+
+                  <InputGroup className="mb-4">
+                  <Input type="password" name='password' id='password'  placeholder="Password" onChange={this.changeValue} required/>
+                  </InputGroup>
+
+                  <Row>
+                    <Col xs="12" lg="6">
+                      <Button color="secondary" className="px-4">Login</Button>
+                    </Col>
+                 
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+            
+          
+          </Row>
+              </Container>
+            </AvForm>
 
             </Col>
             

@@ -86,10 +86,10 @@ class Header extends Component {
                     </DropdownToggle>
 
                     <DropdownMenu className ="account_nav" right>
-                      <DropdownItem className ="account_nav">
+                      {/*<DropdownItem className ="account_nav">
                         {AuthNav}
                       </DropdownItem>
-                      <DropdownItem divider />
+                    <DropdownItem divider />*/}
                       <DropdownItem className ="account_nav">
                         Account Settings
                       </DropdownItem>

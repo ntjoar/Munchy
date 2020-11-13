@@ -16,9 +16,15 @@
    margin-left:45px;
 }
 .Login-wrap{
-   background-color: white;
-   margin-top: 10px;
+
+   padding-top: 10px;
+   padding-bottom: 25px;
 }
 .account_nav{
    color:black !important;;
 }
+.Avfield{
+   width: 335px !important;
+}
+.link { color: #dcdfe4; } /* CSS link color (red) */
+.link:hover { color: #7f818f; } /* CSS link hover (green) */

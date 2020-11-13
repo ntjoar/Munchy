@@ -2,7 +2,7 @@
 import { Redirect, useHistory } from "react-router-dom"
 import React, {Component, Fragment} from 'react';
 import HeaderApp from '../Components/Header'
-import { faUserAlt, faLock} from "@fortawesome/free-solid-svg-icons";
+import { faUserAlt, faSignInAlt, faLock} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {login} from '../actions/authAction'
 import {clearErrors} from '../actions/errorActions'
@@ -102,7 +102,8 @@ class Login extends Component{
               <Col xs="10" lg="3" className="p-0">
                 <Card>
                   <CardBody>
-                    <CardTitle>LOGIN</CardTitle>
+                    <CardTitle><FontAwesomeIcon icon={faSignInAlt}  size="2x" />   SIGN IN</CardTitle>
+                    <hr></hr>
                     <CardText>Sign in with your account.</CardText>
                     <InputGroup className="mb-3">
                       <div className="input-group-prepend">
@@ -122,7 +123,7 @@ class Login extends Component{
                     </InputGroup>
                     <Row>
                       <Col xs="12" lg="6">
-                        <Button color="primary" className="px-4">Login</Button>
+                        <Button color="secondary" className="px-4">Login</Button>
                       </Col>
                    
                     </Row>
@@ -137,11 +138,8 @@ class Login extends Component{
            <Col xs="10" lg="3" className="p-0">
            <Card color="dark">
              <CardBody className="text-white">
-               <CardTitle>CREATE ACCOUNT</CardTitle>
-               <CardText>Don't have an account. Please create an account </CardText>
-            
-               <Col xs="12" lg="6" className="text-right">
-                   <Button color="link" className="px-0" href="/signup"> >>Join</Button>
+               <Col xs="12" lg="12" className="text-center">
+                   <a  className="link" href="/signup"> Or Just Sign In</a>
                  </Col>
                
              </CardBody>
