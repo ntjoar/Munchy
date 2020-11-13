@@ -4,7 +4,6 @@ const axios = require('axios').default;
 const cheerio = require('cheerio');
 const { http, https } = require('follow-redirects');
 
-<<<<<<< HEAD
 async function getReq (query) {
     // var itemArr = []
 
@@ -56,7 +55,8 @@ async function getReq (query) {
     //     itemArr.push(new Item(name, link, finalPrice))
     // }
     return []
-=======
+}
+
 function getSearchItemUrl(query) {
     return `https://www.walmart.com/browse/food/chocolate/976759_1096070_1224976?&search_redirect=true&redirectQuery=${query}`;
 }
@@ -87,7 +87,6 @@ async function getResults (query) {
     //     console.log(name);
     // })
     return items;
->>>>>>> 7f4dbb6f85988a92726b54290e70e16019be5a2e
 }
 
 module.exports = {

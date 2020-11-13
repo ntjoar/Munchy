@@ -12,6 +12,7 @@ import Register from './Pages/signUp'
 import HomePage from './Pages/HomePage'
 import AuthRoute from './Components/AuthRoute'
 import IndexPage from './Pages/IndexPage'
+import Dashboard from './Dashboard'
 
 
 
@@ -36,6 +37,7 @@ class App extends React.Component {
    <Route  path="/login" exact > <Login/> </Route>
    <Route  path="/signup" exact  ><Register/> </Route>
    <Route  exact path="/home" render={(props) => <IndexPage {...props} />} /> 
+   <Route path="/dashboard" exact><Dashboard /></Route>
    </Switch>
    </Router>
    </Provider>
