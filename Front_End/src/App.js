@@ -13,8 +13,6 @@ import AuthRoute from "./Components/AuthRoute";
 import IndexPage from "./Pages/IndexPage";
 import Dashboard from "./Dashboard";
 import Footer from "./Pages/Footer";
-import NavBar from "./Pages/NavbarHeader";
-import NavbarHeader from "./Pages/NavbarHeader";
 
 class App extends React.Component {
   componentDidMount() {
