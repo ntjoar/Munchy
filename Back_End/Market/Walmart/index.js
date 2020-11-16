@@ -17,9 +17,9 @@ async function getResults(query) {
   /** @type {string[]} */
   let temp = await page.evaluate(()=>{
     let div = document.querySelectorAll('.search-result-gridview-item');
-      console.log(div) // console.log inside evaluate, will show on browser console not on node console
+      console.log(div); // console.log inside evaluate, will show on browser console not on node console
       
-      let item = [] 
+      let item = [];
       div.forEach(element => { 
         let name = element.querySelector('[data-type="itemTitles"]');
         if(name != null){
@@ -59,7 +59,7 @@ async function getResults(query) {
     }
   })
 
-  browser.close()
+  browser.close();
   return items;
 }
 
