@@ -1,0 +1,1 @@
+const Jwt_secret = "This_Is_The-JWT#Sectrets_($Login$)"

@@ -1,0 +1,135 @@
+.logo {
+  display: block;
+  height: 50px;
+}
+
+.bottomBorder {
+  /*           width style color  */
+  border-bottom: 2px solid rgb(228, 221, 221);
+}
+.register_div {
+  margin-left: 45px;
+}
+.Login-wrap {
+  padding-top: 10px;
+  padding-bottom: 25px;
+}
+.account_nav {
+  color: black !important;
+}
+.Avfield {
+  width: 335px !important;
+}
+.link {
+  color: #dcdfe4;
+} /* CSS link color (red) */
+.link:hover {
+  color: #7f818f;
+} /* CSS link hover (green) */
+
+.nav-link:before {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  content: "";
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
+  opacity: 0;
+  background: -webkit-radial-gradient(
+    center,
+    ellipse,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  transition-duration: 0.3s;
+  transition-property: transform, opacity;
+}
+
+.nav-link:hover,
+.nav-link:active,
+.nav-link:focus {
+  transform: translateY(-5px);
+  color: white !important;
+  text-decoration: none;
+}
+
+.nav-item-activated {
+  transform: translateY(-5px);
+  color: white !important;
+  text-decoration: none;
+}
+
+.nav-link:hover:before,
+.nav-link:active:before,
+.nav-link:focus:before {
+  opacity: 1;
+  transform: translateY(-5px);
+}
+
+.navbar-header {
+  text-align: center !important;
+  float: none;
+  font-size: larger;
+  margin-top: 0.5em;
+  text-transform: uppercase;
+  list-style-type: none;
+}
+
+.nav-list {
+  margin-left: 3em;
+  display: inline-block;
+}
+
+.nav-link {
+  padding: 0 0;
+  color: black !important;
+  display: inline-block;
+  backface-visibility: hidden;
+  vertical-align: middle;
+  position: relative;
+  transition-duration: 0.3s;
+  transition-property: transform;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.page-title {
+  opacity: 0.75 !important;
+}
+
+.header {
+  background-color: #a8d0e6;
+}
+
+.nav-bar-brand-header {
+  position: absolute;
+  color: black;
+  text-align: left;
+  display: inline-block;
+  left: 1em;
+  font-family: "Palatino";
+  font-weight: bold;
+  font-size: 22px;
+  top: 0.5em;
+}
+
+.nav-bar-brand-header:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.center {
+  position: absolute;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+}

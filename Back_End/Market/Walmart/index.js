@@ -1,50 +1,75 @@
-const Market = require('../../model/Market');
-const Item = require('../../model/Item');
-const axios = require('axios').default;
-const cheerio = require('cheerio');
-const { http, https } = require('follow-redirects');
+const Market = require("../../model/Market");
+const Item = require("../../model/Item");
+const puppeteer = require('puppeteer');
 
 function getSearchItemUrl(query) {
-    return `https://www.walmart.com/browse/food/chocolate/976759_1096070_1224976?&search_redirect=true&redirectQuery=${query}`;
+  return `https://www.walmart.com/search/?query=${query}`;
 }
 
-async function fetch(link) {
-    return await axios.get(link);
-}
+async function getResults(query) {
+  const browser = await puppeteer.launch({ headless: false }); // MUST BE FALSE OR WE GET RECAPTCHAd
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1000, height: 926 });
+  await page.goto(getSearchItemUrl(query),{waitUntil: 'networkidle2'});
 
-async function getHtml(link) {
-    return (await fetch(link)).data;
-}
+  let items = [];
 
-async function getResults (query) {
-    let items = [];
-    // console.log(getSearchItemUrl(query));
+  /** @type {string[]} */
+  let temp = await page.evaluate(()=>{
+    let div = document.querySelectorAll('.search-result-gridview-item');
+      console.log(div); // console.log inside evaluate, will show on browser console not on node console
+      
+      let item = [];
+      div.forEach(element => { 
+        let name = element.querySelector('[data-type="itemTitles"]');
+        if(name != null){
+          item.push(name.textContent);
+        }
 
-    // let html = await axios.get(getSearchItemUrl(query));
-    // console.log(getSearchItemUrl(query));
-    // const $ = cheerio.load(html);
+        let price = element.querySelector('[data-type="priceTags"]')
+        if(price != null) {
+          let str = price.textContent.split('$');
+          item.push(str[1]);
+        }
 
+        let anchor = element.getElementsByTagName('a')[0];
+        if(anchor != null && anchor.href.startsWith("https://www.walmart.com/ip/")) {
+          item.push(anchor.href);
+        }
+      });
 
-    // console.log(searchResults.text());
-    // searchResults.each((i, element) => {
-    //     let elementCheerio = cheerio.load(element);
-    //     console.log(elementCheerio.text());
+      return item;
+  })
 
-    //     let name = elementCheerio('div.search-result-product-title > .visuallyhidden').text().trim();
-    //     console.log(name);
-    // })
-    return items;
+  let name = ""; // Rewrite == 0
+  let price = ""; // Rewrite == 1
+  let link = ""; // Add Item after rewriting this == 2
+
+  /** Store Data */
+  temp.forEach((data, i) => {
+    if(i%3 == 0) {
+      name = data;
+    } else if (i%3 == 1) {
+      price = data;
+    } else {
+      link = data;
+      if(name && price && link) {
+        items.push(new Item(name, price, link));
+      }
+    }
+  })
+
+  browser.close();
+  return items;
 }
 
 module.exports = {
-    search: async function(query) {
-        try{
-            let items = await getResults(query)
-            return new Market('Walmart', 'www.walmart.com', items);
-        }
-        catch (e) {
-            return new Market('Walmart', 'www.walmart.com', []);
-        }
+  search: async function (query) {
+    try {
+      let items = await getResults(query);
+      return new Market("Walmart", "www.walmart.com", items);
+    } catch (e) {
+      return new Market("Walmart", "www.walmart.com", []);
     }
-}
-
+  },
+};
