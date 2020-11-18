@@ -2,3 +2,4 @@
 /Front_End/node_modules/
 /node_modules/
 /Back_End/config/config.env
+/.DS_Store
