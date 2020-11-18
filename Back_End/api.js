@@ -54,12 +54,17 @@ app.get('/:query', async (req, res) => {
     let API_KEY = 'AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE'
     let radInt = parseInt(radius)
     let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${location}&radius=${radInt}&keyword=Grocery%20store`
-    fetch(url)
-    .then(res => res.json())
-    .then((out) => {
-        console.log('Checkout this JSON! ', out);
-    })
-    .catch(err => { throw err });
+    function getStores(url) {
+        fetch(url)
+        .then(res => {return res.json()})
+        .then((out) => {
+            console.log('Checkout this JSON! ',out);
+        })
+        .catch(err => { throw err });
+    }
+    let jsonVal = getStores(url)
+    console.log(jsonVal)
+
     //set the query to the first item in list for now as well, this will change later
     query = itemsList[0]
     marketDataArr = []
