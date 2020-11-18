@@ -1,90 +1,65 @@
 const Market = require("../../model/Market");
 const Item = require("../../model/Item");
-const axios = require("axios").default;
-const cheerio = require("cheerio");
-const { http, https } = require("follow-redirects");
-
-async function getReq(query) {
-  // var itemArr = []
-
-  // const response = await axios.get('https://www.walmart.com/search/?query=' + query)
-  // var data = response.data
-  // // TODO: Edit this variable
-  // var ulStart = data.indexOf('<ul class="search-result-gridview-items four-items" data-automation-id="search-result-gridview-items">')
-  // var i = 0
-  // while(i < 10) {
-  //     var objInitId = ulStart + data.substr(ulStart).indexOf('<li class="Grid-col')
-  //     var objEndId = objInitId + data.substr(objInitId).indexOf('</li>')
-
-  //     // Get name
-  //     var prodId = objInitId + data.substr(objInitId).indexOf('Product Title')
-  //     var nameId = prodId + data.substr(prodId).indexOf('<span>') + 6
-  //     var nameLen = data.substr(nameId).indexOf('</span>')
-  //     var checkNameLen = data.substr(nameId).indexOf('"')
-  //     var minNameLen = -1
-  //     if(checkNameLen < nameLen) {
-  //         minNameLen = checkNameLen
-  //     } else {
-  //         minNameLen = nameLen
-  //     }
-  //     var tempName = data.substr(nameId, minNameLen)
-  //     name = tempName.replace(/(<([^>]+)>)/ig,"")
-
-  //     // Get link
-  //     var linkId = objInitId + data.substr(objInitId).indexOf('<a href="/ip/') + 9
-  //     var linkLen = data.substr(linkId).indexOf('"')
-  //     var tempLink = 'https://walmart.com' + data.substr(linkId, linkLen)
-  //     var link = tempLink.replace(/(<([^>]+)>)/ig,"")
-
-  //     // Get Price
-  //     var curPricePos = objInitId + data.substr(objInitId).indexOf('Current Price')
-  //     var price = curPricePos + data.substr(curPricePos).indexOf('$') + 1
-  //     var priceLen = data.substr(price).indexOf('"')
-  //     var checkPriceLen = data.substr(price).indexOf('<')
-  //     var minPriceLen = -1
-  //     if(checkPriceLen < priceLen) {
-  //         minPriceLen = checkPriceLen
-  //     } else {
-  //         minPriceLen = priceLen
-  //     }
-  //     var tempFinalPrice = data.substr(price, minPriceLen)
-  //     var finalPrice = tempFinalPrice.replace(/(<([^>]+)>)/ig,"")
-
-  //     ulStart = objEndId
-  //     i += 1
-  //     itemArr.push(new Item(name, link, finalPrice))
-  // }
-  return [];
-}
+const puppeteer = require('puppeteer');
 
 function getSearchItemUrl(query) {
-  return `https://www.walmart.com/browse/food/chocolate/976759_1096070_1224976?&search_redirect=true&redirectQuery=${query}`;
-}
-
-async function fetch(link) {
-  return await axios.get(link);
-}
-
-async function getHtml(link) {
-  return (await fetch(link)).data;
+  return `https://www.walmart.com/search/?query=${query}`;
 }
 
 async function getResults(query) {
+  const browser = await puppeteer.launch({ headless: false }); // MUST BE FALSE OR WE GET RECAPTCHAd
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1000, height: 926 });
+  await page.goto(getSearchItemUrl(query),{waitUntil: 'networkidle2'});
+
   let items = [];
-  // console.log(getSearchItemUrl(query));
 
-  // let html = await axios.get(getSearchItemUrl(query));
-  // console.log(getSearchItemUrl(query));
-  // const $ = cheerio.load(html);
+  /** @type {string[]} */
+  let temp = await page.evaluate(()=>{
+    let div = document.querySelectorAll('.search-result-gridview-item');
+      console.log(div); // console.log inside evaluate, will show on browser console not on node console
+      
+      let item = [];
+      div.forEach(element => { 
+        let name = element.querySelector('[data-type="itemTitles"]');
+        if(name != null){
+          item.push(name.textContent);
+        }
 
-  // console.log(searchResults.text());
-  // searchResults.each((i, element) => {
-  //     let elementCheerio = cheerio.load(element);
-  //     console.log(elementCheerio.text());
+        let price = element.querySelector('[data-type="priceTags"]')
+        if(price != null) {
+          let str = price.textContent.split('$');
+          item.push(str[1]);
+        }
 
-  //     let name = elementCheerio('div.search-result-product-title > .visuallyhidden').text().trim();
-  //     console.log(name);
-  // })
+        let anchor = element.getElementsByTagName('a')[0];
+        if(anchor != null && anchor.href.startsWith("https://www.walmart.com/ip/")) {
+          item.push(anchor.href);
+        }
+      });
+
+      return item;
+  })
+
+  let name = ""; // Rewrite == 0
+  let price = ""; // Rewrite == 1
+  let link = ""; // Add Item after rewriting this == 2
+
+  /** Store Data */
+  temp.forEach((data, i) => {
+    if(i%3 == 0) {
+      name = data;
+    } else if (i%3 == 1) {
+      price = data;
+    } else {
+      link = data;
+      if(name && price && link) {
+        items.push(new Item(name, price, link));
+      }
+    }
+  })
+
+  browser.close();
   return items;
 }
 
