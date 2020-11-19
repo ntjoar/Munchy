@@ -30,19 +30,6 @@ describe('Authentication', () => {
       await expect(username).toBe("testuser")
     });
   
-  //   it('should signup and create a new account', async() => {
-  //     await page.waitForSelector('a[href="/register"]')
-  //     await page.click('a[href="/register"]')
-  //     await page.type('input[placeholder="Name"]', "e2etest")
-  //     await page.type('input[placeholder="Email address"]', "e2etest@test.com")
-  //     await page.type('input[placeholder="Password"]', "password")
-  //     await page.click("button")
-  //     await page.waitForSelector('h3.ui.header>div')
-  
-  //     let username = await page.evaluate(()=> {
-  //       return document.querySelector('h3.ui.header>div').innerText
-  //     })
-  //     await expect(username).toBe("e2etest@test.com")
-  //   })
+ 
   });
   
