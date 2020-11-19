@@ -86,7 +86,10 @@ class Dashboard extends Component {
         <PopupPrompt></PopupPrompt>
         <div className="container">
           <div className="topbuttonrow">
-            <Button onClick={(e) => this.setState({ isOpen: true })}>
+            <Button
+              className="button-general"
+              onClick={(e) => this.setState({ isOpen: true })}
+            >
               + Items
             </Button>
             <PopupPrompt
@@ -98,8 +101,10 @@ class Dashboard extends Component {
               Please Enter the Ingredient
             </PopupPrompt>
 
-            <div className="prefbutton">+ Recipe</div>
-            <div className="storeprefbutton">Store Preference Selection</div>
+            <Button className="button-general">+ Recipe</Button>
+            <Button className="storeprefbutton ">
+              Store Preference Selection
+            </Button>
           </div>
 
           <div className="dashboard">
