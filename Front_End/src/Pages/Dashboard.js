@@ -50,7 +50,11 @@ class Dashboard extends Component {
 
   clickToAdd = () => {
     this.setState((state) => {
-      const items = state.items.concat(state.item);
+      var items = state.items;
+      if (state.item != "") {
+        var items = state.items.concat(state.item);
+      }
+
       return {
         isOpen: false,
         items: items,
