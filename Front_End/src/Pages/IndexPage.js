@@ -33,6 +33,7 @@ class indexPage extends Component {
             { !isAuthenticated ? <Redirect to="/login"/> : null}
              {/*<h1>  { user ? `Welcome ${user.firstName}` : '' }</h1>*/}
             <p>user features can go here</p>
+            { user ? <div data-testid="homepage" ></div> : null}
             </Fragment>
         )
     }

@@ -1,5 +1,6 @@
 module.exports = {
     launch: {
-      headless: true 
+      headless: true,
+      slowMo: 250,
     }
   };
