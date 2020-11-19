@@ -39,10 +39,10 @@ class PopupPrompt extends Component {
             className="modal-common-button"
             onClick={this.props.clickToAdd}
           >
-            Ok
+            Add
           </Button>
         </div>
-      </div>
+      </div>      
     );
     if (!this.props.isOpen) {
       prompt = null;
