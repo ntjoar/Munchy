@@ -1,0 +1,41 @@
+.modal-container {
+  border: 2px solid black;
+  z-index: 2;
+  padding: 10px;
+}
+.modal-div-right {
+  text-align: right;
+}
+
+.modal-center {
+  position: absolute;
+  width: 600px;
+  height: 250px;
+  z-index: 15;
+  top: 30%;
+  left: 35%;
+  margin: auto;
+  background: white;
+}
+
+.modal-button {
+  color: black !important;
+  background: none;
+  border: 0px;
+  text-align: right !important;
+}
+
+.modal-button:hover {
+  cursor: pointer;
+  background: none;
+  color: blue !important;
+}
+
+.modal-common-button {
+  margin-top: 20px;
+  width: 100px;
+}
+
+.modal-textarea {
+  height: 50px;
+}
