@@ -42,7 +42,7 @@ class App extends React.Component {
                 render={(props) => <IndexPage {...props} />}
               />
               <Route path="/dashboard" exact>
-                <Dashboard />
+                <Dashboard/>
               </Route>
             </Switch>
           </Router>
