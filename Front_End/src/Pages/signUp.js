@@ -129,7 +129,7 @@ class SignUp extends Component {
 
                   <Row>
                     <Col xs="12" lg="6">
-                      <Button color="secondary" className="px-4">Login</Button>
+                      <Button color="secondary" className="px-4">Sign up</Button>
                     </Col>
                  
                   </Row>

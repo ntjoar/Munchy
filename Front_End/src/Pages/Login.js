@@ -139,7 +139,7 @@ class Login extends Component{
            <Card color="dark">
              <CardBody className="text-white">
                <Col xs="12" lg="12" className="text-center">
-                   <a  className="link" href="/signup"> Or Just Sign In</a>
+                   <a  className="link" href="/signup"> Or Just Sign Up</a>
                  </Col>
                
              </CardBody>
