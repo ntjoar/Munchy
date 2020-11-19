@@ -86,22 +86,23 @@ class Dashboard extends Component {
         <PopupPrompt></PopupPrompt>
         <div className="container">
           <div className="topbuttonrow">
-            <Button
-              className="button-general"
-              onClick={(e) => this.setState({ isOpen: true })}
-            >
-              + Items
-            </Button>
-            <PopupPrompt
-              isOpen={this.state.isOpen}
-              onClose={(e) => this.setState({ isOpen: false })}
-              addItem={this.addItem}
-              clickToAdd={this.clickToAdd}
-            >
-              Please Enter the Ingredient
-            </PopupPrompt>
-
-            <Button className="button-general">+ Recipe</Button>
+            <div className='topleft'>
+              <Button
+                className="button-general"
+                onClick={(e) => this.setState({ isOpen: true })}
+              >
+                + Items
+              </Button>
+              <PopupPrompt
+                isOpen={this.state.isOpen}
+                onClose={(e) => this.setState({ isOpen: false })}
+                addItem={this.addItem}
+                clickToAdd={this.clickToAdd}
+              >
+                Please Enter the Ingredient
+              </PopupPrompt>
+              <Button className="button-general">+ Recipe</Button>
+            </div>
             <Button className="storeprefbutton ">
               Store Preference Selection
             </Button>

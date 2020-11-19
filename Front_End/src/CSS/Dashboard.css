@@ -52,32 +52,30 @@
     margin: 0px 450px 0px 0px;
 }
 
-
-.prefbutton {
-    margin: 0px 20px 0px 0px;
-    width: 100px;
-    height: 35px;
-    text-align: center;
-    line-height: 33px;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: #a8d0e6;
-    font-size: 16px;
-    font-weight: 500;
-}
-
 .storeprefbutton {
-    margin: 0px 0px 0px 0px;
+    margin: 0;
     width: 250px;
     height: 35px;
     text-align: center;
-    line-height: 33px;
-    border-radius: 10px;
-    cursor: pointer;
+    line-height: 35px;
+    padding: 0;
+    border: 2px solid black;
     background-color: #a8d0e6;
-    font-size: 16px;
-    font-weight: 500;
+    color: black !important;
 }
+
+.storeprefbutton:hover {
+    margin: 0;
+    width: 250px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    padding: 0;
+    border: 2px solid black;
+    background-color: #a8d0e6;
+    color: black !important;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 8px 0 rgba(0, 0, 0, 0.19);
+  }
 
 .bottombuttonrow {
     display: flex;
@@ -94,23 +92,70 @@
 
 .clearbutton {
     margin: 0px 700px 0px 0px;
-    width: 100px;
-    height: 45px;
+    width: 80px;
+    height: 100%;
     text-align: center;
-    line-height: 45px;
-    border-radius: 10px;
-    cursor: pointer;
+    line-height: 30px;
+    border: 2px solid black;
+    padding: 4px 5px 5px 3px;
     background-color: #a8d0e6;
+    color: black !important;
 }
+
+.clearbutton:hover {
+    margin: 0px 700px 0px px;
+    width: 80px;
+    text-align: center;
+    line-height: 30px;
+    border: 2px solid black;
+    padding: 4px 5px 5px 3px;
+    height: 100%;
+    background-color: #a8d0e6;
+    color: black !important;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 8px 0 rgba(0, 0, 0, 0.19);
+  }
 
 .searchbutton {
-    margin: 0px 0px 0px 0px;
+    margin: 0;
     width: 100px;
-    height: 45px;
     text-align: center;
-    line-height: 45px;
-    border-radius: 10px;
-    cursor: pointer;
+    line-height: 30px;
+    border: 2px solid black;
+    padding: 4px 5px 5px 3px;
     background-color: #a8d0e6;
+    color: black !important;
+
 }
 
+.searchbutton:hover {
+    margin: 0;
+    width: 100px;
+    text-align: center;
+    line-height: 30px;
+    border: 2px solid black;
+    padding: 4px 5px 5px 3px;
+    background-color: #a8d0e6;
+    color: black !important;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 8px 0 rgba(0, 0, 0, 0.19);
+  }
+
+.button-general {
+    display: flex;
+    border: 2px solid black;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 3px;
+    height: 100%;
+    margin: 0 20px 0 0;
+    background-color: #a8d0e6;
+    color: black !important;
+}
+
+.button-general:hover {
+    padding-top: 2px;
+    height: 100%;
+    margin: 0 20px 0 0;
+    background-color: #a8d0e6;
+    color: black !important;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 8px 0 rgba(0, 0, 0, 0.19);
+}
