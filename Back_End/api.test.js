@@ -1,34 +1,16 @@
 const marketApi = new Map();
 const marketSettings = require('./config/marketSettings.json');
+const fetch = require("node-fetch");
 const markets = marketSettings.markets;
 const marketModulesPath = './Market';
-const connectMongo = require('./config/DbConnection')
-require('dotenv').config({path: './config/config.env'})
-connectMongo();
 
 markets.forEach((market) => {
     marketApi.set(market, require(`${marketModulesPath}/${market}/index.js`))
 })
 
-const fetch = require("node-fetch");
-const express = require('express');
-const app = express();
-var cors = require('cors')
-const port = 8000;
+async function codeSnippet(query, location) {
+    marketDataArr = [];
 
-//using express Body Parser
-app.use(express.json()); 
-app.use(express.urlencoded());
-
-
-app.use(cors())
-app.use('/user', require('./routes/Users'));
-
-app.get('/favicon.ico', (req, res) => res.status(204));
-
-app.get('/:location/:query', async (req, res) => {
-    let query = req.params.query
-    let location = req.params.location
     let locationStr = location.split('&')
     let itemStr = query.split('&')
     //default radius is 0, but radius is in meters!!!!!, SO 2000 RADIUS IS NOT AS BIG AS YOU THINK
@@ -64,13 +46,8 @@ app.get('/:location/:query', async (req, res) => {
     
     if(longitude == "default" ||latitude == "default")
     {
-        console.log("no input for location")
         radius = "0"
     }
-    console.log("ok")
-    console.log(longitude)
-    console.log(latitude)
-    console.log(radius)
     //example api localhost:8000/radius=2000&la=34.0689&lo=-118.4452&brocolli
     
 
@@ -102,7 +79,6 @@ app.get('/:location/:query', async (req, res) => {
         .then(res => res.json())
         .then(out => {
              //parse JSON to check if Walmart, Food4Less, Ralphs, Target is within range
-             console.log(out)
              let jsonVal = out
              //go through the list of results
              for(var i = 0; i < jsonVal["results"].length; i++)
@@ -125,16 +101,10 @@ app.get('/:location/:query', async (req, res) => {
         {
             storesAroundMe = possibleStoreList;
         }
-        
-    console.log(url)
-    console.log("Stores around me",storesAroundMe)
-    console.log("Items List: ", itemsList)
     //set query as the first item of the list for now
     for(const items of itemsList)
     {
         query = items
-        //Go through all markets and check for items
-        marketDataArr = []
         for (const [key, module] of marketApi.entries()) {
             //if the store is not around me skip
             if(!storesAroundMe.includes(key))
@@ -143,9 +113,37 @@ app.get('/:location/:query', async (req, res) => {
             marketDataArr.push(marketData);
         }
     }
-    res.json({
-        data: marketDataArr
-    });
-})
 
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+    return marketDataArr;
+}
+
+async function main() {
+    /** Test Case 1 */
+    let data = await codeSnippet("chocolate", "radius=2000&la=34.0689&lo=-118.4452");
+
+    console.log("Test case 1: Add Distance Limitations");
+    if(data.length != 1) {
+        throw 'Test Case 1 Failed!'
+    }
+    console.log("Test Case 1 Passed!");
+
+    /** Test Case 2 */
+    data = await codeSnippet("brocolli&chicken", "radius=2000&la=34.0689&lo=-118.4452");
+
+    console.log("Test case 2: Multiple items");
+    if(data.length != 2) {
+        throw 'Test Case 2 Failed!'
+    }
+    console.log("Test Case 2 Passed!");
+
+    /** Test Case 3 */
+    data = await codeSnippet("chocolate", "radius=2000&la=default&lo=default");
+
+    console.log("Test case 3: Default Distances");
+    if(data.length != 4) {
+        throw 'Test Case 3 Failed!'
+    }
+    console.log("Test Case 3 Passed!");
+}
+
+main();
