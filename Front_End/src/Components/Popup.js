@@ -25,13 +25,14 @@ class PopupPrompt extends Component {
 
         <div>
           <p>{this.props.children}</p>
-          <textarea
+          <input
             className="modal-textarea"
+            maxLength="100"
             onChange={() =>
               this.props.addItem(document.getElementById("ingredients").value)
             }
             id="ingredients"
-          ></textarea>
+          ></input>
         </div>
 
         <div className="modal-div-right">
