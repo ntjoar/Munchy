@@ -6,8 +6,10 @@
   "scripts": {
     "start": "node api.js",
     "dev": "nodemon api.js",
-    "test": "node api.test.js"
+    "test": "node api.test.js",
+    "test2": "jest"
   },
+  "jest": { "transform": { "^.+\\.jsx?$": "babel-jest" }},
   "author": "",
   "license": "ISC",
   "dependencies": {
