@@ -2,3 +2,5 @@
 /Front_End/node_modules/
 /node_modules/
 /Back_End/config/config.env
+/jtests/node_modules
+/.DS_Store

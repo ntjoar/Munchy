@@ -95,6 +95,7 @@ class Login extends Component{
             <HeaderApp />
             {isAuthenticated ? <Redirect to={{ pathname:"/home", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
             {this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}
+            <div className='signin-form'>
             <Form  onSubmit={this.onSubmit}>
             
             <Container fluid className="full-height bg-light">
@@ -123,7 +124,7 @@ class Login extends Component{
                     </InputGroup>
                     <Row>
                       <Col xs="12" lg="6">
-                        <Button color="secondary" className="px-4">Login</Button>
+                        <Button color="secondary" id ="click-login" className="px-4">Login</Button>
                       </Col>
                    
                     </Row>
@@ -139,7 +140,7 @@ class Login extends Component{
            <Card color="dark">
              <CardBody className="text-white">
                <Col xs="12" lg="12" className="text-center">
-                   <a  className="link" href="/signup"> Or Just Sign In</a>
+                   <a  className="link" href="/signup"> Or Just Sign Up</a>
                  </Col>
                
              </CardBody>
@@ -149,6 +150,7 @@ class Login extends Component{
            </Row>
           </Container>
             </Form>
+            </div>
             </Fragment>
           );
     }

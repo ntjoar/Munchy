@@ -1,29 +1,36 @@
 .itemcontainer {
     display: flex;
     flex-direction: row;
-    align-items: center;;
+    align-items: center;
     width: 100%;
     height: 50px;
-    border: 2px solid purple;
-    margin: 5px 0 0 0;
-}
-
-.removebutton {
+    border-bottom: 3px solid black;
+  }
+  .itemcontainer:hover {
+    background: whitesmoke;
+    border-radius: 7px;
+  }
+  
+  .removebutton {
     margin: 0 15px 0 15px;
     width: 30px;
     height: 30px;
     text-align: center;
     line-height: 30px;
     color: black;
-    border: 1px solid black;
+  }
+  
+  .removebutton:hover {
     cursor: pointer;
-}
-
-.itemname {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(221, 107, 135);
+  }
+  
+  .itemname {
     margin: 0 15px 0 15px;
     width: auto;
     height: 30px;
     line-height: 30px;
     text-align: center;
-    border: 1px solid black;
-}
+  }

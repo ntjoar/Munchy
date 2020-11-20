@@ -3,7 +3,7 @@
   padding: 45px 0 20px;
   font-size: 15px;
   line-height: 24px;
-  position: fixed;
+  /* position: fixed; */
 }
 .site-footer hr {
   border-top-color: #bbb;

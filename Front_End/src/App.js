@@ -11,8 +11,8 @@ import Register from "./Pages/signUp";
 import HomePage from "./Pages/HomePage";
 import AuthRoute from "./Components/AuthRoute";
 import IndexPage from "./Pages/IndexPage";
-import Dashboard from "./Dashboard";
-import Footer from "./Pages/Footer";
+import Dashboard from "./Pages/Dashboard";
+import Footer from "./Components/Footer";
 
 class App extends React.Component {
   componentDidMount() {
@@ -42,12 +42,12 @@ class App extends React.Component {
                 render={(props) => <IndexPage {...props} />}
               />
               <Route path="/dashboard" exact>
-                <Dashboard />
+                <Dashboard/>
               </Route>
             </Switch>
           </Router>
         </Provider>
-        <Footer></Footer>
+        <Footer />
       </Fragment>
     );
   }
