@@ -6,6 +6,8 @@ import {register} from '../actions/authAction'
 import {clearErrors} from '../actions/errorActions'
 import { faUserCircle, faLock} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Redirect, useHistory } from "react-router-dom"
+
 import { AvForm, 
           AvField, 
           AvGroup, 
@@ -94,15 +96,18 @@ class SignUp extends Component {
     }
 
     render(){
-      
+        const { isAuthenticated, user } = this.props.auth;
+
         return (
             <Fragment>
             <HeaderApp />
+        {isAuthenticated ? <Redirect to={{ pathname:"/home", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
+
             <div className="Container">
             <Row>
             <Col>            
             {this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}
-
+            <div className='signin-form'>
             <AvForm onSubmit={this.onSubmit}>
             <Container fluid className="full-height bg-light">
             <Row className="h-100 justify-content-center full-height align-items-center Login-wrap">
@@ -129,7 +134,7 @@ class SignUp extends Component {
 
                   <Row>
                     <Col xs="12" lg="6">
-                      <Button color="secondary" className="px-4">Sign up</Button>
+                      <Button color="secondary" id ="click-login" className="px-4">Sign up</Button>
                     </Col>
                  
                   </Row>
@@ -141,7 +146,7 @@ class SignUp extends Component {
           </Row>
               </Container>
             </AvForm>
-
+            </div>
             </Col>
             
             </Row>
@@ -158,7 +163,9 @@ class SignUp extends Component {
 
 const mapStateToProps = state =>({
     isAuthenticated : state.auth.isAuthenticated,
-    error: state.error
+    error: state.error,
+    auth: state.auth,
+
 })
 export default connect (
     mapStateToProps,

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { login } from "../actions/authAction";
 import { register } from "../actions/authAction";
 import { clearErrors } from "../actions/errorActions";
-
+import { Redirect, useHistory } from "react-router-dom"
 import Logout from "../Components/Logout";
 
 
@@ -40,8 +40,10 @@ class LogoutTest extends Component {
       const { navCollapsed } = this.state;
      
       return(
-
+          <Fragment>
+        {isAuthenticated ? <Redirect to={{ pathname:"/home", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
         <div className="nav-link">{ isAuthenticated ? <Logout />: null}</div>
+        </Fragment>
       )
       
     }
