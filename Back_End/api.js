@@ -26,16 +26,24 @@ app.use('/user', require('./routes/Users'));
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-app.get('/:query', async (req, res) => {
-    let query = req.params.query;
-    let splitQuery = query.split('&')
+app.get('/:location/:query', async (req, res) => {
+    let query = req.params.query
+    let location = req.params.location
+    let locationStr = location.split('&')
+    let itemStr = query.split('&')
     //default radius is 0, but radius is in meters!!!!!, SO 2000 RADIUS IS NOT AS BIG AS YOU THINK
+    //problem here, is that google places API only returns 20, so too big of a radius and it'll sort of be irrelevant how large you make it
     let radius = "0"
     let longitude = "default"
     let latitude = "default"
     let itemsList = []
+
+    //set the query to the first item in list for now as well, this will change later
+    for (const food of itemStr){
+        itemsList.push(food)
+    }
     //Parse through query to check for radius, longitude, latitude
-    for (const words of splitQuery){
+    for (const words of locationStr){
         if(words.includes("radius="))
         {
             radius = words.substring(7)
@@ -84,10 +92,10 @@ app.get('/:query', async (req, res) => {
     */
     // /la=37.000&lo=32.000&rad=2000/query=brocolli&spinach&chocolate
 
-    let location = latitude + "," + longitude
+    let position = latitude + "," + longitude
     let API_KEY = 'AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE'
     let radInt = parseInt(radius)
-    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${location}&radius=${radInt}&keyword=Grocery%20store`
+    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radInt}&keyword=Grocery%20store`
     var possibleStoreList = ["Walmart", "Food4Less", "Ralphs", "Costco"]
     var storesAroundMe = []
     await fetch(url)
@@ -112,19 +120,23 @@ app.get('/:query', async (req, res) => {
             }
         })
         .catch(err => { throw err });
+    console.log(url)
     console.log("Stores around me",storesAroundMe)
-
-    //set the query to the first item in list for now as well, this will change later
-    query = itemsList[0]
-    marketDataArr = []
-    for (const [key, module] of marketApi.entries()) {
-        //if the store is not around me skip
-        if(!storesAroundMe.includes(key))
-            continue;
-        let marketData = await module.search(query);
-        marketDataArr.push(marketData);
+    console.log("Items List: ", itemsList)
+    //set query as the first item of the list for now
+    for(const items of itemsList)
+    {
+        query = items
+        //Go through all markets and check for items
+        marketDataArr = []
+        for (const [key, module] of marketApi.entries()) {
+            //if the store is not around me skip
+            if(!storesAroundMe.includes(key))
+                continue;
+            let marketData = await module.search(query);
+            marketDataArr.push(marketData);
+        }
     }
-
     res.json({
         data: marketDataArr
     });
