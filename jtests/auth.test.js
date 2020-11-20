@@ -12,7 +12,8 @@ const routes = {
   public: {
 	register: `${appUrlBase}/signup`,
 	login: `${appUrlBase}/login`,
-	noMatch: `${appUrlBase}/ineedaview`,
+  noMatch: `${appUrlBase}/ineedaview`,
+  logout: `${appUrlBase}/test-logout`,
   },
   private: {
 	home: `${appUrlBase}/home`,
@@ -25,8 +26,14 @@ let page
 beforeAll(async () => {
   browser = await puppeteer.launch(jestPuppeteerConfig)
   page = await browser.newPage()
+  await page.setViewport({
+    width: 640,
+    height: 480,
+    deviceScaleFactor: 1,
+  });
 })
 
+//End to End login test
 describe('Login', () => {
   test('users can login', async () => {
 	await page.goto(routes.public.login);
@@ -40,6 +47,15 @@ describe('Login', () => {
 	await page.waitForSelector('[data-testid="homepage"]')
   }, 160000);
 });
+
+
+describe('Unathorized view', () => {
+  test('users that are not logged in are redirected to sign in page', async () => {
+    await page.goto(routes.private.home);
+    await page.waitForSelector('.signin-form')
+  }, 9000000);
+});
+
 
 afterAll(() => {
   browser.close()

@@ -68,29 +68,29 @@ class Header extends Component {
       </Fragment>
     );
     return (
-      <div className="bottomBorder">
-        <Navbar className="header" dark expand="sm">
+      <div className="bottomBorder" data-testid="upper" >
+        <Navbar className="header"  data-testid="upper2" dark expand="sm">
           <img className="logo" src={logo} alt="" />
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
+          <Collapse isOpen={this.state.isOpen} data-testid="upper3" navbar>
             {isAuthenticated ? (
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <UncontrolledDropdown nav inNavbar>
+                  <UncontrolledDropdown data-testid="navbar" nav inNavbar>
                     <DropdownToggle nav caret>
                       <FontAwesomeIcon icon={faUserAlt} /> My Account
                     </DropdownToggle>
 
-                    <DropdownMenu className="account_nav" right>
+                    <DropdownMenu className="account_nav" data-testid="drop" right>
                       {/*<DropdownItem className ="account_nav">
                         {AuthNav}
                       </DropdownItem>
                     <DropdownItem divider />*/}
-                      <DropdownItem className="account_nav">
+                      <DropdownItem className="account_nav" >
                         Account Settings
                       </DropdownItem>
 
-                      <DropdownItem className="account_nav">
+                      <DropdownItem className="account_nav" data-testid="nav-link">
                         <Logout />
                       </DropdownItem>
                     </DropdownMenu>
