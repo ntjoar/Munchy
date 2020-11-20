@@ -128,10 +128,10 @@ async function main() {
     console.log("Test Case 1 Passed!");
 
     /** Test Case 2 */
-    data = await codeSnippet("brocolli&chicken", "radius=2000&la=34.0689&lo=-118.4452");
+    data = await codeSnippet("brocolli&chicken", "radius=100&la=34.0689&lo=-118.4452");
 
     console.log("Test case 2: Multiple items");
-    if(data.length != 2) {
+    if(data.length != 0) {
         throw 'Test Case 2 Failed!'
     }
     console.log("Test Case 2 Passed!");
