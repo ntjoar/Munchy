@@ -67,9 +67,9 @@ module.exports = {
   search: async function (query) {
     try {
       let items = await getResults(query);
-      return new Market("Walmart", "www.walmart.com", items);
+      return items;
     } catch (e) {
-      return new Market("Walmart", "www.walmart.com", []);
+      return []
     }
   },
 };
