@@ -13,7 +13,10 @@ markets.forEach((market) => {
 const fetch = require("node-fetch");
 const express = require('express');
 const app = express();
-var cors = require('cors')
+var cors = require('cors');
+const Market = require('./model/Market');
+const Items = require('./model/Items');
+// const { parse } = require('dotenv/types');
 const port = 8000;
 
 //using express Body Parser
@@ -26,9 +29,9 @@ app.use('/user', require('./routes/Users'));
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-app.get('/:location/:query', async (req, res) => {
-    let query = req.params.query
-    let location = req.params.location
+async function parseWebsites(query, location) {
+    marketDataArr = [];
+
     let locationStr = location.split('&')
     let itemStr = query.split('&')
     //default radius is 0, but radius is in meters!!!!!, SO 2000 RADIUS IS NOT AS BIG AS YOU THINK
@@ -64,13 +67,8 @@ app.get('/:location/:query', async (req, res) => {
     
     if(longitude == "default" ||latitude == "default")
     {
-        console.log("no input for location")
         radius = "0"
     }
-    console.log("ok")
-    console.log(longitude)
-    console.log(latitude)
-    console.log(radius)
     //example api localhost:8000/radius=2000&la=34.0689&lo=-118.4452&brocolli
     
 
@@ -102,7 +100,6 @@ app.get('/:location/:query', async (req, res) => {
         .then(res => res.json())
         .then(out => {
              //parse JSON to check if Walmart, Food4Less, Ralphs, Target is within range
-             console.log(out)
              let jsonVal = out
              //go through the list of results
              for(var i = 0; i < jsonVal["results"].length; i++)
@@ -125,27 +122,43 @@ app.get('/:location/:query', async (req, res) => {
         {
             storesAroundMe = possibleStoreList;
         }
-        
-    console.log(url)
-    console.log("Stores around me",storesAroundMe)
-    console.log("Items List: ", itemsList)
+
+    /** Initialize Markets that can be scraped */
+    marketDataArr.push(new Market("Costco", "https://www.costco.com/", []));
+    marketDataArr.push(new Market("Walmart", "https://www.walmart.com/", []));
+    marketDataArr.push(new Market("Ralphs", "https://www.ralphs.com/", []));
+    marketDataArr.push(new Market("Food4Less", "https://www.food4less.com/", []));
+
     //set query as the first item of the list for now
     for(const items of itemsList)
     {
         query = items
-        //Go through all markets and check for items
-        marketDataArr = []
         for (const [key, module] of marketApi.entries()) {
             //if the store is not around me skip
             if(!storesAroundMe.includes(key))
                 continue;
             let marketData = await module.search(query);
-            marketDataArr.push(marketData);
+
+            /** Add specifically to that store's query, don't create new and waste obj space */
+            for (i in marketDataArr) {
+                if(marketDataArr[i]["name"] == key) {
+                    marketDataArr[i]["items"].push(new Items(query.replace("%20", " "), marketData));
+                }
+            }
         }
     }
+
+    return marketDataArr;
+}
+
+app.get('/:location/:query', async (req, res) => {
     res.json({
-        data: marketDataArr
+        data: await parseWebsites(req.params.query, req.params.location)
     });
 })
 
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+
+module.exports = {
+    parseWebsites: parseWebsites
+}
