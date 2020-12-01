@@ -27,6 +27,7 @@ class Dashboard extends Component {
     this.items = [];
     this.state = {
       isOpen: false,
+      storePrefIsOpen: false,
       userLat: "",
       userLong: "",
       userRadius: 2000, // CHANGE USER RADIUS
@@ -93,7 +94,6 @@ class Dashboard extends Component {
         api_url += "&";
       }
     }
-    console.log(api_url);
     fetch(api_url)
     .then(response => response.json())
     .then(data => this.setState({searchResult: data}));
@@ -109,7 +109,7 @@ class Dashboard extends Component {
             <div className='topleft'>
               <Button
                 className="button-general"
-                onClick={(e) => this.setState({ isOpen: true })}
+                onClick={(e) => this.setState({ isOpen: true, storePrefIsOpen: false })}
               >
                 + Items
               </Button>
@@ -123,9 +123,13 @@ class Dashboard extends Component {
               </PopupPrompt>
               <Button className="button-general">+ Recipe</Button>
             </div>
-            <Button className="storeprefbutton ">
+            <Button className="storeprefbutton " onClick={(e) => this.setState({ isOpen: false, storePrefIsOpen: true })}>
               Store Preference Selection
             </Button>
+            <StorePrefPopupPrompt
+              isOpen={this.state.storePrefIsOpen}
+              onClose={(e) => this.setState({ storePrefIsOpen: false })}
+            />
           </div>
 
           <div className="dashboard">

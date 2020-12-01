@@ -24,12 +24,7 @@ class StorePrefPopupPrompt extends Component {
         </div>
 
         <div>
-            <FormGroup check>
-                <Label check>
-                    <Input type='checkbox'/>{' '}
-                    Hello
-                </Label>
-            </FormGroup>
+            
         </div>    
 
         <div className="modal-div-right">
