@@ -92,9 +92,7 @@ class Header extends Component {
                         {AuthNav}
                       </DropdownItem>
                     <DropdownItem divider />*/}
-                      <DropdownItem className="account_nav">
-                        Account Settings
-                      </DropdownItem>
+                
 
                       <DropdownItem
                         className="account_nav"
@@ -106,13 +104,9 @@ class Header extends Component {
                   </UncontrolledDropdown>
                 </NavItem>
 
-                <NavItem className="nav-list">
-                  <NavLink href="/recipes">Your Recipes</NavLink>
-                </NavItem>
-
-                <NavItem className="nav-list">
-                  <NavLink href="/coockbook">Your Cookbook</NavLink>
-                </NavItem>
+               { /*<NavItem className="nav-list">
+                <NavLink href="/dashboard">Dashboard</NavLink>
+                  </NavItem>*/}
               </Nav>
             ) : (
               <div className="header">
@@ -121,9 +115,7 @@ class Header extends Component {
                     <NavLink href="/">Home</NavLink>
                   </NavItem>
 
-                  <NavItem className="nav-list">
-                    <NavLink href="/dashboard">Dashboard</NavLink>
-                  </NavItem>
+                  
 
                   <NavItem className="nav-list">
                     <NavLink href="/login">Sign in</NavLink>

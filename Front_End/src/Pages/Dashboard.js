@@ -4,7 +4,13 @@ import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
 import Item from "../Components/Item";
 import PopupPrompt from "../Components/Popup";
+import {connect} from 'react-redux'
 import StorePrefPopupPrompt from "../Components/StorePrefPopup";
+import PropTypes from 'prop-types'
+import {login} from '../actions/authAction'
+import {clearErrors} from '../actions/errorActions'
+import {register} from '../actions/authAction'
+import { Redirect} from "react-router-dom"
 import {
   Button,
   Modal,
@@ -66,6 +72,15 @@ class Dashboard extends Component {
       recipePromptMessage: this.recipePromptMessage,
     };
   }
+
+  static propTypes = {
+    isAuthenticated : PropTypes.bool,
+    error : PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+
+};
 
   componentDidMount() {
     if ("geolocation" in navigator) {
@@ -202,9 +217,11 @@ class Dashboard extends Component {
   };
 
   render() {
+    const {isAuthenticated, user} = this.props.auth;
     return (
       <Fragment>
         <HeaderApp />
+        { !isAuthenticated ? <Redirect to="/login"/> : null}
         <PopupPrompt></PopupPrompt>
         <div className="container">
           <div className="topbuttonrow">
@@ -309,5 +326,14 @@ class Dashboard extends Component {
     );
   }
 }
+const mapStateToProps = state =>({
+  isAuthenticated : state.auth.isAthenticated,
+  error: state.error,
+  auth: state.auth
 
-export default Dashboard;
+})
+export default connect (
+  mapStateToProps,
+  {login, register, clearErrors}
+)(Dashboard);
+
