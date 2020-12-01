@@ -30,7 +30,9 @@ class Dashboard extends Component {
       storePrefIsOpen: false,
       userLat: "",
       userLong: "",
-      userRadius: 2000, // CHANGE USER RADIUS
+      userRadius: 20, // CHANGE USER RADIUS
+      storeList: ["Ralphs", "Costco", "Food4Less", "Walmart"],
+      numItemsPer: 1,
       items: [], // added some items for developing purposes
       item: "",
       searchResult: {},
@@ -86,6 +88,7 @@ class Dashboard extends Component {
 
   searchItems = () => {
     let num_items = this.state.items.length;
+    let num_stores = this.state.storeList.length;
     let api_url = "http://localhost:8000/radius=" + this.state.userRadius + "&la=" + this.state.userLat + "&lo=" + this.state.userLong + "/";
     var i;
     for(i = 0; i < num_items; i++) {
@@ -94,12 +97,22 @@ class Dashboard extends Component {
         api_url += "&";
       }
     }
+    api_url += "/";
+    for(i = 0; i < num_stores; i++) {
+      api_url += this.state.storeList[i];
+      if(i < num_stores - 1) {
+        api_url += "&";
+      }
+    }
+    api_url += "/" + this.state.numItemsPer;
+    console.log(api_url)
     fetch(api_url)
     .then(response => response.json())
     .then(data => this.setState({searchResult: data}));
   };
 
   render() {
+    console.log(this.state.searchResult);
     return (
       <Fragment>
         <HeaderApp />
