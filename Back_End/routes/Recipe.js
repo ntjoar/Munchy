@@ -6,9 +6,6 @@ const recipeScraper = require("recipe-scraper");
 var unirest = require("unirest");
 
 
-
-
-
 router.get('/get', async (req, res) => {
 
  const URL = req.body.url;
