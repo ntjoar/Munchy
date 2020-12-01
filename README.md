@@ -12,6 +12,47 @@ Our hope with this website is to help promote more interest in the culinary arts
 
 This website is our final project for CS130 and not officially published
 
+## Recipe Scrapping Supported websites
+- https://www.101cookbooks.com/
+- https://www.allrecipes.com/
+- https://www.ambitiouskitchen.com/
+- https://www.averiecooks.com/
+- https://www.bbc.co.uk/
+- https://www.bbcgoodfood.com/
+- https://www.bonappetit.com/
+- https://www.budgetbytes.com/
+- https://www.centraltexasfoodbank.org/
+- https://www.closetcooking.com/
+- https://cookieandkate.com/
+- https://copykat.com/
+- https://damndelicious.net/
+- http://www.eatingwell.com/
+- https://www.epicurious.com/
+- https://www.food.com/
+- https://www.foodandwine.com/
+- https://www.foodnetwork.com/
+- http://www.gimmesomeoven.com/
+- https://www.kitchenstories.com/
+- https://www.minimalistbaker.com/
+- https://www.myrecipes.com/
+- https://www.nomnompaleo.com/
+- https://www.omnivorescookbook.com/
+- https://pinchofyum.com/
+- https://recipetineats.com/
+- https://www.seriouseats.com/
+- https://www.simplyrecipes.com/
+- https://smittenkitchen.com/
+- https://thepioneerwoman.com/
+- https://tastesbetterfromscratch.com/
+- https://therealfoodrds.com/
+- https://www.thespruceeats.com/
+- https://whatsgabycooking.com/
+- https://www.woolworths.com.au/
+- https://www.yummly.com/
+
+
+Other websites can be added in the future.
+
 ## Available Scripts
 
 In the project directory, you can run:

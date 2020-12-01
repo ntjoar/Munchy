@@ -13,7 +13,7 @@ import AuthRoute from "./Components/AuthRoute";
 import IndexPage from "./Pages/IndexPage";
 import Dashboard from "./Pages/Dashboard";
 import Footer from "./Components/Footer";
-
+import LogoutTest from "./Pages/LoggouttTestPage"
 class App extends React.Component {
   componentDidMount() {
     store.dispatch(loadUser());
@@ -40,6 +40,11 @@ class App extends React.Component {
                 exact
                 path="/home"
                 render={(props) => <IndexPage {...props} />}
+              />
+              <Route
+                exact
+                path="/test-logout"
+                render={(props) => <LogoutTest {...props} />}
               />
               <Route path="/dashboard" exact>
                 <Dashboard/>

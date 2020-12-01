@@ -39,9 +39,9 @@ module.exports = {
     search: async function(query){
         try {
             let items = await getResults(query)
-            return new Market('Food4Less', 'www.food4less.com', items)
+            return items;
         } catch (e) {
-            return new Market('Food4Less', 'www.food4less.com', [])
+            return []
         }
     }
 }
