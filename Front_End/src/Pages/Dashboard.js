@@ -4,6 +4,7 @@ import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
 import Item from "../Components/Item";
 import PopupPrompt from "../Components/Popup";
+import StorePrefPopupPrompt from "../Components/StorePrefPopup";
 import {
   Button,
   Modal,
@@ -16,35 +17,78 @@ import {
   FormGroup,
 } from "reactstrap";
 
+//const fetch = require("node-fetch");
+
+function fetchRequest(recipeURL) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    url: recipeURL,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  return fetch("http://localhost:8000/recipe/get/", requestOptions);
+}
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
 
     this.addItem = this.addItem.bind(this);
+    this.addRecipeURL = this.addRecipeURL.bind(this);
     this.clickToAdd = this.clickToAdd.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.recipePromptMessage = "Please Enter the Recipe URL";
+    // this.getRequest = this.getRequest(this);
     this.items = [];
     this.state = {
-      isOpen: false,
-      items: [
-        "Apple",
-        "Steak",
-        "Wagyu Steak",
-        "Salmon",
-        "Eggs",
-        "Sugar",
-        "Coke-Zero",
-        "Chocolate",
-        "Coffee",
-        "Instant Noodle",
-      ], // added some items for developing purposes
+      isOpenItem: false,
+      isOpenRecipe: false,
+      storePrefIsOpen: false,
+      userLat: "",
+      userLong: "",
+      userRadius: 20,
+      storeList: ["Ralphs", "Costco", "Food4Less", "Walmart"],
+      numItemsPer: null,
+      items: [], // added some items for developing purposes
       item: "",
+      recipeURL: "",
+      recipeURLPlaceholder: "",
+      recipeItems: [],
+      searchResult: {},
+      recipePromptMessage: this.recipePromptMessage,
     };
+  }
+
+  componentDidMount() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          userLat: position.coords.latitude,
+          userLong: position.coords.longitude,
+        });
+      });
+    } else {
+      console.log("Location unavailable");
+    }
   }
 
   addItem(itemVal) {
     this.setState({
       item: itemVal,
+    });
+  }
+
+  addRecipeURL(url) {
+    this.setState({
+      recipeURL: url,
     });
   }
 
@@ -56,17 +100,47 @@ class Dashboard extends Component {
       }
 
       return {
-        isOpen: false,
+        isOpenItem: false,
         items: items,
         item: "",
       };
     });
   };
 
+  clickToAddRecipe = () => {
+    //API call here and set the state
+    console.log(this.state.recipeURL);
+    const url = this.state.recipeURL;
+
+    fetchRequest(url)
+      .then((response) => response.json())
+      .then((result) =>
+        this.setState((state) => {
+          try {
+            const res = result.ingredients;
+            if (res.length != 0) {
+              var items = state.items.concat(res);
+            }
+            return {
+              isOpenRecipe: false,
+              items: items,
+              item: "",
+              recipePromptMessage: this.recipePromptMessage,
+            };
+          } catch (error) {
+            return {
+              recipePromptMessage:
+                "Failed To Parse. Please Enter valid Recipe URL",
+            };
+          }
+        })
+      )
+      .catch((error) => console.log("error", error));
+  };
+
   removeItem = (index) => {
     this.setState((state) => {
       const items = state.items.filter((item, j) => index !== j);
-
       return {
         items,
       };
@@ -79,6 +153,54 @@ class Dashboard extends Component {
     });
   };
 
+  setRadius = (radiusVal) => {
+    this.setState({ userRadius: radiusVal });
+  };
+
+  setNumItems = (numItemsVal) => {
+    this.setState({ numItemsPer: numItemsVal });
+  };
+
+  setStorePref = (e) => {
+    let value = Array.from(e.target.selectedOptions, (option) => option.value);
+    this.setState({ storeList: value });
+  };
+
+  searchItems = () => {
+    let num_items = this.state.items.length;
+    let num_stores = this.state.storeList.length;
+    let api_url =
+      "http://localhost:8000/radius=" +
+      this.state.userRadius +
+      "&la=" +
+      this.state.userLat +
+      "&lo=" +
+      this.state.userLong +
+      "/";
+    var i;
+    for (i = 0; i < num_items; i++) {
+      api_url += this.state.items[i];
+      if (i < num_items - 1) {
+        api_url += "&";
+      }
+    }
+    api_url += "/";
+    for (i = 0; i < num_stores; i++) {
+      api_url += this.state.storeList[i];
+      if (i < num_stores - 1) {
+        api_url += "&";
+      }
+    }
+    if (this.state.numItemsPer == null) {
+      api_url += "/none";
+    } else {
+      api_url += "/" + this.state.numItemsPer;
+    }
+    fetch(api_url)
+      .then((response) => response.json())
+      .then((data) => this.setState({ searchResult: data }));
+  };
+
   render() {
     return (
       <Fragment>
@@ -86,26 +208,74 @@ class Dashboard extends Component {
         <PopupPrompt></PopupPrompt>
         <div className="container">
           <div className="topbuttonrow">
-            <div className='topleft'>
+            <div className="topleft">
               <Button
                 className="button-general"
-                onClick={(e) => this.setState({ isOpen: true })}
+                onClick={(e) =>
+                  this.setState({
+                    isOpenItem: true,
+                    storePrefIsOpen: false,
+                    isOpenRecipe: false,
+                  })
+                }
               >
                 + Items
               </Button>
               <PopupPrompt
-                isOpen={this.state.isOpen}
-                onClose={(e) => this.setState({ isOpen: false })}
+                isOpen={this.state.isOpenItem}
+                onClose={(e) => this.setState({ isOpenItem: false })}
                 addItem={this.addItem}
                 clickToAdd={this.clickToAdd}
               >
                 Please Enter the Ingredient
               </PopupPrompt>
-              <Button className="button-general">+ Recipe</Button>
+              <Button
+                className="button-general"
+                onClick={(e) =>
+                  this.setState({
+                    isOpenRecipe: true,
+                    storePrefIsOpen: false,
+                    isOpenItem: false,
+                    recipePromptMessage: this.recipePromptMessage,
+                  })
+                }
+              >
+                + Recipe
+              </Button>
+              <PopupPrompt
+                isOpen={this.state.isOpenRecipe}
+                onClose={(e) =>
+                  this.setState({
+                    isOpenRecipe: false,
+                    recipePromptMessage: this.recipePromptMessage,
+                  })
+                }
+                addItem={this.addRecipeURL}
+                clickToAdd={this.clickToAddRecipe}
+              >
+                {this.state.recipePromptMessage}
+              </PopupPrompt>
             </div>
-            <Button className="storeprefbutton ">
+            <Button
+              className="storeprefbutton "
+              onClick={(e) =>
+                this.setState({
+                  isOpenItem: false,
+                  storePrefIsOpen: true,
+                  isOpenRecipe: false,
+                })
+              }
+            >
               Store Preference Selection
             </Button>
+            <StorePrefPopupPrompt
+              isOpen={this.state.storePrefIsOpen}
+              setRadius={this.setRadius}
+              curRadius={this.state.userRadius}
+              setStorePref={this.setStorePref}
+              setNumItems={this.setNumItems}
+              onClose={(e) => this.setState({ storePrefIsOpen: false })}
+            />
           </div>
 
           <div className="dashboard">
@@ -130,7 +300,9 @@ class Dashboard extends Component {
             <Button className="clearbutton" onClick={this.clearItem}>
               Clear
             </Button>
-            <Button className="searchbutton">Search</Button>
+            <Button className="searchbutton" onClick={this.searchItems}>
+              Search
+            </Button>
           </div>
         </div>
       </Fragment>
