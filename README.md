@@ -120,7 +120,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-# File Heirarchy
+# File Hierarchy
 This should be updated as we update our code design.
 
 ```
@@ -149,7 +149,8 @@ This should be updated as we update our code design.
 |   |   |-- fonts (Installed fonts needed for frontend)
 |   |   |-- images (images used on frontend)
 |   |   |-- App.js (Our main React.js script)
-|   |   |-- ...
+|   |   |-- Components (React components)
+|   |   |-- CSS (Component stylesheets)
 |
 |-- README
 ```
