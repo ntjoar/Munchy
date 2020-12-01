@@ -30,11 +30,13 @@ app.use('/recipe', require('./routes/Recipe'));
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-async function parseWebsites(query, location) {
+async function parseWebsites(query, location, storePref, pref) {
     marketDataArr = [];
 
     let locationStr = location.split('&')
     let itemStr = query.split('&')
+    let queryRet = pref.split('&')
+    let stores = storePref.split('&')
     //default radius is 0, but radius is in meters!!!!!, SO 2000 RADIUS IS NOT AS BIG AS YOU THINK
     //problem here, is that google places API only returns 20, so too big of a radius and it'll sort of be irrelevant how large you make it
     let radius = "0"
@@ -95,7 +97,12 @@ async function parseWebsites(query, location) {
     let API_KEY = 'AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE'
     let radInt = parseInt(radius)
     let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radInt}&keyword=Grocery%20store`
-    var possibleStoreList = ["Walmart", "Food4Less", "Ralphs", "Costco"]
+    var possibleStoreList = []
+    for(var i = 0; i<stores.length;i++){
+        possibleStoreList.push(stores[i])
+    }
+    console.log(possibleStoreList)
+    //var possibleStoreList = ["Walmart", "Food4Less", "Ralphs", "Costco"]
     var storesAroundMe = []
     await fetch(url)
         .then(res => res.json())
@@ -152,9 +159,9 @@ async function parseWebsites(query, location) {
     return marketDataArr;
 }
 
-app.get('/:location/:query', async (req, res) => {
+app.get('/:location/:query/:storePref/:pref', async (req, res) => {
     res.json({
-        data: await parseWebsites(req.params.query, req.params.location)
+        data: await parseWebsites(req.params.query, req.params.location, req.params.storePref, req.params.pref)
     });
 })
 
