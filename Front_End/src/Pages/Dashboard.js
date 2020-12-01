@@ -45,6 +45,7 @@ class Dashboard extends Component {
     this.addRecipeURL = this.addRecipeURL.bind(this);
     this.clickToAdd = this.clickToAdd.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.recipePromptMessage = "Please Enter the Recipe URL";
     // this.getRequest = this.getRequest(this);
     this.items = [];
     this.state = {
@@ -62,6 +63,7 @@ class Dashboard extends Component {
       recipeURLPlaceholder: "",
       recipeItems: [],
       searchResult: {},
+      recipePromptMessage: this.recipePromptMessage,
     };
   }
 
@@ -114,15 +116,23 @@ class Dashboard extends Component {
       .then((response) => response.json())
       .then((result) =>
         this.setState((state) => {
-          const res = result.ingredients;
-          if (res.length != 0) {
-            var items = state.items.concat(res);
+          try {
+            const res = result.ingredients;
+            if (res.length != 0) {
+              var items = state.items.concat(res);
+            }
+            return {
+              isOpenRecipe: false,
+              items: items,
+              item: "",
+              recipePromptMessage: this.recipePromptMessage,
+            };
+          } catch (error) {
+            return {
+              recipePromptMessage:
+                "Failed To Parse. Please Enter valid Recipe URL",
+            };
           }
-          return {
-            isOpenRecipe: false,
-            items: items,
-            item: "",
-          };
         })
       )
       .catch((error) => console.log("error", error));
@@ -202,7 +212,11 @@ class Dashboard extends Component {
               <Button
                 className="button-general"
                 onClick={(e) =>
-                  this.setState({ isOpen: true, storePrefIsOpen: false })
+                  this.setState({
+                    isOpenItem: true,
+                    storePrefIsOpen: false,
+                    isOpenRecipe: false,
+                  })
                 }
               >
                 + Items
@@ -217,23 +231,39 @@ class Dashboard extends Component {
               </PopupPrompt>
               <Button
                 className="button-general"
-                onClick={(e) => this.setState({ isOpenRecipe: true })}
+                onClick={(e) =>
+                  this.setState({
+                    isOpenRecipe: true,
+                    storePrefIsOpen: false,
+                    isOpenItem: false,
+                    recipePromptMessage: this.recipePromptMessage,
+                  })
+                }
               >
                 + Recipe
               </Button>
               <PopupPrompt
                 isOpen={this.state.isOpenRecipe}
-                onClose={(e) => this.setState({ isOpenRecipe: false })}
+                onClose={(e) =>
+                  this.setState({
+                    isOpenRecipe: false,
+                    recipePromptMessage: this.recipePromptMessage,
+                  })
+                }
                 addItem={this.addRecipeURL}
                 clickToAdd={this.clickToAddRecipe}
               >
-                Please Enter the Recipe URL
+                {this.state.recipePromptMessage}
               </PopupPrompt>
             </div>
             <Button
               className="storeprefbutton "
               onClick={(e) =>
-                this.setState({ isOpen: false, storePrefIsOpen: true })
+                this.setState({
+                  isOpenItem: false,
+                  storePrefIsOpen: true,
+                  isOpenRecipe: false,
+                })
               }
             >
               Store Preference Selection
