@@ -15,7 +15,7 @@ async function getHtml(link) {
     return (await fetch(link)).data;
 }
 
-async function getResults(query) {
+async function getResults(query, pref) {
     let html = await getHtml(getSearchItemUrl(query));
     const $ = cheerio.load(html);
 
@@ -32,13 +32,19 @@ async function getResults(query) {
         items.push(new Item(name, price, link));
     });
 
+    if(pref != "none") {
+        return items.sort(function (a, b) {
+            return a.price.localeCompare(b.price);
+        });
+    }
+
     return items;
 }
 
 module.exports = {
-    search: async function(query){
+    search: async function(query, pref){
         try {
-            let items = await getResults(query)
+            let items = await getResults(query, pref)
             return items;
         } catch (e) {
             return []
