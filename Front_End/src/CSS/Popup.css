@@ -40,3 +40,19 @@
   width: 100%;
   height: 35px;
 }
+
+.radius-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.radius-textarea {
+  width: 20%;
+  height: 25px;
+  margin: 0 0 0 10px;
+}
+
+.bruh {
+  border: 2px solid red;
+}

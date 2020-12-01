@@ -23,14 +23,27 @@ class StorePrefPopupPrompt extends Component {
           </Button>
         </div>
 
-        <div>
-            
+        <div className="bruh">
+            <div className="radius-input">
+              <div>Radius (miles)</div>
+              <input 
+                className="radius-textarea" 
+                maxLength="10" 
+                id="radius"
+              ></input>
+            </div>
+            <Form>
+              <FormGroup check>
+                <Input type="radio" name="radio1" id="radio1" disabled/>{' '}
+                <Label for="radio1">ayo</Label>
+              </FormGroup>
+            </Form>
         </div>    
 
         <div className="modal-div-right">
           <Button
             className="modal-common-button"
-            onClick={this.props.clickToAdd}
+            onClick={() => this.props.setRadius(document.getElementById("radius").value)}
           >
             Save
           </Button>

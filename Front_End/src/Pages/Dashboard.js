@@ -30,7 +30,7 @@ class Dashboard extends Component {
       storePrefIsOpen: false,
       userLat: "",
       userLong: "",
-      userRadius: 20, // CHANGE USER RADIUS
+      userRadius: 20,
       storeList: ["Ralphs", "Costco", "Food4Less", "Walmart"],
       numItemsPer: 1,
       items: [], // added some items for developing purposes
@@ -86,6 +86,10 @@ class Dashboard extends Component {
     });
   };
 
+  setRadius = (radiusVal) => {
+    this.setState({userRadius: radiusVal});
+  };
+
   searchItems = () => {
     let num_items = this.state.items.length;
     let num_stores = this.state.storeList.length;
@@ -112,7 +116,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    console.log(this.state.searchResult);
+    console.log(this.state.userRadius);
     return (
       <Fragment>
         <HeaderApp />
@@ -141,6 +145,8 @@ class Dashboard extends Component {
             </Button>
             <StorePrefPopupPrompt
               isOpen={this.state.storePrefIsOpen}
+              setRadius={this.setRadius}
+              curRadius={this.state.userRadius}
               onClose={(e) => this.setState({ storePrefIsOpen: false })}
             />
           </div>
