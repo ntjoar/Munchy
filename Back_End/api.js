@@ -73,30 +73,18 @@ async function parseWebsites(query, location, storePref, pref) {
         radius = "0"
     }
     //example api localhost:8000/radius=2000&la=34.0689&lo=-118.4452&brocolli
-    
+    //http://localhost:8000/radius=2000&la=34.0689&lo=-118.4452/brocolli&chicken/Ralphs&Walmart&Costco&Food4Less/1
 
-    /*TODO
-    change query parameter
-    form a response
-    "items": [
-    "items": 
-        "query" : "brocolli",
-        "itemData" : [
-        {
-          "name": "Heartland Fresh Antibiotic-Free Chicken Wellington with Wild Rice & Mushroom Duxelle, 8 X 9 oz, 4.5 lbs.",
-          "price": "74.99",
-          "link": "https://www.costco.com/heartland-fresh-antibiotic-free-chicken-wellington-with-wild-rice-%2526amp%3b-mushroom-duxelle%2c-8-x-9-oz%2c-4.5-lbs..product.100698772.html"
-        }
-        ]
-    ]
+    
     //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=34.0689,118.4452&radius=2000&type=grocery%20store&key=AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE&location
-    */
-    // /la=37.000&lo=32.000&rad=2000/query=brocolli&spinach&chocolate
 
     let position = latitude + "," + longitude
     let API_KEY = 'AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE'
-    let radInt = parseInt(radius)
-    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radInt}&keyword=Grocery%20store`
+    //convert radius from m to miles
+    let radMeters = parseFloat(radius)
+    radMeters = radMeters * 1609.34
+    console.log(radMeters)
+    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radMeters}&keyword=Grocery%20store`
     var possibleStoreList = []
     for(var i = 0; i<stores.length;i++){
         possibleStoreList.push(stores[i])
@@ -109,6 +97,7 @@ async function parseWebsites(query, location, storePref, pref) {
         .then(out => {
              //parse JSON to check if Walmart, Food4Less, Ralphs, Target is within range
              let jsonVal = out
+             console.log(jsonVal)
              //go through the list of results
              for(var i = 0; i < jsonVal["results"].length; i++)
              {
