@@ -89,8 +89,8 @@ async function parseWebsites(query, location, storePref, pref) {
     for(var i = 0; i<stores.length;i++){
         possibleStoreList.push(stores[i])
     }
-    console.log(stores)
-    console.log(possibleStoreList)
+    // console.log(stores)
+    // console.log(possibleStoreList)
 
     var storesAroundMe = []
     //set the var for the google places API
@@ -105,7 +105,7 @@ async function parseWebsites(query, location, storePref, pref) {
                 let jsonVal = out
                 //console.log(jsonVal)
                 //go through the list of results
-                console.log(jsonVal["results"].length)
+                // console.log(jsonVal["results"].length)
                 if(jsonVal["results"].length > 0){
                     storesAroundMe.push(storeName)
                 }
@@ -118,7 +118,7 @@ async function parseWebsites(query, location, storePref, pref) {
     {
         storesAroundMe = possibleStoreList;
     }
-    console.log(storesAroundMe)
+    // console.log(storesAroundMe)
     /** Initialize Markets that can be scraped */
     marketDataArr.push(new Market("Costco", "https://www.costco.com/", []));
     marketDataArr.push(new Market("Walmart", "https://www.walmart.com/", []));
@@ -133,7 +133,7 @@ async function parseWebsites(query, location, storePref, pref) {
             //if the store is not around me skip
             if(!storesAroundMe.includes(key))
                 continue;
-            let marketData = await module.search(query);
+            let marketData = await module.search(query, queryRet);
 
             /** Add specifically to that store's query, don't create new and waste obj space */
             for (i in marketDataArr) {

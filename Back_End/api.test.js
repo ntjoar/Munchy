@@ -2,7 +2,7 @@ const api = require('./api.js');
 
 async function main() {
     /** Test Case 1 */
-    let data = await api.parseWebsites("chocolate", "radius=2000&la=34.0689&lo=-118.4452");
+    let data = await api.parseWebsites("chocolate", "radius=2000&la=34.0689&lo=-118.4452", "Ralphs", "none");
 
     console.log("Test case 1: Add Distance Limitations");
     if(data[0]["items"].length != 0 || data[1]["items"].length != 0 || 
@@ -12,9 +12,9 @@ async function main() {
     console.log("Test Case 1 Passed!");
 
     /** Test Case 2 */
-    data = await api.parseWebsites("brocolli&chicken", "radius=100&la=34.0689&lo=-118.4452");
+    data = await api.parseWebsites("brocolli&chicken", "radius=100&la=34.0689&lo=-118.4452", "notastore", "none");
 
-    console.log("Test case 2: Multiple items");
+    console.log("Test case 2: Bad distance");
     if(data[0]["items"].length != 0 || data[1]["items"].length != 0 || 
        data[2]["items"].length != 0 || data[3]["items"].length != 0) {
         throw 'Test Case 2 Failed!'
@@ -22,7 +22,7 @@ async function main() {
     console.log("Test Case 2 Passed!");
 
     /** Test Case 3 */
-    data = await api.parseWebsites("chocolate&marshmallows", "radius=2000&la=default&lo=default");
+    data = await api.parseWebsites("chocolate&marshmallows", "radius=2000&la=default&lo=default", "Walmart&Ralphs&Food4Less&Costco", "none");
 
     console.log("Test case 3: Default Distances");
     if(data[0]["items"].length != 2 || data[1]["items"].length != 2 || 
