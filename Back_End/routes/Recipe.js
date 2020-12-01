@@ -58,14 +58,15 @@ const savedRecipe = await newRecipe.save();
     console.log(error.message);
  }
 
- var request = unirest("POST", "https://zestful.p.rapidapi.com/parseIngredients");
+ var request = unirest("POST", process.env.RAPID_URL);
 
  request.type("json");
 
  request.headers({
  "content-type": "application/json",
- "x-rapidapi-key": "6f7dd3742amsh14daeae1d8b8b1cp1107f5jsnb6658ad46560",
- "x-rapidapi-host": "zestful.p.rapidapi.com",
+ 
+ "x-rapidapi-key": process.env.RAPID_KEY,
+ "x-rapidapi-host": process.env.RAPID_HOST,
  "useQueryString": true
 });
 request.send({
