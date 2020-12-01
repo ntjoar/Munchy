@@ -3,8 +3,12 @@ const cheerio = require('cheerio');
 const Item = require('../../model/Item');
 const Market = require('../../model/Market');
 
-function getSearchItemUrl(query) {
-    return `https://www.costco.com/CatalogSearch?keyword=${query}&dept=All`;
+function getSearchItemUrl(query, pref) {
+    if(pref == "none") {
+        return `https://www.costco.com/CatalogSearch?keyword=${query}&dept=All`;
+    } else {
+        return `https://www.costco.com/CatalogSearch?keyword=${query}&dept=All&searchProvider=lucidworks&sortBy=item_location_pricing_salePrice+asc`;
+    }
 }
 
 async function fetch(link) {
@@ -15,8 +19,8 @@ async function getHtml(link) {
     return (await fetch(link)).data;
 }
 
-async function getResults(query) {
-    let html = await getHtml(getSearchItemUrl(query));
+async function getResults(query, pref) {
+    let html = await getHtml(getSearchItemUrl(query, pref));
     const $ = cheerio.load(html);
 
     const items = [];
@@ -36,9 +40,9 @@ async function getResults(query) {
 }
 
 module.exports = {
-    search: async function(query){
+    search: async function(query, pref){
         try {
-            let items = await getResults(query)
+            let items = await getResults(query, pref)
             return items;
         } catch (e) {
             return []

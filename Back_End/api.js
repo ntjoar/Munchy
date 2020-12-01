@@ -83,43 +83,42 @@ async function parseWebsites(query, location, storePref, pref) {
     //convert radius from m to miles
     let radMeters = parseFloat(radius)
     radMeters = radMeters * 1609.34
-    console.log(radMeters)
-    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radMeters}&keyword=Grocery%20store`
-    var possibleStoreList = []
+
+    possibleStoreList = []
+    //store the possible store lists that we will find in google places API
     for(var i = 0; i<stores.length;i++){
         possibleStoreList.push(stores[i])
     }
-    console.log(possibleStoreList)
-    //var possibleStoreList = ["Walmart", "Food4Less", "Ralphs", "Costco"]
+    // console.log(stores)
+    // console.log(possibleStoreList)
+
     var storesAroundMe = []
-    await fetch(url)
-        .then(res => res.json())
-        .then(out => {
-             //parse JSON to check if Walmart, Food4Less, Ralphs, Target is within range
-             let jsonVal = out
-             console.log(jsonVal)
-             //go through the list of results
-             for(var i = 0; i < jsonVal["results"].length; i++)
-             {
-                //check if the resulting grocery stores include the names of any of the possible stores
-                for(var j = 0; j < possibleStoreList.length; j++)
-                {
-                    //if the store is a valid store, add it to our list of stores near us, problem would be if some store named TargetStuff 
-                    // even if its not a target store, we'd include target, we might have to update this to deal with that, but ignore for now
-                    if(jsonVal["results"][i]["name"].includes(possibleStoreList[j]))
-                    {
-                        storesAroundMe.push(possibleStoreList[j]);
-                    }
+    //set the var for the google places API
+    for(var i = 0; i<possibleStoreList.length;i++){
+        let storeName =  possibleStoreList[i]
+        let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radMeters}&name=${storeName}`
+        //var possibleStoreList = ["Walmart", "Food4Less", "Ralphs", "Costco"]
+        await fetch(url)
+            .then(res => res.json())
+            .then(out => {
+                //parse JSON to check if Walmart, Food4Less, Ralphs, Costco is within range
+                let jsonVal = out
+                //console.log(jsonVal)
+                //go through the list of results
+                // console.log(jsonVal["results"].length)
+                if(jsonVal["results"].length > 0){
+                    storesAroundMe.push(storeName)
                 }
-            }
-        })
-        .catch(err => { throw err });
+            })
+            .catch(err => { throw err });
 
-        if(longitude == "default" ||latitude == "default")
-        {
-            storesAroundMe = possibleStoreList;
         }
-
+    //If given no long no lat, check for all stores
+    if(longitude == "default" ||latitude == "default")
+    {
+        storesAroundMe = possibleStoreList;
+    }
+    // console.log(storesAroundMe)
     /** Initialize Markets that can be scraped */
     marketDataArr.push(new Market("Costco", "https://www.costco.com/", []));
     marketDataArr.push(new Market("Walmart", "https://www.walmart.com/", []));
@@ -134,7 +133,7 @@ async function parseWebsites(query, location, storePref, pref) {
             //if the store is not around me skip
             if(!storesAroundMe.includes(key))
                 continue;
-            let marketData = await module.search(query);
+            let marketData = await module.search(query, queryRet);
 
             /** Add specifically to that store's query, don't create new and waste obj space */
             for (i in marketDataArr) {
