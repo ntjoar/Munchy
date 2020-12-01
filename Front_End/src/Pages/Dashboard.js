@@ -32,7 +32,7 @@ class Dashboard extends Component {
       userLong: "",
       userRadius: 20,
       storeList: ["Ralphs", "Costco", "Food4Less", "Walmart"],
-      numItemsPer: 1,
+      numItemsPer: null,
       items: [], // added some items for developing purposes
       item: "",
       searchResult: {},
@@ -90,6 +90,15 @@ class Dashboard extends Component {
     this.setState({userRadius: radiusVal});
   };
 
+  setNumItems = (numItemsVal) => {
+    this.setState({numItemsPer: numItemsVal});
+  };
+
+  setStorePref = (e) => {
+    let value = Array.from(e.target.selectedOptions, option => option.value);
+    this.setState({storeList: value});
+  };
+
   searchItems = () => {
     let num_items = this.state.items.length;
     let num_stores = this.state.storeList.length;
@@ -108,15 +117,18 @@ class Dashboard extends Component {
         api_url += "&";
       }
     }
-    api_url += "/" + this.state.numItemsPer;
-    console.log(api_url)
+    if(this.state.numItemsPer == null) {
+      api_url += "/none";
+    }
+    else {
+      api_url += "/" + this.state.numItemsPer;
+    }
     fetch(api_url)
     .then(response => response.json())
     .then(data => this.setState({searchResult: data}));
   };
 
   render() {
-    console.log(this.state.userRadius);
     return (
       <Fragment>
         <HeaderApp />
@@ -147,6 +159,8 @@ class Dashboard extends Component {
               isOpen={this.state.storePrefIsOpen}
               setRadius={this.setRadius}
               curRadius={this.state.userRadius}
+              setStorePref={this.setStorePref}
+              setNumItems={this.setNumItems}
               onClose={(e) => this.setState({ storePrefIsOpen: false })}
             />
           </div>

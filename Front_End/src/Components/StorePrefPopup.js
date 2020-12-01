@@ -10,6 +10,7 @@ import {
   Label,
   Form,
   FormGroup,
+  Col
 } from "reactstrap";
 
 class StorePrefPopupPrompt extends Component {
@@ -23,19 +24,20 @@ class StorePrefPopupPrompt extends Component {
           </Button>
         </div>
 
-        <div className="bruh">
-            <div className="radius-input">
-              <div>Radius (miles)</div>
-              <input 
-                className="radius-textarea" 
-                maxLength="10" 
-                id="radius"
-              ></input>
-            </div>
+        <div>
             <Form>
-              <FormGroup check>
-                <Input type="radio" name="radio1" id="radio1" disabled/>{' '}
-                <Label for="radio1">ayo</Label>
+              <FormGroup >
+                <Label for="radius">Radius (Miles)</Label>
+                <Input type="radius" name="radius" id="radius" maxlength="10"/>
+                <Label for="numItems">Number of Items Per Store</Label>
+                <Input type="numItems" name="numItems" id="numItems" maxlength="10"/>
+                <Label for="storeselect">Stores to Search</Label>
+                <Input type="select" name="storeselect" id="storeselect" multiple onChange={this.props.setStorePref}>
+                  <option>Ralphs</option>
+                  <option>Costco</option>
+                  <option>Walmart</option>
+                  <option>Food4Less</option>
+                </Input>
               </FormGroup>
             </Form>
         </div>    
@@ -43,7 +45,10 @@ class StorePrefPopupPrompt extends Component {
         <div className="modal-div-right">
           <Button
             className="modal-common-button"
-            onClick={() => this.props.setRadius(document.getElementById("radius").value)}
+            onClick={() => {
+              this.props.setRadius(document.getElementById("radius").value);
+              this.props.setNumItems(document.getElementById("numItems").value);
+            }}
           >
             Save
           </Button>
