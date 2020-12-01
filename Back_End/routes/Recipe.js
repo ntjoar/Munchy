@@ -9,20 +9,21 @@ var unirest = require("unirest");
 
 
 
-router.post("/get", async (req, res) => {
-  const URL = req.body.url;
+router.get('/get', async (req, res) => {
 
-  let recipe = await recipeScraper(URL).catch((error) => {
-    res.status(400).json({ error: error.message });
-    console.log(error.message);
-  });
+ const URL = req.body.url;
 
-  const recipeExist = await RecipeModel.findOne({ name: recipe.name });
+
+ let recipe = await recipeScraper(URL).catch(error=> { 
+     
+    res.status(400).json({error: error.message})
+    console.log(error.message)});
+
+    const recipeExist = await  RecipeModel.findOne({ name: recipe.name });
   if (recipeExist) {
     return res.status(400).send("This recipe is already saved in the cookbook");
   }
 
-<<<<<<< HEAD
 
   //const spliItems = recipe.ingredients.map(ingredient => parse(ingredient))
   //const items = spliItems.map(item => item.ingredient)
@@ -88,27 +89,5 @@ request.send({
 
   
 })
-=======
-  const newRecipe = new RecipeModel({
-    name: recipe.name,
-    ingredients: recipe.ingredients,
-    instructions: recipe.instructions,
-    servings: recipe.servings,
-    image: recipe.image,
-    prepTime: recipe.time.prep,
-    cookTime: recipe.time.cook,
-    activeTime: recipe.time.active,
-    inactiveTime: recipe.time.inactive,
-    readyTime: recipe.time.ready,
-    totalTime: recipe.time.total,
-  });
-  const savedRecipe = await newRecipe.save();
-  try {
-    res.status(200).json(savedRecipe);
-  } catch (error) {
-    console.log(error.message);
-  }
-});
->>>>>>> abbca0fba098d7ea9d84822f4aea5d3c9734494c
 
 module.exports = router;
