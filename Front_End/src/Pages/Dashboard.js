@@ -85,11 +85,14 @@ class Dashboard extends Component {
       isOpenRecipe: false,
       dropDownToggle: false,
       storePrefIsOpen: false,
-      userLat: "",
-      userLong: "",
+      userLat: 34.0689,
+      userLong: -118.4452,
       userRadius: 20,
       storeList: ["Ralphs", "Costco", "Food4Less", "Walmart"],
       numItemsPer: null,
+      tempRadius: 0,
+      tempStoreList: [],
+      tempNumItemsPer: null,
       items: [],
       item: "",
       recipeURL: "",
@@ -129,16 +132,14 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.reloadRecipes();
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.setState({
-          userLat: position.coords.latitude,
-          userLong: position.coords.longitude,
-        });
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+      this.setState({
+        userLat: position.coords.latitude,
+        userLong: position.coords.longitude,
       });
-    } else {
-      console.log("Location unavailable");
-    }
+    });
   }
 
   selectRecipe(event) {
@@ -263,21 +264,49 @@ class Dashboard extends Component {
   };
 
   setRadius = (radiusVal) => {
-    this.setState({ userRadius: radiusVal });
+    this.setState({ tempRadius: radiusVal });
   };
 
   setNumItems = (numItemsVal) => {
-    this.setState({ numItemsPer: numItemsVal });
+    this.setState({ tempNumItemsPer: numItemsVal });
   };
 
   setStorePref = (e) => {
     let value = Array.from(e.target.selectedOptions, (option) => option.value);
-    this.setState({ storeList: value });
+    this.setState({ tempStoreList: value });
   };
+
+  saveStorePref = () => {
+    this.setState((state) => {
+      var userRadius = state.userRadius;
+      var storeList = state.storeList;
+      var numItemsPer = state.numItemsPer;
+      if(state.tempRadius != 0) {
+        var userRadius = state.tempRadius;
+      }
+      if(state.tempStoreList.length != 0) {
+        var storeList = state.tempStoreList;
+      }
+      if(state.tempNumItemsPer != null) {
+        var numItemsPer = state.tempNumItemsPer;
+      }
+
+      return {
+        userRadius: userRadius,
+        storeList: storeList,
+        numItemsPer: numItemsPer,
+        storePrefIsOpen: false,
+        tempNumItemsPer: null,
+        tempRadius: 0,
+        tempStoreList: [],
+      };
+    });
+  }
 
   searchItems = () => {
     let num_items = this.state.items.length;
     let num_stores = this.state.storeList.length;
+
     let api_url =
       "http://localhost:8000/radius=" +
       this.state.userRadius +
@@ -326,57 +355,58 @@ class Dashboard extends Component {
         <HeaderApp />
         {!isAuthenticated ? <Redirect to="/login" /> : null}
         <div className="container">
-          <ButtonGroup size="md" className="topleft">
+          <div className="topbuttonrow">
+            <ButtonGroup size="md" className="topleft">
+              <Button
+                className="button-general"
+                onClick={(e) =>
+                  this.setState({
+                    isOpenItem: true,
+                    storePrefIsOpen: false,
+                    isOpenRecipe: false,
+                  })
+                }
+              >
+                + Items
+              </Button>
+
+              <Button
+                className="button-general"
+                onClick={(e) =>
+                  this.setState({
+                    isOpenRecipe: true,
+                    storePrefIsOpen: false,
+                    isOpenItem: false,
+                    recipePromptMessage: this.recipePromptMessage,
+                  })
+                }
+              >
+                + Recipe
+              </Button>
+
+              {/* RECIPE DROP DOWN LIST SECTION */}
+
+              <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
+                <DropdownToggle caret className="button-dropdown">
+                  {this.state.currentRecipe}
+                </DropdownToggle>
+                <DropdownMenu className="drop-down-menu">
+                  {this.state.recipeNameList.map((value) => {
+                    return (
+                      <DropdownItem
+                        className="drop-down-item"
+                        onClick={this.selectRecipe}
+                      >
+                        {value}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </Dropdown>
+              {/* END OF RECIPE DROP DOWN LIST */}
+            </ButtonGroup>
             <Button
-              className="button-general"
-              onClick={(e) =>
-                this.setState({
-                  isOpenItem: true,
-                  storePrefIsOpen: false,
-                  isOpenRecipe: false,
-                })
-              }
-            >
-              + Items
-            </Button>
-
-            <Button
-              className="button-general"
-              onClick={(e) =>
-                this.setState({
-                  isOpenRecipe: true,
-                  storePrefIsOpen: false,
-                  isOpenItem: false,
-                  recipePromptMessage: this.recipePromptMessage,
-                })
-              }
-            >
-              + Recipe
-            </Button>
-
-            {/* RECIPE DROP DOWN LIST SECTION */}
-
-            <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
-              <DropdownToggle caret className="button-dropdown">
-                {this.state.currentRecipe}
-              </DropdownToggle>
-              <DropdownMenu className="drop-down-menu">
-                {this.state.recipeNameList.map((value) => {
-                  return (
-                    <DropdownItem
-                      className="drop-down-item"
-                      onClick={this.selectRecipe}
-                    >
-                      {value}
-                    </DropdownItem>
-                  );
-                })}
-              </DropdownMenu>
-            </Dropdown>
-            {/* END OF RECIPE DROP DOWN LIST */}
-
-            <Button
-              className="storeprefbutton "
+              className="storeprefbutton"
               onClick={(e) =>
                 this.setState({
                   isOpenItem: false,
@@ -387,7 +417,7 @@ class Dashboard extends Component {
             >
               Store Preference Selection
             </Button>
-          </ButtonGroup>
+          </div>
 
           {/* Pop up Window Section */}
           <PopupPrompt
@@ -417,9 +447,9 @@ class Dashboard extends Component {
           <StorePrefPopupPrompt
             isOpen={this.state.storePrefIsOpen}
             setRadius={this.setRadius}
-            curRadius={this.state.userRadius}
             setStorePref={this.setStorePref}
             setNumItems={this.setNumItems}
+            saveStorePref={this.saveStorePref}
             onClose={(e) => this.setState({ storePrefIsOpen: false })}
           />
           {/* End of Pop up Window Section */}
