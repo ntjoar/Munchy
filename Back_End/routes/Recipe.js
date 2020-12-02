@@ -6,7 +6,7 @@ const recipeScraper = require("recipe-scraper");
 var unirest = require("unirest");
 
 
-router.get('/get', async (req, res) => {
+router.post('/get', async (req, res) => {
 
  const URL = req.body.url;
 
@@ -50,13 +50,13 @@ const newRecipe = new RecipeModel({
 const savedRecipe = await newRecipe.save();
 
 //console.log(data);
- try{
-     res.status(200).json(savedRecipe);
+//  try{
+//      res.status(200).json(savedRecipe);
 
- }
- catch(error){
-    console.log(error.message);
- }
+//  }
+//  catch(error){
+//     console.log(error.message);
+//  }
 
  var request = unirest("POST", process.env.RAPID_URL);
 
@@ -81,6 +81,13 @@ request.send({
     if (err) return res.status(400).send("Unable to update recipe with list of items");
     doc.Items = items;
     doc.save();
+    try{
+            res.status(200).json(doc);
+      
+       }
+        catch(error){
+           console.log(error.message);
+        }
   });
  //console.log(items);
    });
