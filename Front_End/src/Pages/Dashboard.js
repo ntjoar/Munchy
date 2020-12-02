@@ -322,53 +322,68 @@ class Dashboard extends Component {
             (
               <div className="dashboard">
                 {
-                  // loop through each store 
+                  //part 2, using item_containers 
+                  //loop through each store 
                   Object.keys(this.state.searchResult.data).map((key, i) => (
-                    // the name of the paragraph block doesn't matter, <p test> works as well
-                    <p key={i}> 
-                      Store: {this.state.searchResult.data[key].name}
 
-                      {
-                        //for each store, loop through items 
-                        Object.keys(this.state.searchResult.data[key].items).map((item, i) => (
-                          <p item={i}> 
-                            Item Name: {this.state.searchResult.data[key].items[item].query}
+                      //for each store, loop through items 
+                      Object.keys(this.state.searchResult.data[key].items).map((item, i) => (
+                        //quick hack that sets numItemsPer = 200 if it is null
+                          Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, ((this.state.numItemsPer == null) ? 200 : this.state.numItemsPer)).map((product, i) =>{
+                            //create a item container with value equal to what we want 
+                            return (
+                            <div className="itemcontainer">
+                            <div className="itemname">
+                              {
+                                "Store: " + this.state.searchResult.data[key].name + 
+                                "\nItem Name: " + this.state.searchResult.data[key].items[item].query + 
+                                "\nProduct Name: " + this.state.searchResult.data[key].items[item].itemData[product].name + 
+                                "\nPrice: " + this.state.searchResult.data[key].items[item].itemData[product].price + 
+                                "\nURL: " + this.state.searchResult.data[key].items[item].itemData[product].link
+                              }
+                            </div>
+                            </div>
+                          );
+                          })
+                      ))))
+                  }
 
-                            {
-                              // for each item, loop through results
-                              // trim results using slice to number of items per store (default = 1?? hard code this in? todo) 
-                              // TODO: might say name even if array is empty; handle this? 
-                              Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, this.state.numItemsPer).map((product, i) => (
-                                <p product={i}>
-                                 Product Name: {this.state.searchResult.data[key].items[item].itemData[product].name}
-                                 Price: {this.state.searchResult.data[key].items[item].itemData[product].price}
-                                </p>
+                  {/* // loop through each store 
+                  // Object.keys(this.state.searchResult.data).map((key, i) => (
+                  //   // the name of the paragraph block doesn't matter, <p test> works as well
+                  //   <p key={i}> 
+                  //     Store: {this.state.searchResult.data[key].name}
+
+                  //     {
+                  //       //for each store, loop through items 
+                  //       Object.keys(this.state.searchResult.data[key].items).map((item, i) => (
+                  //         <p item={i}> 
+                  //           Item Name: {this.state.searchResult.data[key].items[item].query}
+
+                  //           {
+                  //             // for each item, loop through results
+                  //             // trim results using slice to number of items per store (default = 1?? hard code this in? todo) 
+                  //             // TODO: might say name even if array is empty; handle this? 
+                  //             Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, this.state.numItemsPer).map((product, i) => (
+                  //               <p product={i}>
+                  //                Product Name: {this.state.searchResult.data[key].items[item].itemData[product].name}
+                  //                Price: {this.state.searchResult.data[key].items[item].itemData[product].price}
+                  //               </p>
 
                                 
-                              ))
+                  //             ))
 
-                              // Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, this.state.numItemsPer).map((product, i) =>{
-                              //   //create a item container with value equal to what we want 
-                              //   return (
-                              //   <div className="itemcontainer">
-                              //   <div className="itemname">
-                              //     {
-                              //       "Store: " + this.state.searchResult.data[key].name
-                              //     }
-                              //   </div>
-                              //   </div>
-                              // );
-                              // })
+                              
                                 
-                            }
+                  //           }
 
-                          </p>
-                        ))
-                      }
-                    </p>
-                    )
-                  )
-                }
+                  //         </p>
+                  //       ))
+                  //     }
+                  //   </p>
+                  //   )
+                  // )
+                //} */}
               </div> 
             )
           }
