@@ -46,9 +46,12 @@ class App extends React.Component {
                 path="/test-logout"
                 render={(props) => <LogoutTest {...props} />}
               />
-              <Route path="/dashboard" exact>
-                <Dashboard/>
-              </Route>
+              <Route
+              exact
+              path="/dashboard"
+              render={(props) => <Dashboard {...props} />}
+            />
+              
             </Switch>
           </Router>
         </Provider>

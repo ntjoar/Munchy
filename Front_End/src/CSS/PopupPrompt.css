@@ -37,3 +37,7 @@
   border: 1px solid #999;
   font-size: 20px;
 }
+
+.round-border {
+  border-radius: 20px !important;
+}

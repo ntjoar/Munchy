@@ -14,7 +14,8 @@ const recipeSchema = mongoose.Schema({
     inactiveTime: String,
     readyTime: String,
     totalTime: String,
-    
+    Items: [String],
+    user: String, //{ type:  mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdDate: {type:Date,
     default:Date.now}
 })

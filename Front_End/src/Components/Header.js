@@ -68,9 +68,11 @@ class Header extends Component {
       </Fragment>
     );
     return (
-      <div className="bottomBorder" data-testid="upper" >
-        <Navbar className="header"  data-testid="upper2" dark expand="sm">
-          <img className="logo" src={logo} alt="" />
+      <div className="bottomBorder" data-testid="upper">
+        <Navbar className="header" data-testid="upper2" dark expand="sm">
+          <a href="/">
+            <img className="logo" src={logo} alt="" />
+          </a>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} data-testid="upper3" navbar>
             {isAuthenticated ? (
@@ -81,29 +83,30 @@ class Header extends Component {
                       <FontAwesomeIcon icon={faUserAlt} /> My Account
                     </DropdownToggle>
 
-                    <DropdownMenu className="account_nav" data-testid="drop" right>
+                    <DropdownMenu
+                      className="account_nav"
+                      data-testid="drop"
+                      right
+                    >
                       {/*<DropdownItem className ="account_nav">
                         {AuthNav}
                       </DropdownItem>
                     <DropdownItem divider />*/}
-                      <DropdownItem className="account_nav" >
-                        Account Settings
-                      </DropdownItem>
+                
 
-                      <DropdownItem className="account_nav" data-testid="nav-link">
+                      <DropdownItem
+                        className="account_nav"
+                        data-testid="nav-link"
+                      >
                         <Logout />
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </NavItem>
 
-                <NavItem className="nav-list">
-                  <NavLink href="/recipes">Your Recipes</NavLink>
-                </NavItem>
-
-                <NavItem className="nav-list">
-                  <NavLink href="/coockbook">Your Cookbook</NavLink>
-                </NavItem>
+               { /*<NavItem className="nav-list">
+                <NavLink href="/dashboard">Dashboard</NavLink>
+                  </NavItem>*/}
               </Nav>
             ) : (
               <div className="header">
@@ -112,9 +115,7 @@ class Header extends Component {
                     <NavLink href="/">Home</NavLink>
                   </NavItem>
 
-                  <NavItem className="nav-list">
-                    <NavLink href="/dashboard">Dashboard</NavLink>
-                  </NavItem>
+                  
 
                   <NavItem className="nav-list">
                     <NavLink href="/login">Sign in</NavLink>

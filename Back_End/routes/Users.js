@@ -73,7 +73,13 @@ router.get("/user", authorize, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) throw Error("User does not exist");
-    res.json(user);
+    const payload = {
+      id: user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    };
+    res.json(payload);
     // console.log(res.headersSent)
     // console.log(res.headers)
   } catch (e) {

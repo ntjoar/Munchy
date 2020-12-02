@@ -93,7 +93,7 @@ class Login extends Component{
             
             <Fragment>
             <HeaderApp />
-            {isAuthenticated ? <Redirect to={{ pathname:"/home", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
+            {isAuthenticated ? <Redirect to={{ pathname:"/dashboard", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
             {this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>) : null}
             <div className='signin-form'>
             <Form  onSubmit={this.onSubmit}>

@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+
+  
   "scripts": {
     "client-install": "npm install --prefix Front_End",
     "server-install": "npm install --prefix Back_End",
