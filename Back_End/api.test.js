@@ -30,6 +30,18 @@ async function main() {
         throw 'Test Case 3 Failed!'
     }
     console.log("Test Case 3 Passed!");
+
+    /** Test Case 4 */
+    data = await api.parseWebsites("chocolate", "radius=2000&la=34.0689&lo=-118.4452", "Walmart&Ralphs&Food4Less&Costco", "price");
+
+    console.log("Test case 4: Sort by price");
+    if(data[0]["items"][0]["itemData"][0]["price"] > data[0]["items"][0]["itemData"][1]["price"] ||
+       data[1]["items"][0]["itemData"][0]["price"] > data[1]["items"][0]["itemData"][1]["price"] ||
+       data[2]["items"][0]["itemData"][0]["price"] > data[2]["items"][0]["itemData"][1]["price"] ||
+       data[3]["items"][0]["itemData"][0]["price"] > data[3]["items"][0]["itemData"][1]["price"]) {
+        throw 'Test Case 4 Failed!'
+    }
+    console.log("Test Case 4 Passed!");
 }
 
 (async () => { 

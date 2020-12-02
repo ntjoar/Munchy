@@ -7,6 +7,7 @@ var unirest = require("unirest");
 
 router.post("/get", async (req, res) => {
   const URL = req.body.url;
+  const userID = req.body.userId;
 
   let recipe = await recipeScraper(URL).catch((error) => {
     res.status(400).json({ error: error.message });
@@ -39,15 +40,18 @@ router.post("/get", async (req, res) => {
     inactiveTime: recipe.time.inactive,
     readyTime: recipe.time.ready,
     totalTime: recipe.time.total,
+    user: userID,
   });
   const savedRecipe = await newRecipe.save();
 
   //console.log(data);
-  try {
-    res.status(200).json(savedRecipe);
-  } catch (error) {
-    console.log(error.message);
-  }
+  //  try{
+  //      res.status(200).json(savedRecipe);
+
+  //  }
+  //  catch(error){
+  //     console.log(error.message);
+  //  }
 
   var request = unirest("POST", process.env.RAPID_URL);
 
@@ -77,9 +81,29 @@ router.post("/get", async (req, res) => {
           .send("Unable to update recipe with list of items");
       doc.Items = items;
       doc.save();
+      try {
+        res.status(200).json(doc);
+      } catch (error) {
+        console.log(error.message);
+      }
     });
     //console.log(items);
   });
 });
 
+router.get("/recipes", async (req, res) => {
+  const userID = req.body.userId;
+  console.log(userID);
+  const recipes = await RecipeModel.find({ user: userID }).exec();
+  if (recipes.length == 0)
+    return res
+      .status(400)
+      .send("No recipe found. Please consider adding recipes");
+
+  try {
+    res.status(200).json(recipes);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 module.exports = router;
