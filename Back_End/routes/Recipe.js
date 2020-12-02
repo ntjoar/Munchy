@@ -14,7 +14,10 @@ router.post("/get", async (req, res) => {
     console.log(error.message);
   });
 
-  const recipeExist = await RecipeModel.findOne({ name: recipe.name });
+  const recipeExist = await RecipeModel.findOne({
+    name: recipe.name,
+    user: userID,
+  });
   if (recipeExist) {
     return res.status(400).send("This recipe is already saved in the cookbook");
   }

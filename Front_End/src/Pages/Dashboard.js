@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState } from "react";
+import React, { Component, Fragment, useState, useEffect } from "react";
 import "../CSS/Dashboard.css";
 import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
@@ -100,21 +100,6 @@ class Dashboard extends Component {
     };
 
     this.recipes = {};
-
-    loadRecipes(this.userId)
-      .then((response) => response.json())
-      .then((result) => {
-        this.recipes = result;
-        var recipeList = [];
-        for (var i = 0; i < result.length; i++) {
-          recipeList.push(result[i].name);
-        }
-
-        this.setState({
-          recipeNameList: recipeList,
-        });
-      })
-      .catch((error) => console.log("Does not have any recipes yet"));
   }
 
   static propTypes = {
@@ -143,6 +128,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this.reloadRecipes();
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.setState({
@@ -215,44 +201,40 @@ class Dashboard extends Component {
       // if it does, call API,
       // Otherwise, create a new recipe with empty list
       fetchRequest(url, this.userId)
-        .then((response) => {
+        .then((response) => response.json())
+        .then((result) => {
+          document.getElementById("add-button").removeAttribute("disabled");
           try {
-            response.json();
+            console.log(result);
+            const res = result.Items;
+
+            this.setState((state) => {
+              var items = state.items.concat(res);
+
+              this.reloadRecipes();
+
+              return {
+                isOpenRecipe: false,
+                items: items,
+                recipePromptMessage: this.recipePromptMessage,
+                currentRecipe: result.name,
+              };
+            });
           } catch (error) {
-            response.text();
+            console.log(error);
+            return {
+              recipePromptMessage:
+                "Failed To Parse. Either Invalid URL or Recipe already in the cookbook",
+            };
           }
         })
-        .then((result) =>
-          this.setState((state) => {
-            document.getElementById("add-button").removeAttribute("disabled");
-            try {
-              const res = result.Items;
-              if (res.length != 0) {
-                var items = state.items.concat(res);
-                this.reloadRecipes();
-
-                return {
-                  isOpenRecipe: false,
-                  items: items,
-                  item: "",
-                  recipePromptMessage: this.recipePromptMessage,
-                  currentRecipe: result.name,
-                };
-              }
-            } catch (error) {
-              return {
-                recipePromptMessage:
-                  "Failed To Parse. Please Enter valid Recipe URL",
-              };
-            }
-          })
-        )
         .catch((error) => {
           document.getElementById("add-button").removeAttribute("disabled");
+          console.log(error);
           this.setState((state) => {
             return {
               recipePromptMessage:
-                "Failed To Parse. Please Enter valid Recipe URL",
+                "Failed To Parse. Either Invalid URL or Recipe already in the cookbook",
             };
           });
         });
