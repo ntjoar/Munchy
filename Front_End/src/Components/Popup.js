@@ -39,6 +39,7 @@ class PopupPrompt extends Component {
           <Button
             className="modal-common-button"
             onClick={this.props.clickToAdd}
+            id="add-button"
           >
             Add
           </Button>
