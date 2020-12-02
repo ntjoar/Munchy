@@ -15,7 +15,7 @@ import {
 class PopupPrompt extends Component {
   render() {
     let prompt = (
-      <div className="modal-container modal-center">
+      <div className="modal-container modal-center round-border">
         <div className="modal-div-right">
           {" "}
           <Button className="modal-button" onClick={this.props.onClose}>
@@ -43,12 +43,16 @@ class PopupPrompt extends Component {
             Add
           </Button>
         </div>
-      </div>      
+      </div>
     );
     if (!this.props.isOpen) {
       prompt = null;
     }
-    return <div>{prompt}</div>;
+    return (
+      <div>
+        <strong>{prompt}</strong>
+      </div>
+    );
   }
 }
 

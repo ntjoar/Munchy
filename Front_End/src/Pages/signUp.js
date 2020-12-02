@@ -101,7 +101,7 @@ class SignUp extends Component {
         return (
             <Fragment>
             <HeaderApp />
-        {isAuthenticated ? <Redirect to={{ pathname:"/home", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
+        {isAuthenticated ? <Redirect to={{ pathname:"/dashboard", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
 
             <div className="Container">
             <Row>
