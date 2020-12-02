@@ -91,7 +91,7 @@ router.post("/get", async (req, res) => {
   });
 });
 
-router.get("/recipes", async (req, res) => {
+router.post("/recipes", async (req, res) => {
   const userID = req.body.userId;
   console.log(userID);
   const recipes = await RecipeModel.find({ user: userID }).exec();
