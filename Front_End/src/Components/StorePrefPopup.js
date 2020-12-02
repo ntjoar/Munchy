@@ -48,6 +48,7 @@ class StorePrefPopupPrompt extends Component {
             onClick={() => {
               this.props.setRadius(document.getElementById("radius").value);
               this.props.setNumItems(document.getElementById("numItems").value);
+              this.props.onClose();
             }}
           >
             Save
