@@ -9,6 +9,7 @@ var unirest = require("unirest");
 router.post('/get', async (req, res) => {
 
  const URL = req.body.url;
+ const userID = req.body.userId;
 
 
  let recipe = await recipeScraper(URL).catch(error=> { 
@@ -45,6 +46,7 @@ const newRecipe = new RecipeModel({
  inactiveTime:recipe.time.inactive,
  readyTime: recipe.time.ready,
  totalTime: recipe.time.total,
+ user: userID
  
 })
 const savedRecipe = await newRecipe.save();
@@ -95,4 +97,23 @@ request.send({
   
 })
 
+router.get('/recipes', async (req, res) =>{
+
+  const userID = req.body.userId;
+  console.log(userID)
+  const recipes = await RecipeModel.find({user : userID}).exec();
+  if(recipes.length ==0) 
+        return res.status(400).send("No recipe found. Please consider adding recipes");
+
+
+  try{
+    res.status(200).json(recipes);
+
+}
+catch(error){
+   console.log(error.message);
+}
+
+
+})
 module.exports = router;

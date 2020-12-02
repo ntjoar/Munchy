@@ -14,6 +14,8 @@ email:{
     unique:true,
     required:true
 },
+recepies: [{ type:  mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+
 password:{
     type:String,
     rquired:true
