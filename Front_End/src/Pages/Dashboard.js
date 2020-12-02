@@ -4,13 +4,13 @@ import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
 import Item from "../Components/Item";
 import PopupPrompt from "../Components/Popup";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 import StorePrefPopupPrompt from "../Components/StorePrefPopup";
-import PropTypes from 'prop-types'
-import {login} from '../actions/authAction'
-import {clearErrors} from '../actions/errorActions'
-import {register} from '../actions/authAction'
-import { Redirect} from "react-router-dom"
+import PropTypes from "prop-types";
+import { login } from "../actions/authAction";
+import { clearErrors } from "../actions/errorActions";
+import { register } from "../actions/authAction";
+import { Redirect } from "react-router-dom";
 import {
   Button,
   Modal,
@@ -22,8 +22,6 @@ import {
   Form,
   FormGroup,
 } from "reactstrap";
-
-//const fetch = require("node-fetch");
 
 function fetchRequest(recipeURL) {
   var myHeaders = new Headers();
@@ -52,8 +50,6 @@ class Dashboard extends Component {
     this.clickToAdd = this.clickToAdd.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.recipePromptMessage = "Please Enter the Recipe URL";
-    // this.getRequest = this.getRequest(this);
-    this.items = [];
     this.state = {
       isOpenItem: false,
       isOpenRecipe: false,
@@ -63,24 +59,21 @@ class Dashboard extends Component {
       userRadius: 20,
       storeList: ["Ralphs", "Costco", "Food4Less", "Walmart"],
       numItemsPer: null,
-      items: [], // added some items for developing purposes
+      items: ["Broccoli", "Apple", "Kitkat"],
       item: "",
       recipeURL: "",
-      recipeURLPlaceholder: "",
-      recipeItems: [],
       searchResult: {},
       recipePromptMessage: this.recipePromptMessage,
     };
   }
 
   static propTypes = {
-    isAuthenticated : PropTypes.bool,
-    error : PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool,
+    error: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
-
-};
+    auth: PropTypes.object.isRequired,
+  };
 
   componentDidMount() {
     if ("geolocation" in navigator) {
@@ -123,7 +116,6 @@ class Dashboard extends Component {
   };
 
   clickToAddRecipe = () => {
-    //API call here and set the state
     console.log(this.state.recipeURL);
     const url = this.state.recipeURL;
 
@@ -192,7 +184,9 @@ class Dashboard extends Component {
       "&lo=" +
       this.state.userLong +
       "/";
+
     var i;
+
     for (i = 0; i < num_items; i++) {
       api_url += this.state.items[i];
       if (i < num_items - 1) {
@@ -211,17 +205,24 @@ class Dashboard extends Component {
     } else {
       api_url += "/" + this.state.numItemsPer;
     }
+
+    console.log(api_url);
+
     fetch(api_url)
       .then((response) => response.json())
-      .then((data) => this.setState({ searchResult: data }));
+      .then((data) => {
+        this.setState({
+          searchResult: data,
+        });
+      });
   };
 
   render() {
-    const {isAuthenticated, user} = this.props.auth;
+    const { isAuthenticated, user } = this.props.auth;
     return (
       <Fragment>
         <HeaderApp />
-        { !isAuthenticated ? <Redirect to="/login"/> : null}
+        {!isAuthenticated ? <Redirect to="/login" /> : null}
         <PopupPrompt></PopupPrompt>
         <div className="container">
           <div className="topbuttonrow">
@@ -326,14 +327,11 @@ class Dashboard extends Component {
     );
   }
 }
-const mapStateToProps = state =>({
-  isAuthenticated : state.auth.isAthenticated,
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAthenticated,
   error: state.error,
-  auth: state.auth
-
-})
-export default connect (
-  mapStateToProps,
-  {login, register, clearErrors}
-)(Dashboard);
-
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { login, register, clearErrors })(
+  Dashboard
+);
