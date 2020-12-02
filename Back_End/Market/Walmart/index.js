@@ -10,6 +10,10 @@ function getSearchItemUrl(query, pref) {
   }
 }
 
+function price(obj) { //convert obj.price to float
+  return parseFloat(obj.price.replace(/[^\.\d]/g, ''));
+}
+
 async function getResults(query, pref) {
   const browser = await puppeteer.launch({ headless: false }); // MUST BE FALSE OR WE GET RECAPTCHAd
   const page = await browser.newPage();
@@ -71,6 +75,11 @@ module.exports = {
   search: async function (query, pref) {
     try {
       let items = await getResults(query, pref);
+      if(pref != "none") {
+        return items.sort(function (a, b) {
+            return price(a)-price(b);
+        });
+      }
       return items;
     } catch (e) {
       return []
