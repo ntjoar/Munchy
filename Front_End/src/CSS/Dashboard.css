@@ -23,14 +23,14 @@
   width: 100%;
   height: 35px;
   text-align: left;
-  margin: 50px 0px 0px 100px;
+  margin: 50px 0px 0px 0px;
 }
 
 .topleft {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 50px 450px 0px 110px;
+  margin: 0px 230px 0px 0px;
 }
 
 .storeprefbutton {
@@ -38,11 +38,12 @@
   width: 280px;
   height: 35px;
   text-align: center;
-  line-height: 35px;
+  line-height: 33px;
   padding: 0;
   border: 2px solid black;
   background-color: #a8d0e6;
   color: black !important;
+  border-radius: 5px;
 }
 
 .storeprefbutton:hover,
@@ -52,8 +53,7 @@
   width: 280px;
   height: 35px;
   text-align: center;
-  line-height: 35px;
-  padding: 0;
+  line-height: 33px;
   border: 2px solid black;
   background-color: #2fb1f7;
   color: black !important;
@@ -136,7 +136,7 @@
 .button-general:hover,
 .button-general:active,
 .button-general:focus {
-  padding-top: 2px;
+  padding-top: 3px;
   height: 100%;
   margin: 0 20px 0 0;
   background-color: #2fb1f7;
