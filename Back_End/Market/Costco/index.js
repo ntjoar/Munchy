@@ -19,6 +19,10 @@ async function getHtml(link) {
     return (await fetch(link)).data;
 }
 
+function price(obj) { //convert obj.price to float
+    return parseFloat(obj.price.replace(/[^\.\d]/g, ''));
+}
+
 async function getResults(query, pref) {
     let html = await getHtml(getSearchItemUrl(query, pref));
     const $ = cheerio.load(html);
@@ -42,7 +46,12 @@ async function getResults(query, pref) {
 module.exports = {
     search: async function(query, pref){
         try {
-            let items = await getResults(query, pref)
+            let items = await getResults(query, pref);
+            if(pref != "none") {
+                return items.sort(function (a, b) {
+                    return price(a)-price(b);
+                });
+            }
             return items;
         } catch (e) {
             return []
