@@ -25,6 +25,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  ButtonGroup,
 } from "reactstrap";
 import { faLongArrowAltDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -167,10 +168,14 @@ class Dashboard extends Component {
       items: items,
     });
   }
+
   toggle() {
     const negate = !this.state.dropDownToggle;
     this.setState({
       dropDownToggle: negate,
+      isOpenItem: false,
+      isOpenRecipe: false,
+      storePrefIsOpen: false,
     });
   }
 
@@ -338,99 +343,104 @@ class Dashboard extends Component {
       <Fragment>
         <HeaderApp />
         {!isAuthenticated ? <Redirect to="/login" /> : null}
-        <PopupPrompt></PopupPrompt>
         <div className="container">
-          <div className="topbuttonrow">
-            <div className="topleft">
-              <Button
-                className="button-general"
-                onClick={(e) =>
-                  this.setState({
-                    isOpenItem: true,
-                    storePrefIsOpen: false,
-                    isOpenRecipe: false,
-                  })
-                }
-              >
-                + Items
-              </Button>
-              <PopupPrompt
-                isOpen={this.state.isOpenItem}
-                onClose={(e) => this.setState({ isOpenItem: false })}
-                addItem={this.addItem}
-                clickToAdd={this.clickToAdd}
-              >
-                Please Enter the Ingredient
-              </PopupPrompt>
-              <Button
-                className="button-general"
-                onClick={(e) =>
-                  this.setState({
-                    isOpenRecipe: true,
-                    storePrefIsOpen: false,
-                    isOpenItem: false,
-                    recipePromptMessage: this.recipePromptMessage,
-                  })
-                }
-              >
-                + Recipe
-              </Button>
-              <PopupPrompt
-                isOpen={this.state.isOpenRecipe}
-                onClose={(e) =>
-                  this.setState({
-                    isOpenRecipe: false,
-                    recipePromptMessage: this.recipePromptMessage,
-                  })
-                }
-                addItem={this.addRecipeURL}
-                clickToAdd={this.clickToAddRecipe}
-              >
-                {this.state.recipePromptMessage}
-              </PopupPrompt>
-              {/* RECIPE DROP DOWN LIST SECTION */}
+          <ButtonGroup size="md" className="topleft">
+            <Button
+              className="button-general"
+              onClick={(e) =>
+                this.setState({
+                  isOpenItem: true,
+                  storePrefIsOpen: false,
+                  isOpenRecipe: false,
+                })
+              }
+            >
+              + Items
+            </Button>
 
-              <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
-                <DropdownToggle caret className="button-dropdown">
-                  {this.state.currentRecipe}
-                </DropdownToggle>
-                <DropdownMenu className="drop-down-menu">
-                  {this.state.recipeNameList.map((value) => {
-                    return (
-                      <DropdownItem
-                        className="drop-down-item"
-                        onClick={this.selectRecipe}
-                      >
-                        {value}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </Dropdown>
-              {/* END OF RECIPE DROP DOWN LIST */}
+            <Button
+              className="button-general"
+              onClick={(e) =>
+                this.setState({
+                  isOpenRecipe: true,
+                  storePrefIsOpen: false,
+                  isOpenItem: false,
+                  recipePromptMessage: this.recipePromptMessage,
+                })
+              }
+            >
+              + Recipe
+            </Button>
 
-              <Button
-                className="storeprefbutton "
-                onClick={(e) =>
-                  this.setState({
-                    isOpenItem: false,
-                    storePrefIsOpen: true,
-                    isOpenRecipe: false,
-                  })
-                }
-              >
-                Store Preference Selection
-              </Button>
-              <StorePrefPopupPrompt
-                isOpen={this.state.storePrefIsOpen}
-                setRadius={this.setRadius}
-                curRadius={this.state.userRadius}
-                setStorePref={this.setStorePref}
-                setNumItems={this.setNumItems}
-                onClose={(e) => this.setState({ storePrefIsOpen: false })}
-              />
-            </div>
-          </div>
+            {/* RECIPE DROP DOWN LIST SECTION */}
+
+            <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
+              <DropdownToggle caret className="button-dropdown">
+                {this.state.currentRecipe}
+              </DropdownToggle>
+              <DropdownMenu className="drop-down-menu">
+                {this.state.recipeNameList.map((value) => {
+                  return (
+                    <DropdownItem
+                      className="drop-down-item"
+                      onClick={this.selectRecipe}
+                    >
+                      {value}
+                    </DropdownItem>
+                  );
+                })}
+              </DropdownMenu>
+            </Dropdown>
+            {/* END OF RECIPE DROP DOWN LIST */}
+
+            <Button
+              className="storeprefbutton "
+              onClick={(e) =>
+                this.setState({
+                  isOpenItem: false,
+                  storePrefIsOpen: true,
+                  isOpenRecipe: false,
+                })
+              }
+            >
+              Store Preference Selection
+            </Button>
+          </ButtonGroup>
+
+          {/* Pop up Window Section */}
+          <PopupPrompt
+            className="left"
+            isOpen={this.state.isOpenItem}
+            onClose={(e) => this.setState({ isOpenItem: false })}
+            addItem={this.addItem}
+            clickToAdd={this.clickToAdd}
+          >
+            Please Enter the Ingredient
+          </PopupPrompt>
+
+          <PopupPrompt
+            isOpen={this.state.isOpenRecipe}
+            onClose={(e) =>
+              this.setState({
+                isOpenRecipe: false,
+                recipePromptMessage: this.recipePromptMessage,
+              })
+            }
+            addItem={this.addRecipeURL}
+            clickToAdd={this.clickToAddRecipe}
+          >
+            {this.state.recipePromptMessage}
+          </PopupPrompt>
+
+          <StorePrefPopupPrompt
+            isOpen={this.state.storePrefIsOpen}
+            setRadius={this.setRadius}
+            curRadius={this.state.userRadius}
+            setStorePref={this.setStorePref}
+            setNumItems={this.setNumItems}
+            onClose={(e) => this.setState({ storePrefIsOpen: false })}
+          />
+          {/* End of Pop up Window Section */}
 
           <div className="dashboard">
             <div>
