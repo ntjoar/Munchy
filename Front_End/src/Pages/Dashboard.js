@@ -370,55 +370,7 @@ class Dashboard extends Component {
         
         <div className="container">
           <div className="topbuttonrow">
-            <ButtonGroup size="md" className="topleft">
-              <Button
-                className="button-general"
-                onClick={(e) =>
-                  this.setState({
-                    isOpenItem: true,
-                    storePrefIsOpen: false,
-                    isOpenRecipe: false,
-                  })
-                }
-              >
-                + Items
-              </Button>
-
-              <Button
-                className="button-general"
-                onClick={(e) =>
-                  this.setState({
-                    isOpenRecipe: true,
-                    storePrefIsOpen: false,
-                    isOpenItem: false,
-                    recipePromptMessage: this.recipePromptMessage,
-                  })
-                }
-              >
-                + Recipe
-              </Button>
-
-              {/* RECIPE DROP DOWN LIST SECTION */}
-
-              <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
-                <DropdownToggle caret className="button-dropdown">
-                  {this.state.currentRecipe}
-                </DropdownToggle>
-                <DropdownMenu className="drop-down-menu">
-                  {this.state.recipeNameList.map((value) => {
-                    return (
-                      <DropdownItem
-                        className="drop-down-item"
-                        onClick={this.selectRecipe}
-                      >
-                        {value}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </Dropdown>
-              {/* END OF RECIPE DROP DOWN LIST */}
-            </ButtonGroup>
+    
             <Button
 
               className="button-general"

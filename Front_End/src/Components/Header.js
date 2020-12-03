@@ -90,10 +90,8 @@ class Header extends Component {
               <NavLink href="/recipes">My recipes</NavLink>
               </Link>
             </NavItem>
-=======
-                <NavItem className="nav-list">
-                    <NavLink href="/dashboard">Dashboard</NavLink>
-                  </NavItem>
+
+                
 
                 <NavItem>
                   <UncontrolledDropdown data-testid="navbar" nav inNavbar>
