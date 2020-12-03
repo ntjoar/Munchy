@@ -87,7 +87,7 @@ class Recipes extends Component {
             <Fragment>
             <HeaderApp />
             {!isAuthenticated ? <Redirect to="/login" /> : null}
-            <div className="mb-4 mt-4 pl-15 recipe_header" ><h4>Your save recipes</h4></div>
+            <div className="mb-4 mt-4 pl-15 recipe_header" ><h4>Your saved recipes</h4></div>
             <Container fluid>
             
             
