@@ -28,9 +28,9 @@ class StorePrefPopupPrompt extends Component {
             <Form>
               <FormGroup >
                 <Label for="radius">Radius (Miles)</Label>
-                <Input type="radius" name="radius" id="radius" maxlength="10"/>
+                <Input type="radius" name="radius" id="radius" maxLength="10" onChange={() => this.props.setRadius(document.getElementById("radius").value)}/>
                 <Label for="numItems">Number of Items Per Store</Label>
-                <Input type="numItems" name="numItems" id="numItems" maxlength="10"/>
+                <Input type="numItems" name="numItems" id="numItems" maxLength="10" onChange={() => this.props.setNumItems(document.getElementById("numItems").value)}/>
                 <Label for="storeselect">Stores to Search</Label>
                 <Input type="select" name="storeselect" id="storeselect" multiple onChange={this.props.setStorePref}>
                   <option>Ralphs</option>
@@ -46,8 +46,7 @@ class StorePrefPopupPrompt extends Component {
           <Button
             className="modal-common-button"
             onClick={() => {
-              this.props.setRadius(document.getElementById("radius").value);
-              this.props.setNumItems(document.getElementById("numItems").value);
+              this.props.saveStorePref();
             }}
           >
             Save
