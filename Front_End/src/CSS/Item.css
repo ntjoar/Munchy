@@ -34,3 +34,19 @@
     line-height: 30px;
     text-align: center;
   }
+
+  .biggeritemcontainer {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    width: 100%;
+    height: 175px;
+    border-bottom: 3px solid black;
+  }
+
+  .biggeritemname {
+    margin: 10px 15px 10px; 
+    width: 1000px;
+    height: 175px;
+    text-align: left;
+  }

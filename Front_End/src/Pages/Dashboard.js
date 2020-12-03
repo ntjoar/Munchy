@@ -48,11 +48,6 @@ function fetchRequest(recipeURL, userid) {
   return fetch("http://localhost:8000/recipe/get/", requestOptions);
 }
 
-<<<<<<< HEAD
-// function printJSON(jsonObject){
-
-// }
-=======
 function loadRecipes(id) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -70,7 +65,6 @@ function loadRecipes(id) {
 
   return fetch("http://localhost:8000/recipe/recipes/", requestOptions);
 }
->>>>>>> ae1979b9b592906e8348885026554f9c3b6877c6
 
 class Dashboard extends Component {
   constructor(props) {
@@ -477,7 +471,17 @@ class Dashboard extends Component {
               })}
             </div>
           </div>
-              
+
+          <div className="bottombuttonrow">
+            <Button className="clearbutton" onClick={this.clearItem}>
+              Clear
+            </Button>
+            <Button className="searchbutton" onClick={this.searchItems}>
+              Search
+            </Button>
+          </div>
+        
+
           {/* below line checks if searchResult is empty; otherwise, we run our functions to display the results dashboard*/}
           { (Object.keys(this.state.searchResult).length == 0) ? null : 
             (
@@ -493,71 +497,24 @@ class Dashboard extends Component {
                           Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, ((this.state.numItemsPer == null) ? 200 : this.state.numItemsPer)).map((product, i) =>{
                             //create a item container with value equal to what we want 
                             return (
-                            <div className="itemcontainer">
-                            <div className="itemname">
-                              {
-                                "Store: " + this.state.searchResult.data[key].name + 
-                                "\nItem Name: " + this.state.searchResult.data[key].items[item].query + 
-                                "\nProduct Name: " + this.state.searchResult.data[key].items[item].itemData[product].name + 
-                                "\nPrice: " + this.state.searchResult.data[key].items[item].itemData[product].price + 
-                                "\nURL: " + this.state.searchResult.data[key].items[item].itemData[product].link
-                              }
+                            <div className="biggeritemcontainer">
+                            <div className="biggeritemname">
+                              {"Store: " + this.state.searchResult.data[key].name} <br></br>
+                              {"Item Name: " + this.state.searchResult.data[key].items[item].query} <br></br>
+                              {"Product Name: " + this.state.searchResult.data[key].items[item].itemData[product].name} <br></br>
+                              {"Price: " + this.state.searchResult.data[key].items[item].itemData[product].price} <br></br>
+                              {"URL: " + this.state.searchResult.data[key].items[item].itemData[product].link}
                             </div>
                             </div>
                           );
                           })
                       ))))
                   }
-
-                  {/* // loop through each store 
-                  // Object.keys(this.state.searchResult.data).map((key, i) => (
-                  //   // the name of the paragraph block doesn't matter, <p test> works as well
-                  //   <p key={i}> 
-                  //     Store: {this.state.searchResult.data[key].name}
-
-                  //     {
-                  //       //for each store, loop through items 
-                  //       Object.keys(this.state.searchResult.data[key].items).map((item, i) => (
-                  //         <p item={i}> 
-                  //           Item Name: {this.state.searchResult.data[key].items[item].query}
-
-                  //           {
-                  //             // for each item, loop through results
-                  //             // trim results using slice to number of items per store (default = 1?? hard code this in? todo) 
-                  //             // TODO: might say name even if array is empty; handle this? 
-                  //             Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, this.state.numItemsPer).map((product, i) => (
-                  //               <p product={i}>
-                  //                Product Name: {this.state.searchResult.data[key].items[item].itemData[product].name}
-                  //                Price: {this.state.searchResult.data[key].items[item].itemData[product].price}
-                  //               </p>
-
-                                
-                  //             ))
-
-                              
-                                
-                  //           }
-
-                  //         </p>
-                  //       ))
-                  //     }
-                  //   </p>
-                  //   )
-                  // )
-                //} */}
               </div> 
             )
           }
 
-          <div className="bottombuttonrow">
-            <Button className="clearbutton" onClick={this.clearItem}>
-              Clear
-            </Button>
-            <Button className="searchbutton" onClick={this.searchItems}>
-              Search
-            </Button>
-          </div>
-        </div>
+      </div>  
       </Fragment>
     );
   }

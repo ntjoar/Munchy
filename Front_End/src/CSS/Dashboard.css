@@ -1,14 +1,11 @@
 .container {
   width: 1000px;
   height: 600px;
-<<<<<<< HEAD
   text-align: center;
-   overflow-y: scroll; 
+  overflow-y: scroll; 
   /* display: flex; 
   flex-direction: column; */
-=======
   text-align: left;
->>>>>>> ae1979b9b592906e8348885026554f9c3b6877c6
 }
 
 .dashboard {
