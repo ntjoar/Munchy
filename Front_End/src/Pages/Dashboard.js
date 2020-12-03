@@ -2,7 +2,6 @@ import React, { Component, Fragment, useState, useEffect } from "react";
 import "../CSS/Dashboard.css";
 import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
-import Item from "../Components/Item";
 import PopupPrompt from "../Components/Popup";
 import { connect } from "react-redux";
 import StorePrefPopupPrompt from "../Components/StorePrefPopup";

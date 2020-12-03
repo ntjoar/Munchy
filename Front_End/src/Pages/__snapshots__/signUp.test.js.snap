@@ -1,0 +1,225 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+Array [
+  <div
+    className="bottomBorder"
+    data-testid="upper"
+  >
+    <nav
+      className="header navbar navbar-expand-sm navbar-dark"
+      data-testid="upper2"
+    >
+      <a
+        href="/"
+      >
+        <img
+          alt=""
+          className="logo"
+          src="munchy_logo.png"
+        />
+      </a>
+      <button
+        aria-label="Toggle navigation"
+        className="navbar-toggler"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        className="collapse navbar-collapse"
+        data-testid="upper3"
+        style={Object {}}
+      >
+        <div
+          className="header"
+        >
+          <ul
+            className="navbar-header center navbar-nav"
+          >
+            <li
+              className="nav-list nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </li>
+            <li
+              className="nav-list nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/login"
+                onClick={[Function]}
+              >
+                Sign in
+              </a>
+            </li>
+            <li
+              className="nav-list nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/signup"
+                onClick={[Function]}
+              >
+                Sign up
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>,
+  <div
+    className="Container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col"
+      >
+        <div
+          className="signin-form"
+        >
+          <form
+            action="#"
+            className="av-valid"
+            method="get"
+            noValidate={true}
+            onKeyDown={[Function]}
+            onSubmit={[Function]}
+          >
+            <div
+              className="full-height bg-light container-fluid"
+            >
+              <div
+                className="h-100 justify-content-center full-height align-items-center Login-wrap row"
+              >
+                <div
+                  className="p-0 col-10 col-lg-3"
+                >
+                  <div
+                    className="card"
+                  >
+                    <div
+                      className="card-body"
+                    >
+                      <div
+                        className="card-title"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          className="svg-inline--fa fa-user-circle fa-w-16 fa-2x "
+                          data-icon="user-circle"
+                          data-prefix="fas"
+                          focusable="false"
+                          role="img"
+                          style={Object {}}
+                          viewBox="0 0 496 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"
+                            fill="currentColor"
+                            style={Object {}}
+                          />
+                        </svg>
+                          SIGN UP
+                      </div>
+                      <hr />
+                      <p
+                        className="card-text"
+                      >
+                        Create an account.
+                      </p>
+                      <div
+                        className="mb-3 input-group"
+                      >
+                        <input
+                          className="form-control"
+                          id="firstName"
+                          name="firstName"
+                          onChange={[Function]}
+                          placeholder="Enter Your Firstname"
+                          required={true}
+                          type="text"
+                        />
+                                          
+                      </div>
+                      <div
+                        className="mb-3 input-group"
+                      >
+                        <input
+                          className="form-control"
+                          id="lastName"
+                          name="lastName"
+                          onChange={[Function]}
+                          placeholder="Enter Your Lastname"
+                          required={true}
+                          type="text"
+                        />
+                                          
+                      </div>
+                      <div
+                        className="mb-3 input-group"
+                      >
+                        <input
+                          className="form-control"
+                          id="email"
+                          name="email"
+                          onChange={[Function]}
+                          placeholder="Email"
+                          required={true}
+                          type="text"
+                        />
+                      </div>
+                      <div
+                        className="mb-4 input-group"
+                      >
+                        <input
+                          className="form-control"
+                          id="password"
+                          name="password"
+                          onChange={[Function]}
+                          placeholder="Password"
+                          required={true}
+                          type="password"
+                        />
+                      </div>
+                      <div
+                        className="row"
+                      >
+                        <div
+                          className="col-12 col-lg-6"
+                        >
+                          <button
+                            aria-label={null}
+                            className="px-4 btn btn-secondary"
+                            id="click-login"
+                            onClick={[Function]}
+                          >
+                            Sign up
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
