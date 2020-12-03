@@ -528,7 +528,8 @@ class Dashboard extends Component {
                               {"Item Name: " + this.state.searchResult.data[key].items[item].query} <br></br>
                               {"Product Name: " + this.state.searchResult.data[key].items[item].itemData[product].name} <br></br>
                               {"Price: " + this.state.searchResult.data[key].items[item].itemData[product].price} <br></br>
-                              {"URL: " + this.state.searchResult.data[key].items[item].itemData[product].link}
+                              {"URL: "}
+                              <a href={this.state.searchResult.data[key].items[item].itemData[product].link}>Click here to go to product</a>
                             </div>
                             </div>
                           );

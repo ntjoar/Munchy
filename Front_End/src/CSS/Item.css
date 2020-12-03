@@ -40,13 +40,15 @@
     flex-direction: row;
     align-items: left;
     width: 100%;
-    height: 175px;
+    overflow-x: hidden; 
+    overflow-y: hidden; 
+    height: 140px; 
     border-bottom: 3px solid black;
   }
 
   .biggeritemname {
     margin: 10px 15px 10px; 
-    width: 1000px;
-    height: 175px;
+
+    height: 140px;
     text-align: left;
   }
