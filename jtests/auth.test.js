@@ -41,7 +41,7 @@ describe('Login', () => {
 	await page.waitForSelector('.signin-form');
 
 	await page.click('input[name=email]')
-	await page.type('input[name=email]', 'k.benlghalia@gmail.com')
+	await page.type('input[name=email]', 'test@test.com')
 	await page.click('input[name=password]')
 	await page.type('input[name=password]', '123456789')
 	await page.click('#click-login')

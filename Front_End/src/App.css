@@ -138,3 +138,28 @@
   height: 500px;
   object-fit: cover
 }
+
+.recipe_img{
+  width: auto;
+  height: 150px;
+  object-fit: cover
+}
+.recipe_img2{
+  width: 470px;
+  height: 150px;
+  object-fit: cover
+}
+.row_r {
+  columns: 3 ;
+}
+.recipe_button{
+
+color: red !important;
+}
+.recipe_button:hover{
+
+  color: white !important;
+  }
+.recipe_header{
+ margin-left: 25px; 
+}

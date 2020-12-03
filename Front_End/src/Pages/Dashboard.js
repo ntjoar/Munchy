@@ -2,7 +2,6 @@ import React, { Component, Fragment, useState, useEffect } from "react";
 import "../CSS/Dashboard.css";
 import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
-import Item from "../Components/Item";
 import PopupPrompt from "../Components/Popup";
 import { connect } from "react-redux";
 import StorePrefPopupPrompt from "../Components/StorePrefPopup";
@@ -10,7 +9,8 @@ import PropTypes from "prop-types";
 import { login } from "../actions/authAction";
 import { clearErrors } from "../actions/errorActions";
 import { register } from "../actions/authAction";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
   Button,
   Modal,
@@ -100,6 +100,7 @@ class Dashboard extends Component {
       recipePromptMessage: this.recipePromptMessage,
       currentRecipe: "Select Recipe",
       recipeNameList: [],
+      redirect: false
     };
 
     this.recipes = {};
@@ -128,6 +129,16 @@ class Dashboard extends Component {
         });
       })
       .catch((error) => console.log("Does not have any recipes yet"));
+  }
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/recipes' />
+    }
   }
 
   componentDidMount() {
@@ -276,6 +287,7 @@ class Dashboard extends Component {
     this.setState({ tempStoreList: value });
   };
 
+
   saveStorePref = () => {
     this.setState((state) => {
       var userRadius = state.userRadius;
@@ -302,6 +314,7 @@ class Dashboard extends Component {
       };
     });
   }
+
 
   searchItems = () => {
     let num_items = this.state.items.length;
@@ -350,63 +363,75 @@ class Dashboard extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
+
     return (
       <Fragment>
         <HeaderApp />
-        {!isAuthenticated ? <Redirect to="/login" /> : null}
+        { !isAuthenticated ? <Redirect to="/login"/> : null}
+        { user ? <div data-testid="homepage" ></div> : null}
         <div className="container">
           <div className="topbuttonrow">
-            <ButtonGroup size="md" className="topleft">
-              <Button
-                className="button-general"
-                onClick={(e) =>
-                  this.setState({
-                    isOpenItem: true,
-                    storePrefIsOpen: false,
-                    isOpenRecipe: false,
-                  })
-                }
-              >
-                + Items
-              </Button>
-
-              <Button
-                className="button-general"
-                onClick={(e) =>
-                  this.setState({
-                    isOpenRecipe: true,
-                    storePrefIsOpen: false,
-                    isOpenItem: false,
-                    recipePromptMessage: this.recipePromptMessage,
-                  })
-                }
-              >
-                + Recipe
-              </Button>
-
-              {/* RECIPE DROP DOWN LIST SECTION */}
-
-              <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
-                <DropdownToggle caret className="button-dropdown">
-                  {this.state.currentRecipe}
-                </DropdownToggle>
-                <DropdownMenu className="drop-down-menu">
-                  {this.state.recipeNameList.map((value) => {
-                    return (
-                      <DropdownItem
-                        className="drop-down-item"
-                        onClick={this.selectRecipe}
-                      >
-                        {value}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </Dropdown>
-              {/* END OF RECIPE DROP DOWN LIST */}
-            </ButtonGroup>
+          { user ? <div data-testid="homepage" ></div> : null}
             <Button
+
+              className="button-general"
+              onClick={(e) =>
+                this.setState({
+                  isOpenItem: true,
+                  storePrefIsOpen: false,
+                  isOpenRecipe: false,
+                })
+              }
+            >
+              + Items
+            </Button>
+
+            <Button
+              className="button-general"
+              onClick={(e) =>
+                this.setState({
+                  isOpenRecipe: true,
+                  storePrefIsOpen: false,
+                  isOpenItem: false,
+                  recipePromptMessage: this.recipePromptMessage,
+                })
+              }
+            >
+              + Recipe
+            </Button>
+
+            {/* RECIPE DROP DOWN LIST SECTION */}
+
+            <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
+              <DropdownToggle caret className="button-dropdown">
+                {this.state.currentRecipe}
+              </DropdownToggle>
+              <DropdownMenu className="drop-down-menu">
+                {this.state.recipeNameList.map((value) => {
+                  return (
+                    <DropdownItem
+                      className="drop-down-item"
+                      onClick={this.selectRecipe}
+                    >
+                      {value}
+                    </DropdownItem>
+                  );
+                })}
+              </DropdownMenu>
+
+            </Dropdown>
+            {/* END OF RECIPE DROP DOWN LIST */}
+            {this.renderRedirect()}
+            <Button
+            className="button-general" onClick={this.setRedirect}>
+                See All my recipes
+          </Button>
+
+            <Button
+              className="storeprefbutton "
+
               className="storeprefbutton"
+
               onClick={(e) =>
                 this.setState({
                   isOpenItem: false,
