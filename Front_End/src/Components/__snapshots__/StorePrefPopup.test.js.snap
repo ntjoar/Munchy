@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly when open 1`] = `
+<div>
+  <div
+    className="modal-container modal-center"
+  >
+    <div
+      className="modal-div-right"
+    >
+       
+      <button
+        aria-label={null}
+        className="modal-button btn btn-secondary"
+        onClick={[Function]}
+      >
+        x
+      </button>
+    </div>
+    <div>
+      <form
+        className=""
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            className=""
+            htmlFor="radius"
+          >
+            Radius (Miles)
+          </label>
+          <input
+            className="form-control"
+            id="radius"
+            maxLength="10"
+            name="radius"
+            onChange={[Function]}
+            type="radius"
+          />
+          <label
+            className=""
+            htmlFor="numItems"
+          >
+            Number of Items Per Store
+          </label>
+          <input
+            className="form-control"
+            id="numItems"
+            maxLength="10"
+            name="numItems"
+            onChange={[Function]}
+            type="numItems"
+          />
+          <label
+            className=""
+            htmlFor="storeselect"
+          >
+            Stores to Search
+          </label>
+          <select
+            className="form-control"
+            id="storeselect"
+            multiple={true}
+            name="storeselect"
+          >
+            <option>
+              Ralphs
+            </option>
+            <option>
+              Costco
+            </option>
+            <option>
+              Walmart
+            </option>
+            <option>
+              Food4Less
+            </option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div
+      className="modal-div-right"
+    >
+      <button
+        aria-label={null}
+        className="modal-common-button btn btn-secondary"
+        onClick={[Function]}
+        type="button"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+`;

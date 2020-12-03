@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly when adding ingredients 1`] = `
+<div>
+  <strong>
+    <div
+      className="modal-container modal-center round-border"
+    >
+      <div
+        className="modal-div-right"
+      >
+         
+        <button
+          aria-label={null}
+          className="modal-button btn btn-secondary"
+          onClick={[Function]}
+        >
+          x
+        </button>
+      </div>
+      <div>
+        <p>
+          Please Enter the Ingredient
+        </p>
+        <input
+          className="modal-textarea"
+          id="ingredients"
+          maxLength="100"
+          onChange={[Function]}
+        />
+      </div>
+      <div
+        className="modal-div-right"
+      >
+        <button
+          aria-label={null}
+          className="modal-common-button btn btn-secondary"
+          id="add-button"
+          onClick={[Function]}
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </strong>
+</div>
+`;
+
+exports[`renders correctly when adding recipe URL 1`] = `
+<div>
+  <strong>
+    <div
+      className="modal-container modal-center round-border"
+    >
+      <div
+        className="modal-div-right"
+      >
+         
+        <button
+          aria-label={null}
+          className="modal-button btn btn-secondary"
+          onClick={[Function]}
+        >
+          x
+        </button>
+      </div>
+      <div>
+        <p>
+          Please Enter the Recipe URL
+        </p>
+        <input
+          className="modal-textarea"
+          id="ingredients"
+          maxLength="100"
+          onChange={[Function]}
+        />
+      </div>
+      <div
+        className="modal-div-right"
+      >
+        <button
+          aria-label={null}
+          className="modal-common-button btn btn-secondary"
+          id="add-button"
+          onClick={[Function]}
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </strong>
+</div>
+`;
