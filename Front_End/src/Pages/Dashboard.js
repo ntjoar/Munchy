@@ -101,7 +101,7 @@ class Dashboard extends Component {
       recipePromptMessage: this.recipePromptMessage,
       currentRecipe: "Select Recipe",
       recipeNameList: [],
-      redirect: false
+      redirect: false,
     };
 
     this.recipes = {};
@@ -133,14 +133,14 @@ class Dashboard extends Component {
   }
   setRedirect = () => {
     this.setState({
-      redirect: true
-    })
-  }
+      redirect: true,
+    });
+  };
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/recipes' />
+      return <Redirect to="/recipes" />;
     }
-  }
+  };
 
   componentDidMount() {
     this.reloadRecipes();
@@ -256,7 +256,10 @@ class Dashboard extends Component {
         .getElementById("add-button")
         .setAttribute("disabled", "disabled");
     } else {
-      //TODO: Add Recipe here
+      this.setState({
+        recipePromptMessage:
+          "Invalid URL. Please include http:// or https:// in the URL",
+      });
     }
   };
 
@@ -288,19 +291,18 @@ class Dashboard extends Component {
     this.setState({ tempStoreList: value });
   };
 
-
   saveStorePref = () => {
     this.setState((state) => {
       var userRadius = state.userRadius;
       var storeList = state.storeList;
       var numItemsPer = state.numItemsPer;
-      if(state.tempRadius != 0) {
+      if (state.tempRadius != 0) {
         var userRadius = state.tempRadius;
       }
-      if(state.tempStoreList.length != 0) {
+      if (state.tempStoreList.length != 0) {
         var storeList = state.tempStoreList;
       }
-      if(state.tempNumItemsPer != null) {
+      if (state.tempNumItemsPer != null) {
         var numItemsPer = state.tempNumItemsPer;
       }
 
@@ -314,8 +316,7 @@ class Dashboard extends Component {
         tempStoreList: [],
       };
     });
-  }
-
+  };
 
   searchItems = () => {
     let num_items = this.state.items.length;
@@ -367,12 +368,10 @@ class Dashboard extends Component {
     return (
       <Fragment>
         <HeaderApp />
-        
+
         <div className="container">
           <div className="topbuttonrow">
-    
             <Button
-
               className="button-general"
               onClick={(e) =>
                 this.setState({
@@ -417,20 +416,16 @@ class Dashboard extends Component {
                   );
                 })}
               </DropdownMenu>
-
             </Dropdown>
             {/* END OF RECIPE DROP DOWN LIST */}
             {this.renderRedirect()}
-            <Button
-            className="button-general" onClick={this.setRedirect}>
-                See All my recipes
-          </Button>
+            <Button className="button-general" onClick={this.setRedirect}>
+              See All my recipes
+            </Button>
 
             <Button
               className="storeprefbutton "
-
               className="storeprefbutton"
-
               onClick={(e) =>
                 this.setState({
                   isOpenItem: false,
