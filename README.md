@@ -1,10 +1,10 @@
 # Munchy
-For this project, you will need to run two separate servers. One is for our webscraping API and one for our frontend server. Frontend should be run on port 3000 and backend on port 8000. For this, the frontend takes basic inputs and sends it to our api so our API can return values to front end. 
+For this project, you will need to run two separate servers. One is for our webscraping API and one for our frontend server. Frontend should be run on port 3000 and backend on port 8000. For this, the frontend takes user inputs (ingredient names, store preferences) and sends it to our API which returns webscraped ingredient price data to the frontend. 
 
 ## About
-Munchy is a team of CS130 Students at UCLA. We understand the struggle of students trying to cook recipes but not knowing where to go for ingredients. We hope to create a solution in which students can easily find cheap ingredients near them. As such, we are hoping to give those students trying to take more interest in culinary arts the ability to do so.
+Munchy is a team of CS130 students at UCLA. We understand the struggle of students trying to cook recipes but not knowing where to go for ingredients. We hope to create a solution in which students can easily find cheap ingredients near them. As such, we are hoping to give those students trying to take more interest in culinary arts the ability to do so. We want you to be able to cook and execute a recipe without the hassle of finding the cheapest available choice for each ingredient. This is a website made by students for students.
 
-Our hope with this website is to help promote more interest in the culinary arts using recipes. We want you to be able to cook and execute a recipe without the hassle of having to find the cheapest available choice for each ingredient. This is a website made by students for students.
+Users are able to provide recipe URLs to our app, which will webscrape the recipe website, find all the required ingredients, and add them to the current query. Users are also able to manually add items. Our webscraping API then parses the items included in the query from the frontend and searches various stores for these items, returning the items and their prices to the user. 
 
 This website is our final project for CS130 and not officially published.
 
