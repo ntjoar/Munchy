@@ -365,12 +365,15 @@ class Dashboard extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
+
     return (
       <Fragment>
         <HeaderApp />
-
+        {!isAuthenticated ? <Redirect to="/login" /> : null}
+        {user ? <div data-testid="homepage"></div> : null}
         <div className="container">
           <div className="topbuttonrow">
+            {user ? <div data-testid="homepage"></div> : null}
             <Button
               className="button-general"
               onClick={(e) =>
