@@ -78,6 +78,7 @@ class Header extends Component {
           <Collapse isOpen={this.state.isOpen} data-testid="upper3" navbar>
             {isAuthenticated ? (
               <Nav className="ml-auto" navbar>
+
               
               <NavItem className="nav-list">
               <Link to="/dashboard">
@@ -89,6 +90,11 @@ class Header extends Component {
               <NavLink href="/recipes">My recipes</NavLink>
               </Link>
             </NavItem>
+=======
+                <NavItem className="nav-list">
+                    <NavLink href="/dashboard">Dashboard</NavLink>
+                  </NavItem>
+
                 <NavItem>
                   <UncontrolledDropdown data-testid="navbar" nav inNavbar>
                     <DropdownToggle nav caret>
