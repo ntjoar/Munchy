@@ -12,6 +12,7 @@ import HomePage from "./Pages/HomePage";
 import AuthRoute from "./Components/AuthRoute";
 import IndexPage from "./Pages/IndexPage";
 import Dashboard from "./Pages/Dashboard";
+import Recipes from "./Pages/Recipes";
 import Footer from "./Components/Footer";
 import LogoutTest from "./Pages/LoggouttTestPage"
 class App extends React.Component {
@@ -50,6 +51,11 @@ class App extends React.Component {
               exact
               path="/dashboard"
               render={(props) => <Dashboard {...props} />}
+            />
+            <Route
+              exact
+              path="/recipes"
+              render={(props) => <Recipes {...props} />}
             />
               
             </Switch>

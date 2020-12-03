@@ -10,6 +10,7 @@ import Logout from "./Logout";
 import {} from "@fortawesome/free-solid-svg-icons";
 import { faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {Link} from 'react-router-dom'
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 import {
@@ -77,6 +78,17 @@ class Header extends Component {
           <Collapse isOpen={this.state.isOpen} data-testid="upper3" navbar>
             {isAuthenticated ? (
               <Nav className="ml-auto" navbar>
+              
+              <NavItem className="nav-list">
+              <Link to="/dashboard">
+              <NavLink href="/dashboard">Dashboard</NavLink>
+              </Link>
+            </NavItem>
+            <NavItem className="nav-list">
+            <Link to="/recipes">
+              <NavLink href="/recipes">My recipes</NavLink>
+              </Link>
+            </NavItem>
                 <NavItem>
                   <UncontrolledDropdown data-testid="navbar" nav inNavbar>
                     <DropdownToggle nav caret>

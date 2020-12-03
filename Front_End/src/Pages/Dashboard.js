@@ -10,7 +10,8 @@ import PropTypes from "prop-types";
 import { login } from "../actions/authAction";
 import { clearErrors } from "../actions/errorActions";
 import { register } from "../actions/authAction";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
   Button,
   Modal,
@@ -97,6 +98,7 @@ class Dashboard extends Component {
       recipePromptMessage: this.recipePromptMessage,
       currentRecipe: "Select Recipe",
       recipeNameList: [],
+      redirect: false
     };
 
     this.recipes = {};
@@ -125,6 +127,16 @@ class Dashboard extends Component {
         });
       })
       .catch((error) => console.log("Does not have any recipes yet"));
+  }
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/recipes' />
+    }
   }
 
   componentDidMount() {
@@ -275,6 +287,7 @@ class Dashboard extends Component {
     this.setState({ storeList: value });
   };
 
+ 
   searchItems = () => {
     let num_items = this.state.items.length;
     let num_stores = this.state.storeList.length;
@@ -324,7 +337,7 @@ class Dashboard extends Component {
     return (
       <Fragment>
         <HeaderApp />
-        {!isAuthenticated ? <Redirect to="/login" /> : null}
+        
         <div className="container">
           <ButtonGroup size="md" className="topleft">
             <Button
@@ -372,8 +385,14 @@ class Dashboard extends Component {
                   );
                 })}
               </DropdownMenu>
+
             </Dropdown>
             {/* END OF RECIPE DROP DOWN LIST */}
+            {this.renderRedirect()}
+            <Button
+            className="button-general" onClick={this.setRedirect}>
+                See All my recipes
+          </Button>
 
             <Button
               className="storeprefbutton "
