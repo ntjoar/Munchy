@@ -1,10 +1,14 @@
 .container {
   width: 1000px;
   height: 600px;
+<<<<<<< HEAD
   text-align: center;
    overflow-y: scroll; 
   /* display: flex; 
   flex-direction: column; */
+=======
+  text-align: left;
+>>>>>>> ae1979b9b592906e8348885026554f9c3b6877c6
 }
 
 .dashboard {
@@ -33,30 +37,30 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 0px 450px 0px 0px;
+  margin: 0px 230px 0px 0px;
 }
 
 .storeprefbutton {
-  margin: 0;
-  width: 250px;
+  margin: 0px 0px 0px 0px;
+  width: 280px;
   height: 35px;
   text-align: center;
-  line-height: 35px;
+  line-height: 33px;
   padding: 0;
   border: 2px solid black;
   background-color: #a8d0e6;
   color: black !important;
+  border-radius: 5px;
 }
 
 .storeprefbutton:hover,
 .storeprefbutton:active,
 .storeprefbutton:focus {
   margin: 0;
-  width: 250px;
+  width: 280px;
   height: 35px;
   text-align: center;
-  line-height: 35px;
-  padding: 0;
+  line-height: 33px;
   border: 2px solid black;
   background-color: #2fb1f7;
   color: black !important;
@@ -139,10 +143,56 @@
 .button-general:hover,
 .button-general:active,
 .button-general:focus {
+  padding-top: 3px;
+  height: 100%;
+  margin: 0 20px 0 0;
+  background-color: #2fb1f7;
+  color: black !important;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 8px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button-dropdown {
+  border: 2px solid black;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 3px;
+  height: 100%;
+  width: 200px;
+  margin: 0 20px 0 0;
+  background-color: #a8d0e6;
+  color: black !important;
+  white-space: nowrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.button-dropdown:hover,
+.button-dropdown:active,
+.button-dropdownl:focus {
   padding-top: 2px;
   height: 100%;
   margin: 0 20px 0 0;
   background-color: #2fb1f7;
   color: black !important;
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 8px 0 rgba(0, 0, 0, 0.19);
+}
+
+.drop-down-menu {
+  background-color: #a8d0e6;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.drop-down-item {
+  color: black !important;
+  border-radius: 2px solid black;
+}
+
+.drop-down {
+  width: 200px;
+}
+
+.left {
+  text-align: left;
 }

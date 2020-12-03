@@ -1,16 +1,16 @@
-import React, { Component, Fragment, useState } from "react";
+import React, { Component, Fragment, useState, useEffect } from "react";
 import "../CSS/Dashboard.css";
 import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
 import Item from "../Components/Item";
 import PopupPrompt from "../Components/Popup";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 import StorePrefPopupPrompt from "../Components/StorePrefPopup";
-import PropTypes from 'prop-types'
-import {login} from '../actions/authAction'
-import {clearErrors} from '../actions/errorActions'
-import {register} from '../actions/authAction'
-import { Redirect} from "react-router-dom"
+import PropTypes from "prop-types";
+import { login } from "../actions/authAction";
+import { clearErrors } from "../actions/errorActions";
+import { register } from "../actions/authAction";
+import { Redirect } from "react-router-dom";
 import {
   Button,
   Modal,
@@ -21,16 +21,21 @@ import {
   Label,
   Form,
   FormGroup,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  ButtonGroup,
 } from "reactstrap";
+import { faLongArrowAltDown } from "@fortawesome/free-solid-svg-icons";
 
-//const fetch = require("node-fetch");
-
-function fetchRequest(recipeURL) {
+function fetchRequest(recipeURL, userid) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
     url: recipeURL,
+    userId: userid,
   });
 
   var requestOptions = {
@@ -43,9 +48,29 @@ function fetchRequest(recipeURL) {
   return fetch("http://localhost:8000/recipe/get/", requestOptions);
 }
 
+<<<<<<< HEAD
 // function printJSON(jsonObject){
 
 // }
+=======
+function loadRecipes(id) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    userId: id,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  return fetch("http://localhost:8000/recipe/recipes/", requestOptions);
+}
+>>>>>>> ae1979b9b592906e8348885026554f9c3b6877c6
 
 class Dashboard extends Component {
   constructor(props) {
@@ -55,48 +80,96 @@ class Dashboard extends Component {
     this.addRecipeURL = this.addRecipeURL.bind(this);
     this.clickToAdd = this.clickToAdd.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.selectRecipe = this.selectRecipe.bind(this);
+    //this.reloadRecipes = this.reloadRecipes.bind(this);
     this.recipePromptMessage = "Please Enter the Recipe URL";
-    // this.getRequest = this.getRequest(this);
-    this.items = [];
+    this.userId = localStorage.getItem("id");
+
     this.state = {
       isOpenItem: false,
       isOpenRecipe: false,
+      dropDownToggle: false,
       storePrefIsOpen: false,
-      userLat: "",
-      userLong: "",
+      userLat: 34.0689,
+      userLong: -118.4452,
       userRadius: 20,
       storeList: ["Ralphs", "Costco", "Food4Less", "Walmart"],
       numItemsPer: null,
-      items: [], // added some items for developing purposes
+      tempRadius: 0,
+      tempStoreList: [],
+      tempNumItemsPer: null,
+      items: [],
       item: "",
       recipeURL: "",
-      recipeURLPlaceholder: "",
-      recipeItems: [],
       searchResult: {},
       recipePromptMessage: this.recipePromptMessage,
+      currentRecipe: "Select Recipe",
+      recipeNameList: [],
     };
+
+    this.recipes = {};
   }
 
   static propTypes = {
-    isAuthenticated : PropTypes.bool,
-    error : PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool,
+    error: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+  };
 
-};
+  reloadRecipes() {
+    loadRecipes(this.userId)
+      .then((response) => response.json())
+      .then((result) => {
+        this.recipes = result;
+        var recipeList = [];
+        for (var i = 0; i < result.length; i++) {
+          recipeList.push(result[i].name);
+        }
+
+        this.setState({
+          recipeNameList: recipeList,
+        });
+      })
+      .catch((error) => console.log("Does not have any recipes yet"));
+  }
 
   componentDidMount() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.setState({
-          userLat: position.coords.latitude,
-          userLong: position.coords.longitude,
-        });
+    this.reloadRecipes();
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+      this.setState({
+        userLat: position.coords.latitude,
+        userLong: position.coords.longitude,
       });
-    } else {
-      console.log("Location unavailable");
+    });
+  }
+
+  selectRecipe(event) {
+    const selectedRecipeName = event.currentTarget.textContent;
+    var items = [];
+    for (var i = 0; i < this.recipes.length; i++) {
+      if (this.recipes[i].name == selectedRecipeName) {
+        items = this.recipes[i].Items;
+      }
     }
+    this.setState({
+      currentRecipe: selectedRecipeName,
+      items: items,
+    });
+  }
+
+  toggle() {
+    const negate = !this.state.dropDownToggle;
+    this.setState({
+      dropDownToggle: negate,
+      isOpenItem: false,
+      isOpenRecipe: false,
+      storePrefIsOpen: false,
+    });
   }
 
   addItem(itemVal) {
@@ -126,35 +199,59 @@ class Dashboard extends Component {
     });
   };
 
+  //TODO: get nice error message
   clickToAddRecipe = () => {
-    //API call here and set the state
-    console.log(this.state.recipeURL);
     const url = this.state.recipeURL;
 
-    fetchRequest(url)
-      .then((response) => response.json())
-      .then((result) =>
-        this.setState((state) => {
+    if (url.includes("http://") || url.includes("https://")) {
+      // TODO: check if the text contains https or http://
+      // if it does, call API,
+      // Otherwise, create a new recipe with empty list
+      fetchRequest(url, this.userId)
+        .then((response) => response.json())
+        .then((result) => {
+          document.getElementById("add-button").removeAttribute("disabled");
           try {
-            const res = result.ingredients;
-            if (res.length != 0) {
+            console.log(result);
+            const res = result.Items;
+
+            this.setState((state) => {
               var items = state.items.concat(res);
-            }
-            return {
-              isOpenRecipe: false,
-              items: items,
-              item: "",
-              recipePromptMessage: this.recipePromptMessage,
-            };
+
+              this.reloadRecipes();
+
+              return {
+                isOpenRecipe: false,
+                items: items,
+                recipePromptMessage: this.recipePromptMessage,
+                currentRecipe: result.name,
+              };
+            });
           } catch (error) {
+            console.log(error);
             return {
               recipePromptMessage:
-                "Failed To Parse. Please Enter valid Recipe URL",
+                "Failed To Parse. Either Invalid URL or Recipe already in the cookbook",
             };
           }
         })
-      )
-      .catch((error) => console.log("error", error));
+        .catch((error) => {
+          document.getElementById("add-button").removeAttribute("disabled");
+          console.log(error);
+          this.setState((state) => {
+            return {
+              recipePromptMessage:
+                "Failed To Parse. Either Invalid URL or Recipe already in the cookbook",
+            };
+          });
+        });
+
+      document
+        .getElementById("add-button")
+        .setAttribute("disabled", "disabled");
+    } else {
+      //TODO: Add Recipe here
+    }
   };
 
   removeItem = (index) => {
@@ -173,21 +270,49 @@ class Dashboard extends Component {
   };
 
   setRadius = (radiusVal) => {
-    this.setState({ userRadius: radiusVal });
+    this.setState({ tempRadius: radiusVal });
   };
 
   setNumItems = (numItemsVal) => {
-    this.setState({ numItemsPer: numItemsVal });
+    this.setState({ tempNumItemsPer: numItemsVal });
   };
 
   setStorePref = (e) => {
     let value = Array.from(e.target.selectedOptions, (option) => option.value);
-    this.setState({ storeList: value });
+    this.setState({ tempStoreList: value });
   };
+
+  saveStorePref = () => {
+    this.setState((state) => {
+      var userRadius = state.userRadius;
+      var storeList = state.storeList;
+      var numItemsPer = state.numItemsPer;
+      if(state.tempRadius != 0) {
+        var userRadius = state.tempRadius;
+      }
+      if(state.tempStoreList.length != 0) {
+        var storeList = state.tempStoreList;
+      }
+      if(state.tempNumItemsPer != null) {
+        var numItemsPer = state.tempNumItemsPer;
+      }
+
+      return {
+        userRadius: userRadius,
+        storeList: storeList,
+        numItemsPer: numItemsPer,
+        storePrefIsOpen: false,
+        tempNumItemsPer: null,
+        tempRadius: 0,
+        tempStoreList: [],
+      };
+    });
+  }
 
   searchItems = () => {
     let num_items = this.state.items.length;
     let num_stores = this.state.storeList.length;
+
     let api_url =
       "http://localhost:8000/radius=" +
       this.state.userRadius +
@@ -196,7 +321,9 @@ class Dashboard extends Component {
       "&lo=" +
       this.state.userLong +
       "/";
+
     var i;
+
     for (i = 0; i < num_items; i++) {
       api_url += this.state.items[i];
       if (i < num_items - 1) {
@@ -215,21 +342,27 @@ class Dashboard extends Component {
     } else {
       api_url += "/" + this.state.numItemsPer;
     }
+
+    console.log(api_url);
+
     fetch(api_url)
       .then((response) => response.json())
-      .then((data) => this.setState({ searchResult: data }));
+      .then((data) => {
+        this.setState({
+          searchResult: data,
+        });
+      });
   };
 
   render() {
-    const {isAuthenticated, user} = this.props.auth;
+    const { isAuthenticated, user } = this.props.auth;
     return (
       <Fragment>
         <HeaderApp />
-        { !isAuthenticated ? <Redirect to="/login"/> : null}
-        <PopupPrompt></PopupPrompt>
+        {!isAuthenticated ? <Redirect to="/login" /> : null}
         <div className="container">
           <div className="topbuttonrow">
-            <div className="topleft">
+            <ButtonGroup size="md" className="topleft">
               <Button
                 className="button-general"
                 onClick={(e) =>
@@ -242,14 +375,7 @@ class Dashboard extends Component {
               >
                 + Items
               </Button>
-              <PopupPrompt
-                isOpen={this.state.isOpenItem}
-                onClose={(e) => this.setState({ isOpenItem: false })}
-                addItem={this.addItem}
-                clickToAdd={this.clickToAdd}
-              >
-                Please Enter the Ingredient
-              </PopupPrompt>
+
               <Button
                 className="button-general"
                 onClick={(e) =>
@@ -263,22 +389,30 @@ class Dashboard extends Component {
               >
                 + Recipe
               </Button>
-              <PopupPrompt
-                isOpen={this.state.isOpenRecipe}
-                onClose={(e) =>
-                  this.setState({
-                    isOpenRecipe: false,
-                    recipePromptMessage: this.recipePromptMessage,
-                  })
-                }
-                addItem={this.addRecipeURL}
-                clickToAdd={this.clickToAddRecipe}
-              >
-                {this.state.recipePromptMessage}
-              </PopupPrompt>
-            </div>
+
+              {/* RECIPE DROP DOWN LIST SECTION */}
+
+              <Dropdown isOpen={this.state.dropDownToggle} toggle={this.toggle}>
+                <DropdownToggle caret className="button-dropdown">
+                  {this.state.currentRecipe}
+                </DropdownToggle>
+                <DropdownMenu className="drop-down-menu">
+                  {this.state.recipeNameList.map((value) => {
+                    return (
+                      <DropdownItem
+                        className="drop-down-item"
+                        onClick={this.selectRecipe}
+                      >
+                        {value}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </Dropdown>
+              {/* END OF RECIPE DROP DOWN LIST */}
+            </ButtonGroup>
             <Button
-              className="storeprefbutton "
+              className="storeprefbutton"
               onClick={(e) =>
                 this.setState({
                   isOpenItem: false,
@@ -289,15 +423,42 @@ class Dashboard extends Component {
             >
               Store Preference Selection
             </Button>
-            <StorePrefPopupPrompt
-              isOpen={this.state.storePrefIsOpen}
-              setRadius={this.setRadius}
-              curRadius={this.state.userRadius}
-              setStorePref={this.setStorePref}
-              setNumItems={this.setNumItems}
-              onClose={(e) => this.setState({ storePrefIsOpen: false })}
-            />
           </div>
+
+          {/* Pop up Window Section */}
+          <PopupPrompt
+            className="left"
+            isOpen={this.state.isOpenItem}
+            onClose={(e) => this.setState({ isOpenItem: false })}
+            addItem={this.addItem}
+            clickToAdd={this.clickToAdd}
+          >
+            Please Enter the Ingredient
+          </PopupPrompt>
+
+          <PopupPrompt
+            isOpen={this.state.isOpenRecipe}
+            onClose={(e) =>
+              this.setState({
+                isOpenRecipe: false,
+                recipePromptMessage: this.recipePromptMessage,
+              })
+            }
+            addItem={this.addRecipeURL}
+            clickToAdd={this.clickToAddRecipe}
+          >
+            {this.state.recipePromptMessage}
+          </PopupPrompt>
+
+          <StorePrefPopupPrompt
+            isOpen={this.state.storePrefIsOpen}
+            setRadius={this.setRadius}
+            setStorePref={this.setStorePref}
+            setNumItems={this.setNumItems}
+            saveStorePref={this.saveStorePref}
+            onClose={(e) => this.setState({ storePrefIsOpen: false })}
+          />
+          {/* End of Pop up Window Section */}
 
           <div className="dashboard">
             <div>
@@ -401,14 +562,11 @@ class Dashboard extends Component {
     );
   }
 }
-const mapStateToProps = state =>({
-  isAuthenticated : state.auth.isAthenticated,
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAthenticated,
   error: state.error,
-  auth: state.auth
-
-})
-export default connect (
-  mapStateToProps,
-  {login, register, clearErrors}
-)(Dashboard);
-
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { login, register, clearErrors })(
+  Dashboard
+);
