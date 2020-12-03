@@ -485,7 +485,7 @@ class Dashboard extends Component {
           {/* below line checks if searchResult is empty; otherwise, we run our functions to display the results dashboard*/}
           { (Object.keys(this.state.searchResult).length == 0) ? null : 
             (
-              <div className="dashboard">
+              <div className="results_dashboard">
                 {
                   //part 2, using item_containers 
                   //loop through each store 
