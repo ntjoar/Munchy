@@ -2,7 +2,6 @@ import React, { Component, Fragment, useState, useEffect } from "react";
 import "../CSS/Dashboard.css";
 import "../CSS/Item.css";
 import HeaderApp from "../Components/Header";
-import Item from "../Components/Item";
 import PopupPrompt from "../Components/Popup";
 import { connect } from "react-redux";
 import StorePrefPopupPrompt from "../Components/StorePrefPopup";
@@ -502,7 +501,42 @@ class Dashboard extends Component {
               Search
             </Button>
           </div>
-        </div>
+        
+
+          {/* below line checks if searchResult is empty; otherwise, we run our functions to display the results dashboard*/}
+          { (Object.keys(this.state.searchResult).length == 0) ? null : 
+            (
+              <div className="results_dashboard">
+                {
+                  //part 2, using item_containers 
+                  //loop through each store 
+                  Object.keys(this.state.searchResult.data).map((key, i) => (
+
+                      //for each store, loop through items 
+                      Object.keys(this.state.searchResult.data[key].items).map((item, i) => (
+                        //quick hack that sets numItemsPer = 200 if it is null
+                          Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, ((this.state.numItemsPer == null) ? 200 : this.state.numItemsPer)).map((product, i) =>{
+                            //create a item container with value equal to what we want 
+                            return (
+                            <div className="biggeritemcontainer">
+                            <div className="biggeritemname">
+                              {"Store: " + this.state.searchResult.data[key].name} <br></br>
+                              {"Item Name: " + this.state.searchResult.data[key].items[item].query} <br></br>
+                              {"Product Name: " + this.state.searchResult.data[key].items[item].itemData[product].name} <br></br>
+                              {"Price: " + this.state.searchResult.data[key].items[item].itemData[product].price} <br></br>
+                              {"URL: "}
+                              <a href={this.state.searchResult.data[key].items[item].itemData[product].link}>Click here to go to product</a>
+                            </div>
+                            </div>
+                          );
+                          })
+                      ))))
+                  }
+              </div> 
+            )
+          }
+
+      </div>  
       </Fragment>
     );
   }

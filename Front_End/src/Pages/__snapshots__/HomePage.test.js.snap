@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+Array [
+  <div
+    className="bottomBorder"
+    data-testid="upper"
+  >
+    <nav
+      className="header navbar navbar-expand-sm navbar-dark"
+      data-testid="upper2"
+    >
+      <a
+        href="/"
+      >
+        <img
+          alt=""
+          className="logo"
+          src="munchy_logo.png"
+        />
+      </a>
+      <button
+        aria-label="Toggle navigation"
+        className="navbar-toggler"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        className="collapse navbar-collapse"
+        data-testid="upper3"
+        style={Object {}}
+      >
+        <div
+          className="header"
+        >
+          <ul
+            className="navbar-header center navbar-nav"
+          >
+            <li
+              className="nav-list nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </li>
+            <li
+              className="nav-list nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/login"
+                onClick={[Function]}
+              >
+                Sign in
+              </a>
+            </li>
+            <li
+              className="nav-list nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/signup"
+                onClick={[Function]}
+              >
+                Sign up
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>,
+  <div
+    className="carousel slide"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onTouchEnd={[Function]}
+    onTouchStart={[Function]}
+  >
+    <ol
+      className="carousel-indicators"
+    >
+      <li
+        className="active"
+        onClick={[Function]}
+      />
+      <li
+        className=""
+        onClick={[Function]}
+      />
+      <li
+        className=""
+        onClick={[Function]}
+      />
+      <li
+        className=""
+        onClick={[Function]}
+      />
+    </ol>
+    <div
+      className="carousel-inner"
+    >
+      <div
+        className="carousel-item active"
+      >
+        <img
+          alt=""
+          src="img1.jpg"
+        />
+        <div
+          className="carousel-caption d-none d-md-block"
+        >
+          <h3>
+            Some text goes here
+          </h3>
+          <p>
+            Some text goes here
+          </p>
+        </div>
+      </div>
+      <div
+        className="carousel-item"
+      >
+        <img
+          alt=""
+          src="img3.jpg"
+        />
+        <div
+          className="carousel-caption d-none d-md-block"
+        >
+          <h3>
+            Some text goes here
+          </h3>
+          <p>
+            Some text goes here
+          </p>
+        </div>
+      </div>
+      <div
+        className="carousel-item"
+      >
+        <img
+          alt="Slide 3"
+          src="img4.jpg"
+        />
+        <div
+          className="carousel-caption d-none d-md-block"
+        >
+          <h3>
+            Some text goes here
+          </h3>
+          <p>
+            Some text goes here
+          </p>
+        </div>
+      </div>
+      <div
+        className="carousel-item"
+      >
+        <img
+          alt="Slide 4"
+          src="img5.jpg"
+        />
+        <div
+          className="carousel-caption d-none d-md-block"
+        >
+          <h3>
+            Some text goes here
+          </h3>
+          <p>
+            Some text goes here
+          </p>
+        </div>
+      </div>
+    </div>
+    <a
+      className="carousel-control-prev"
+      onClick={[Function]}
+      role="button"
+      style={
+        Object {
+          "cursor": "pointer",
+        }
+      }
+      tabIndex="0"
+    >
+      <span
+        aria-hidden="true"
+        className="carousel-control-prev-icon"
+      />
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+    <a
+      className="carousel-control-next"
+      onClick={[Function]}
+      role="button"
+      style={
+        Object {
+          "cursor": "pointer",
+        }
+      }
+      tabIndex="0"
+    >
+      <span
+        aria-hidden="true"
+        className="carousel-control-next-icon"
+      />
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </div>,
+]
+`;
