@@ -16,7 +16,7 @@ const routes = {
   logout: `${appUrlBase}/test-logout`,
   },
   private: {
-	home: `${appUrlBase}/home`,
+	home: `${appUrlBase}/dashboard`,
   },
 };
 
