@@ -69,10 +69,8 @@ async function parseWebsites(query, location, storePref, pref) {
   //example api localhost:8000/radius=2000&la=34.0689&lo=-118.4452&brocolli
   //http://localhost:8000/radius=2000&la=34.0689&lo=-118.4452/brocolli&chicken/Ralphs&Walmart&Costco&Food4Less/1
 
-  //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=34.0689,118.4452&radius=2000&type=grocery%20store&key=AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE&location
-
   let position = latitude + "," + longitude;
-  let API_KEY = "insert API key here"
+  let API_KEY = process.env.API_KEY;
   //convert radius from m to miles
   let radMeters = parseFloat(radius);
   radMeters = radMeters * 1609.34;
@@ -94,7 +92,7 @@ async function parseWebsites(query, location, storePref, pref) {
     }
     let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radMeters}&name=${storeName}`;
     //var possibleStoreList = ["Walmart", "Food4Less", "Ralphs", "Costco"]
-    console.log(url)
+    // console.log(url)
     await fetch(url)
       .then((res) => res.json())
       .then((out) => {
@@ -115,8 +113,8 @@ async function parseWebsites(query, location, storePref, pref) {
         throw err;
       });
   }
-  console.log("this is the stores aroud me")
-  console.log(storesAroundMe)
+  // console.log("this is the stores aroud me")
+  // console.log(storesAroundMe)
   //If given no long no lat, check for all stores
   if (longitude == "default" || latitude == "default") {
     storesAroundMe = possibleStoreList;
