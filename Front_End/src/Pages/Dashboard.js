@@ -283,12 +283,13 @@ class Dashboard extends Component {
     this.setState({ tempNumItemsPer: numItemsVal });
   };
 
+  // Set 
   setStorePref = (e) => {
     let value = Array.from(e.target.selectedOptions, (option) => option.value);
     this.setState({ tempStoreList: value });
   };
 
-
+// Save store preferences
   saveStorePref = () => {
     this.setState((state) => {
       var userRadius = state.userRadius;
@@ -316,7 +317,7 @@ class Dashboard extends Component {
     });
   }
 
-
+// search items
   searchItems = () => {
     let num_items = this.state.items.length;
     let num_stores = this.state.storeList.length;
