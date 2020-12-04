@@ -64,7 +64,7 @@ describe('Login :', () => {
   }, 160000);
 });
 
-describe('Unathorized view', () => {
+describe('Unauthorized view', () => {
   test('users that are not logged in are redirected to sign in page', async () => {
     await page.goto(routes.private.home);
     await page.waitForSelector('.signin-form')
