@@ -1,7 +1,15 @@
 .container {
-  width: 1000px;
+  width: 80%;
   height: 600px;
   text-align: left;
+  overflow: scroll;
+}
+
+.result-container {
+  width: 65%;
+  text-align: left;
+  margin: auto;
+  padding: 0px 0px 100px 0;
 }
 
 .dashboard {
@@ -9,19 +17,29 @@
   flex-direction: column;
   width: 100%;
   height: 400px;
+  /* height: auto; */
   border: 2px solid black;
   border-radius: 10px;
   margin: 20px 0px 0px 0px;
   overflow: scroll;
 }
 
-.topbuttonrow {
+.results_dashboard {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px 0px 0px 0px;
+}
+
+.topbuttonrow {
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
   height: 35px;
+  width: 100%;
   text-align: left;
   margin: 50px 0px 0px 0px;
 }
@@ -34,7 +52,6 @@
   margin: 50px 75px 0px 110px;
 
   margin: 0px 230px 0px 0px;
-
 }
 
 .storeprefbutton {
@@ -126,7 +143,6 @@
 }
 
 .button-general {
-  display: flex;
   border: 2px solid black;
   flex-direction: row;
   flex-wrap: wrap;
@@ -154,7 +170,7 @@
   flex-wrap: wrap;
   padding-top: 3px;
   height: 100%;
-  width: 200px;
+  width: 280px;
   margin: 0 20px 0 0;
   background-color: #a8d0e6;
   color: black !important;
@@ -187,7 +203,7 @@
 }
 
 .drop-down {
-  width: 200px;
+  width: 250px;
 }
 
 .left {

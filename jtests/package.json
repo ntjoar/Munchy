@@ -10,11 +10,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+<<<<<<< HEAD
     "jest": "^26.6.3",
     "react-styleguidist": "^11.1.4"
+=======
+    "@babel/plugin-syntax-jsx": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "jest": "^26.6.3"
+>>>>>>> 3e43f3390f8d66d655c630b6d8d9ac96f19d55d9
   },
   "dependencies": {
     "jest-puppeteer": "^4.4.0",
-    "puppeteer": "^5.5.0"
+    "puppeteer": "^5.5.0",
+    "react-test-renderer": "^16.13.1"
   }
 }

@@ -3,7 +3,11 @@
   padding: 45px 0 20px;
   font-size: 15px;
   line-height: 24px;
-  /* position: fixed; */
+  /* Adding 3 lines below so that footer is sticky
+   margin-top:auto;   
+  position: relative; 
+  height: 200px; 
+  margin-top: -200px;  */
 }
 .site-footer hr {
   border-top-color: #bbb;
