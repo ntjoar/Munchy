@@ -143,14 +143,24 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.reloadRecipes();
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-      this.setState({
-        userLat: position.coords.latitude,
-        userLong: position.coords.longitude,
-      });
-    });
+
+    var options = {
+      enableHighAccuracy: false,
+      maximumAge: Infinity,
+      timeout: 500
+    };
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({userLat: position.coords.latitude});
+        this.setState({userLong: position.coords.longitude});
+      }, 
+      (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }, options);
+    }
+    else {
+      console.log("Location unavailable");
+    }
   }
 
   selectRecipe(event) {
@@ -364,7 +374,6 @@ class Dashboard extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
-
     return (
       <Fragment>
         <HeaderApp />
