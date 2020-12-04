@@ -22,24 +22,24 @@ const items = [
   {
     src: image1,
     altText: '',
-    caption: 'Some text goes here'
+    caption: ''
   },
   {
     src: image2,
     altText: '',
-    caption: 'Some text goes here'
+    caption: ''
 
   },
   {
     src: image3,
     altText: 'Slide 3',
-    caption: 'Some text goes here'
+    caption: ''
 
   },
   {
     src: image4,
     altText: 'Slide 4',
-    caption: 'Some text goes here'
+    caption: ''
 
   }
 ];
