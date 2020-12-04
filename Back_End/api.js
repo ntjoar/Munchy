@@ -16,6 +16,7 @@ const app = express();
 var cors = require("cors");
 const Market = require("./model/Market");
 const Items = require("./model/Items");
+const { json } = require("body-parser");
 // const { parse } = require('dotenv/types');
 const port = 8000;
 
@@ -71,11 +72,7 @@ async function parseWebsites(query, location, storePref, pref) {
   //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=34.0689,118.4452&radius=2000&type=grocery%20store&key=AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE&location
 
   let position = latitude + "," + longitude;
-
-  let API_KEY = "";
-
-  let API_KEY = "put in API key here"
-
+  let API_KEY = "insert API key here"
   //convert radius from m to miles
   let radMeters = parseFloat(radius);
   radMeters = radMeters * 1609.34;
@@ -92,8 +89,12 @@ async function parseWebsites(query, location, storePref, pref) {
   //set the var for the google places API
   for (var i = 0; i < possibleStoreList.length; i++) {
     let storeName = possibleStoreList[i];
+    if(storeName == "Food4Less"){
+      storeName = "Food 4 Less"
+    }
     let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${position}&radius=${radMeters}&name=${storeName}`;
     //var possibleStoreList = ["Walmart", "Food4Less", "Ralphs", "Costco"]
+    console.log(url)
     await fetch(url)
       .then((res) => res.json())
       .then((out) => {
@@ -102,14 +103,20 @@ async function parseWebsites(query, location, storePref, pref) {
         //console.log(jsonVal)
         //go through the list of results
         // console.log(jsonVal["results"].length)
-        if (jsonVal["results"].length > 0) {
-          storesAroundMe.push(storeName);
+        //go through the list of results
+        for(var c = 0; c < jsonVal["results"].length; c++){
+           //check if the resulting grocery stores include the names of any of the possible stores
+          if(jsonVal["results"][c]["name"].includes(storeName)){
+              storesAroundMe.push(possibleStoreList[i]);
+          }
         }
       })
       .catch((err) => {
         throw err;
       });
   }
+  console.log("this is the stores aroud me")
+  console.log(storesAroundMe)
   //If given no long no lat, check for all stores
   if (longitude == "default" || latitude == "default") {
     storesAroundMe = possibleStoreList;
@@ -139,7 +146,6 @@ async function parseWebsites(query, location, storePref, pref) {
       }
     }
   }
-
   return marketDataArr;
 }
 
