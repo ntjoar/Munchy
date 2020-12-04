@@ -32,6 +32,9 @@ async function getResults(query, pref) {
         let name = elementCheerio('.kds-Text--l').text().trim();
         let link = "https://www.ralphs.com" + elementCheerio('.flex-grow > a').attr('href').trim();
         let price = elementCheerio('.kds-Price').text().trim().substr(1).split(" ")[0];
+        if(price == "bout") {
+            price = elementCheerio('.kds-Price').text().trim().substr(1).split(" ")[1].substr(1);
+        }
 
         items.push(new Item(name, price, link));
     });
