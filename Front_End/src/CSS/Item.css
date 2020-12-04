@@ -34,3 +34,21 @@
     line-height: 30px;
     text-align: center;
   }
+
+  .biggeritemcontainer {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    width: 100%;
+    overflow-x: hidden; 
+    overflow-y: hidden; 
+    height: 170px; 
+    border-bottom: 3px solid black;
+  }
+
+  .biggeritemname {
+    margin: 10px 15px 10px; 
+
+    height: 170px;
+    text-align: left;
+  }
