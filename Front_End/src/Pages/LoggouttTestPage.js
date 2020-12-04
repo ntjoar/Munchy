@@ -38,11 +38,11 @@ class LogoutTest extends Component {
     render() {
       const { isAuthenticated, user } = this.props.auth;
       const { navCollapsed } = this.state;
-     
       return(
           <Fragment>
-        {isAuthenticated ? <Redirect to={{ pathname:"/home", state: { isAuthenticated: isAuthenticated, user: user }}}/> : null}
-        <div className="nav-link">{ isAuthenticated ? <Logout />: null}</div>
+         
+        <button className="nav-link">{ isAuthenticated ? <Logout />: <div className="[data-testid='logoutTest']" ></div>}</button>
+       
         </Fragment>
       )
       

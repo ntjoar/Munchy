@@ -33,10 +33,25 @@ beforeAll(async () => {
   });
 })
 
+// The user should not login, and the veiw should stay in the login page
+describe('Login :', () => {
+  test('user cannot login with wrong credentials', async () => {
+	await page.goto(routes.public.login);
+	await page.waitForSelector('.signin-form');
+
+	await page.click('input[name=email]')
+	await page.type('input[name=email]', 'test895@test8545.com')
+	await page.click('input[name=password]')
+	await page.type('input[name=password]', '123456789')
+	await page.click('#click-login')
+	await page.waitForSelector('.signin-form')
+  }, 160000);
+});
+
 
 //End to End login test
-describe('Login', () => {
-  test('users can login', async () => {
+describe('Login :', () => {
+  test('users can login with correct credentials', async () => {
 	await page.goto(routes.public.login);
 	await page.waitForSelector('.signin-form');
 
@@ -48,7 +63,6 @@ describe('Login', () => {
 	await page.waitForSelector('[data-testid="homepage"]')
   }, 160000);
 });
-
 
 describe('Unathorized view', () => {
   test('users that are not logged in are redirected to sign in page', async () => {
