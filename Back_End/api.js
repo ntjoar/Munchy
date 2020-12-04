@@ -71,7 +71,11 @@ async function parseWebsites(query, location, storePref, pref) {
   //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=34.0689,118.4452&radius=2000&type=grocery%20store&key=AIzaSyC0WqlCfH7xt2LBwxNeHdmHg8LUM8dhHsE&location
 
   let position = latitude + "," + longitude;
+<<<<<<< HEAD
   let API_KEY = "";
+=======
+  let API_KEY = "put in API key here"
+>>>>>>> 6f1b943600778cda89900a1112839d5bd992566b
   //convert radius from m to miles
   let radMeters = parseFloat(radius);
   radMeters = radMeters * 1609.34;
