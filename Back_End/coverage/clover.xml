@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1605878728825" clover="3.2.0">
-  <project timestamp="1605878728826" name="All files">
+<coverage generated="1607084086162" clover="3.2.0">
+  <project timestamp="1607084086162" name="All files">
     <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="3" coveredelements="3" complexity="0" loc="3" ncloc="3" packages="1" files="1" classes="1"/>
     <file name="User.js" path="C:\Users\kbenl\Desktop\My classes_fall_2020\CS130\cs130_Project\Munchy\Back_End\model\User.js">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="1" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
-      <line num="26" count="1" type="stmt"/>
+      <line num="28" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>

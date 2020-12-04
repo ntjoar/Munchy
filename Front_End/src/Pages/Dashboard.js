@@ -100,7 +100,7 @@ class Dashboard extends Component {
       recipePromptMessage: this.recipePromptMessage,
       currentRecipe: "Select Recipe",
       recipeNameList: [],
-      redirect: false
+      redirect: false,
     };
 
     this.recipes = {};
@@ -132,14 +132,14 @@ class Dashboard extends Component {
   }
   setRedirect = () => {
     this.setState({
-      redirect: true
-    })
-  }
+      redirect: true,
+    });
+  };
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/recipes' />
+      return <Redirect to="/recipes" />;
     }
-  }
+  };
 
   componentDidMount() {
     this.reloadRecipes();
@@ -265,7 +265,10 @@ class Dashboard extends Component {
         .getElementById("add-button")
         .setAttribute("disabled", "disabled");
     } else {
-      //TODO: Add Recipe here
+      this.setState({
+        recipePromptMessage:
+          "Invalid URL. Please include http:// or https:// in the URL",
+      });
     }
   };
 
@@ -297,19 +300,18 @@ class Dashboard extends Component {
     this.setState({ tempStoreList: value });
   };
 
-
   saveStorePref = () => {
     this.setState((state) => {
       var userRadius = state.userRadius;
       var storeList = state.storeList;
       var numItemsPer = state.numItemsPer;
-      if(state.tempRadius != 0) {
+      if (state.tempRadius != 0) {
         var userRadius = state.tempRadius;
       }
-      if(state.tempStoreList.length != 0) {
+      if (state.tempStoreList.length != 0) {
         var storeList = state.tempStoreList;
       }
-      if(state.tempNumItemsPer != null) {
+      if (state.tempNumItemsPer != null) {
         var numItemsPer = state.tempNumItemsPer;
       }
 
@@ -323,8 +325,7 @@ class Dashboard extends Component {
         tempStoreList: [],
       };
     });
-  }
-
+  };
 
   searchItems = () => {
     let num_items = this.state.items.length;
@@ -376,13 +377,12 @@ class Dashboard extends Component {
     return (
       <Fragment>
         <HeaderApp />
-        { !isAuthenticated ? <Redirect to="/login"/> : null}
-        { user ? <div data-testid="homepage" ></div> : null}
+        {!isAuthenticated ? <Redirect to="/login" /> : null}
+        {user ? <div data-testid="homepage"></div> : null}
         <div className="container">
-          <div className="topbuttonrow">
-          { user ? <div data-testid="homepage" ></div> : null}
+          <ButtonGroup className="topbuttonrow">
+            {user ? <div data-testid="homepage"></div> : null}
             <Button
-
               className="button-general"
               onClick={(e) =>
                 this.setState({
@@ -416,31 +416,28 @@ class Dashboard extends Component {
                 {this.state.currentRecipe}
               </DropdownToggle>
               <DropdownMenu className="drop-down-menu">
-                {this.state.recipeNameList.map((value) => {
+                {this.state.recipeNameList.map((item) => {
                   return (
                     <DropdownItem
                       className="drop-down-item"
                       onClick={this.selectRecipe}
+                      key={item}
                     >
-                      {value}
+                      {item}
                     </DropdownItem>
                   );
                 })}
               </DropdownMenu>
-
             </Dropdown>
             {/* END OF RECIPE DROP DOWN LIST */}
             {this.renderRedirect()}
-            <Button
-            className="button-general" onClick={this.setRedirect}>
-                See All my recipes
-          </Button>
+            <Button className="button-general" onClick={this.setRedirect}>
+              See All my recipes
+            </Button>
 
             <Button
               className="storeprefbutton "
-
               className="storeprefbutton"
-
               onClick={(e) =>
                 this.setState({
                   isOpenItem: false,
@@ -451,7 +448,7 @@ class Dashboard extends Component {
             >
               Store Preference Selection
             </Button>
-          </div>
+          </ButtonGroup>
 
           {/* Pop up Window Section */}
           <PopupPrompt
@@ -514,42 +511,69 @@ class Dashboard extends Component {
               Search
             </Button>
           </div>
-        
+        </div>
 
-          {/* below line checks if searchResult is empty; otherwise, we run our functions to display the results dashboard*/}
-          { (Object.keys(this.state.searchResult).length == 0) ? null : 
-            (
-              <div className="results_dashboard">
-                {
-                  //part 2, using item_containers 
-                  //loop through each store 
-                  Object.keys(this.state.searchResult.data).map((key, i) => (
-
-                      //for each store, loop through items 
-                      Object.keys(this.state.searchResult.data[key].items).map((item, i) => (
-                        //quick hack that sets numItemsPer = 200 if it is null
-                          Object.keys(this.state.searchResult.data[key].items[item].itemData).slice(0, ((this.state.numItemsPer == null) ? 200 : this.state.numItemsPer)).map((product, i) =>{
-                            //create a item container with value equal to what we want 
-                            return (
+        {/* below line checks if searchResult is empty; otherwise, we run our functions to display the results dashboard*/}
+        {Object.keys(this.state.searchResult).length == 0 ? null : (
+          <div className="result-container">
+            <div className="results_dashboard">
+              {
+                //part 2, using item_containers
+                //loop through each store
+                Object.keys(this.state.searchResult.data).map((key, i) =>
+                  //for each store, loop through items
+                  Object.keys(this.state.searchResult.data[key].items).map(
+                    (item, i) =>
+                      //quick hack that sets numItemsPer = 200 if it is null
+                      Object.keys(
+                        this.state.searchResult.data[key].items[item].itemData
+                      )
+                        .slice(
+                          0,
+                          this.state.numItemsPer == null
+                            ? 200
+                            : this.state.numItemsPer
+                        )
+                        .map((product, i) => {
+                          //create a item container with value equal to what we want
+                          return (
                             <div className="biggeritemcontainer">
-                            <div className="biggeritemname">
-                              {"Store: " + this.state.searchResult.data[key].name} <br></br>
-                              {"Item Name: " + this.state.searchResult.data[key].items[item].query} <br></br>
-                              {"Product Name: " + this.state.searchResult.data[key].items[item].itemData[product].name} <br></br>
-                              {"Price: " + this.state.searchResult.data[key].items[item].itemData[product].price} <br></br>
-                              {"URL: "}
-                              <a href={this.state.searchResult.data[key].items[item].itemData[product].link}>Click here to go to product</a>
-                            </div>
+                              <div className="biggeritemname">
+                                {"Store: " +
+                                  this.state.searchResult.data[key].name}{" "}
+                                <br></br>
+                                {"Item Name: " +
+                                  this.state.searchResult.data[key].items[item]
+                                    .query}{" "}
+                                <br></br>
+                                {"Product Name: " +
+                                  this.state.searchResult.data[key].items[item]
+                                    .itemData[product].name}{" "}
+                                <br></br>
+                                {"Price: " +
+                                  this.state.searchResult.data[key].items[item]
+                                    .itemData[product].price}{" "}
+                                <br></br>
+                                {"URL: "}
+                                <a
+                                  href={
+                                    this.state.searchResult.data[key].items[
+                                      item
+                                    ].itemData[product].link
+                                  }
+                                >
+                                  Click here to go to product
+                                </a>
+                              </div>
                             </div>
                           );
-                          })
-                      ))))
-                  }
-              </div> 
-            )
-          }
-
-      </div>  
+                        })
+                  )
+                )
+              }
+            </div>
+          </div>
+        )}
       </Fragment>
     );
   }
